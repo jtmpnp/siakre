@@ -48,31 +48,82 @@
     }
     .nav-brand { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
     .nav-logo { width: 42px; height: 42px; background: transparent; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .nav-logo svg { width: 24px; height: 24px; fill: var(--orange); }
     .nav-brand-text { line-height: 1.1; }
     .nav-brand-text .inst { font-size: .68rem; font-weight: 700; color: var(--navy); letter-spacing: .04em; text-transform: uppercase; }
-    .nav-brand-text .site { font-family: 'Plus Jakarta Sans', sans-serif; font-size: .95rem; font-weight: 800; color: var(--orange); letter-spacing: -.01em; }
     .nav-links { display: flex; gap: .25rem; margin-left: auto; align-items: center; list-style: none; }
-    .nav-links a { display: flex; align-items: center; gap: .4rem; padding: .45rem .85rem; border-radius: 6px; font-size: .85rem; font-weight: 500; color: var(--gray-600); text-decoration: none; transition: background .15s, color .15s; }
+    .nav-links a {
+      display: flex; align-items: center; gap: .4rem;
+      padding: .45rem .85rem; border-radius: 6px;
+      font-size: .85rem; font-weight: 500;
+      color: var(--gray-600); text-decoration: none;
+      transition: background .15s, color .15s;
+    }
     .nav-links a:hover { background: var(--gray-50); color: var(--navy); }
     .nav-links a.active { background: var(--navy); color: var(--white); }
-    .nav-links .btn-login { background: var(--orange); color: var(--white); border-radius: 6px; padding: .45rem .9rem; font-size: .85rem; font-weight: 600; text-decoration: none; transition: background .15s; }
+    .nav-links .btn-login {
+      background: var(--orange); color: var(--white);
+      border-radius: 6px; padding: .45rem .9rem;
+      font-size: .85rem; font-weight: 600;
+      text-decoration: none; transition: background .15s;
+    }
     .nav-links .btn-login:hover { background: var(--orange-lt); }
     .nav-icon { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+    /* DROPDOWN */
+    .nav-item { position: relative; }
+    .nav-item > a {
+      display: flex; align-items: center; gap: .4rem;
+      padding: .45rem .85rem; border-radius: 6px;
+      font-size: .85rem; font-weight: 500;
+      color: var(--gray-600); text-decoration: none;
+      transition: background .15s, color .15s;
+      cursor: pointer;
+    }
+    .nav-item > a:hover { background: var(--gray-50); color: var(--navy); }
+    .nav-item .chevron {
+      width: 10px; height: 10px;
+      stroke: currentColor; fill: none; stroke-width: 2.5;
+      transition: transform .2s;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute; top: calc(100% + 8px); left: 0;
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: 10px;
+      box-shadow: 0 8px 32px rgba(26,43,74,.14);
+      min-width: 220px;
+      padding: .4rem 0;
+      z-index: 200;
+    }
+    .nav-item:hover .dropdown-menu { display: block; }
+    .nav-item:hover .chevron { transform: rotate(180deg); }
+    .dropdown-menu a {
+      display: flex; align-items: center; gap: .5rem;
+      padding: .55rem 1rem;
+      font-size: .82rem; font-weight: 500;
+      color: var(--gray-600); text-decoration: none;
+      border-radius: 0;
+      transition: background .12s, color .12s;
+    }
+    .dropdown-menu a:hover { background: var(--gray-50); color: var(--navy); }
+    .dropdown-menu .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--orange); flex-shrink: 0;
+    }
+    .dropdown-divider { height: 1px; background: var(--gray-100); margin: .3rem 0; }
 
     /* ===================== HERO ===================== */
     .hero {
       position: relative;
-      height: 410px;
-  min-height: unset;
+      height: 410px; min-height: unset;
       background: linear-gradient(125deg, #071b3e 0%, #0d2a5e 45%, #102f6e 100%);
       display: grid;
       grid-template-columns: 1fr 1fr;
       overflow: hidden;
     }
     .hero::before {
-      content: '';
-      position: absolute;
+      content: ''; position: absolute;
       top: 18px; right: 20px;
       width: 100px; height: 60px;
       background-image: radial-gradient(circle, rgba(232,92,26,.55) 1.5px, transparent 1.5px);
@@ -82,7 +133,6 @@
     .hero-wave { position: absolute; bottom: 0; right: 0; width: 58%; height: 100%; pointer-events: none; z-index: 1; }
     .hero-wave svg { width: 100%; height: 100%; }
 
-    /* Kiri */
     .hero-content {
       position: relative; z-index: 3;
       display: flex; flex-direction: column; justify-content: center;
@@ -115,42 +165,29 @@
     .btn-primary:hover { background: var(--orange-lt); transform: translateY(-1px); }
     .btn-primary svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.2; }
 
-
-    /* Kanan – foto gedung */
     .hero-visual { position: relative; z-index: 3; display: flex; align-items: center; justify-content: center; padding: 1.5rem 1.5rem 1.5rem 0; }
     .hero-img-wrap { position: relative; width: 100%; max-width: 480px; height: 340px; }
     .hero-img-bg { position: absolute; right: -40px; top: 50%; transform: translateY(-50%); width: 110%; height: 115%; background: linear-gradient(160deg, #0d3a8a 0%, #072060 100%); border-radius: 50% 20% 50% 20%; z-index: 0; }
     .hero-img-container { position: relative; z-index: 2; width: 100%; height: 100%; border-radius: 50% 45% 50% 45% / 50% 50% 50% 50%; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.45); }
     .hero-img-container img { width: 100%; height: 100%; object-fit: cover; }
-
-    /* Chevron tengah */
     .hero-chevrons { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 4; display: flex; gap: 4px; }
     .chev { display: block; width: 0; height: 0; border-top: 24px solid transparent; border-bottom: 24px solid transparent; border-left: 18px solid rgba(255,255,255,.18); }
     .chev.dim { border-left-color: rgba(255,255,255,.09); }
-
-    /* Titik dekoratif foto */
     .deco-dots { position: absolute; top: 8px; right: -8px; width: 70px; height: 50px; background-image: radial-gradient(circle, rgba(232,92,26,.6) 1.5px, transparent 1.5px); background-size: 9px 9px; z-index: 5; }
-
-    /* Garis oranye bawah */
     .hero-bottom-curve { position: absolute; bottom: 0; left: 0; right: 0; height: 14px; background: var(--orange); z-index: 4; }
-    /* ===================== END HERO ===================== */
 
     /* FEATURE CARDS */
     .features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; padding: 2rem 2.5rem; background: var(--white); box-shadow: var(--shadow); }
     .feat-card { display: flex; flex-direction: column; gap: .6rem; padding: 1.25rem 1.1rem; border: 1px solid var(--gray-100); border-radius: var(--r-lg); background: var(--white); cursor: pointer; transition: box-shadow .2s, transform .2s; }
     .feat-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
     .feat-icon-wrap { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-    .feat-icon-wrap.blue   { background: #dbeafe; }
-    .feat-icon-wrap.orange { background: #ffedd5; }
-    .feat-icon-wrap.green  { background: #dcfce7; }
-    .feat-icon-wrap.purple { background: #ede9fe; }
+    .feat-icon-wrap.blue { background: #dbeafe; } .feat-icon-wrap.orange { background: #ffedd5; }
+    .feat-icon-wrap.green { background: #dcfce7; } .feat-icon-wrap.purple { background: #ede9fe; }
     .feat-icon { width: 22px; height: 22px; stroke-width: 1.8; fill: none; }
-    .feat-icon.blue   { stroke: #2563eb; }
-    .feat-icon.orange { stroke: var(--orange); }
-    .feat-icon.green  { stroke: var(--green); }
-    .feat-icon.purple { stroke: var(--purple); }
+    .feat-icon.blue { stroke: #2563eb; } .feat-icon.orange { stroke: var(--orange); }
+    .feat-icon.green { stroke: var(--green); } .feat-icon.purple { stroke: var(--purple); }
     .feat-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: .92rem; font-weight: 700; color: var(--navy); }
-    .feat-card p  { font-size: .78rem; color: var(--gray-600); line-height: 1.5; flex: 1; }
+    .feat-card p { font-size: .78rem; color: var(--gray-600); line-height: 1.5; flex: 1; }
     .feat-link { display: inline-flex; align-items: center; gap: .3rem; font-size: .78rem; font-weight: 700; color: var(--orange); text-decoration: none; }
     .feat-link:hover { text-decoration: underline; }
     .feat-link svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2.5; }
@@ -170,7 +207,7 @@
     .news-thumb-inner svg { width: 22px; height: 22px; stroke: #90caf9; fill: none; stroke-width: 1.5; }
     .news-body { flex: 1; }
     .news-body h4 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: .85rem; font-weight: 700; color: var(--navy); margin-bottom: .2rem; }
-    .news-body p  { font-size: .75rem; color: var(--gray-600); line-height: 1.4; margin-bottom: .35rem; }
+    .news-body p { font-size: .75rem; color: var(--gray-600); line-height: 1.4; margin-bottom: .35rem; }
     .news-date { display: flex; align-items: center; gap: .3rem; font-size: .72rem; color: var(--gray-400); }
     .news-date svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; }
 
@@ -180,9 +217,9 @@
     .stat-card:hover { box-shadow: var(--shadow-lg); }
     .stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
     .stat-icon svg { width: 22px; height: 22px; fill: none; stroke-width: 1.8; }
-    .stat-icon.blue   { background: #dbeafe; } .stat-icon.blue   svg { stroke: #2563eb; }
-    .stat-icon.green  { background: #dcfce7; } .stat-icon.green  svg { stroke: var(--green); }
-    .stat-icon.amber  { background: #fef3c7; } .stat-icon.amber  svg { stroke: #d97706; }
+    .stat-icon.blue { background: #dbeafe; } .stat-icon.blue svg { stroke: #2563eb; }
+    .stat-icon.green { background: #dcfce7; } .stat-icon.green svg { stroke: var(--green); }
+    .stat-icon.amber { background: #fef3c7; } .stat-icon.amber svg { stroke: #d97706; }
     .stat-icon.purple { background: #ede9fe; } .stat-icon.purple svg { stroke: var(--purple); }
     .stat-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.1rem; font-weight: 800; color: var(--navy); line-height: 1; }
     .stat-label { font-size: .75rem; font-weight: 600; color: var(--gray-600); }
@@ -203,7 +240,7 @@
       .footer-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 768px) {
-      .hero { grid-template-columns: 1fr; }
+      .hero { grid-template-columns: 1fr; height: auto; }
       .hero-visual { display: none; }
       .hero-content { padding: 2.5rem 1.5rem; }
       .hero-title { font-size: 2rem; }
@@ -229,11 +266,60 @@
     </div>
   </a>
   <ul class="nav-links">
-    <li><a href="#" class="active"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 12L12 3l9 9M5 10v9h5v-5h4v5h5v-9"/></svg>Beranda</a></li>
-    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>Instrumen Akreditasi<svg class="nav-icon" style="width:10px;height:10px" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></a></li>
-    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg>Dokumen Akreditasi<svg class="nav-icon" style="width:10px;height:10px" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></a></li>
-    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Informasi Akreditasi</a></li>
-    <li><a href="#" class="btn-login"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Portal Login</a></li>
+
+    <!-- Beranda -->
+    <li>
+      <a href="index.html" class="active">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 12L12 3l9 9M5 10v9h5v-5h4v5h5v-9"/></svg>
+        Beranda
+      </a>
+    </li>
+
+    <!-- Instrumen Akreditasi — TANPA panah, tanpa dropdown -->
+    <li>
+      <a href="instrumen.html">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Instrumen Akreditasi
+      </a>
+    </li>
+
+    <!-- Dokumen Akreditasi — ADA dropdown -->
+    <li class="nav-item">
+      <a href="dokumen.html">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+        Dokumen Akreditasi
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </a>
+      <div class="dropdown-menu">
+        <a href="d3tme.html"><span class="dot"></span>D3 Teknik Mesin</a>
+        <a href="d3tab.html"><span class="dot"></span>D3 Teknik Alat Berat</a>
+        <a href="d4rpm.html"><span class="dot"></span>D4 Rekayasa Perancangan Mekanik</a>
+        <a href="d4tma.html"><span class="dot"></span>D4 Teknik Manufaktur</a>
+      </div>
+    </li>
+
+    <!-- Informasi Akreditasi — ADA dropdown -->
+    <li class="nav-item">
+      <a href="informasi.html">
+        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Informasi Akreditasi
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </a>
+      <div class="dropdown-menu">
+        <a href="#"><span class="dot"></span>Status Akreditasi</a>
+        <a href="#"><span class="dot"></span>Tim Akreditasi</a>
+        <a href="#"><span class="dot"></span>Kegiatan Akreditasi</a>
+      </div>
+    </li>
+
+    <!-- Portal Login -->
+    <li>
+      <a href="portal.html" class="btn-login">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Portal Login
+      </a>
+    </li>
+
   </ul>
 </nav>
 
@@ -244,8 +330,6 @@
       <ellipse cx="420" cy="210" rx="340" ry="230" fill="rgba(10,40,100,0.45)"/>
     </svg>
   </div>
-
-  <!-- KIRI: Teks -->
   <div class="hero-content">
     <div class="hero-eyebrow">Sistem Informasi</div>
     <div class="hero-title-sm">Arsip Akreditasi</div>
@@ -256,17 +340,12 @@
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
       Selengkapnya
     </a>
-    
   </div>
-
-  <!-- Chevron tengah -->
   <div class="hero-chevrons">
     <span class="chev dim"></span>
     <span class="chev dim"></span>
     <span class="chev"></span>
   </div>
-
-  <!-- KANAN: Foto Gedung -->
   <div class="hero-visual">
     <div class="hero-img-wrap">
       <div class="hero-img-bg"></div>
@@ -276,7 +355,6 @@
       </div>
     </div>
   </div>
-
   <div class="hero-bottom-curve"></div>
 </section>
 
@@ -340,7 +418,6 @@
       </div>
     </div>
   </div>
-
   <div>
     <div class="section-header"><h2 class="section-title">Statistik Dokumen</h2></div>
     <div class="stats-grid">
@@ -377,11 +454,11 @@
     </div>
     <div class="footer-col">
       <h5>Menu Utama</h5>
-      <a href="#">Beranda</a>
-      <a href="#">Instrumen Akreditasi</a>
-      <a href="#">Dokumen Akreditasi</a>
-      <a href="#">Informasi Akreditasi</a>
-      <a href="#">Portal Login</a>
+      <a href="index.html">Beranda</a>
+      <a href="instrumen.html">Instrumen Akreditasi</a>
+      <a href="dokumen.html">Dokumen Akreditasi</a>
+      <a href="informasi.html">Informasi Akreditasi</a>
+      <a href="portal.html">Portal Login</a>
     </div>
     <div class="footer-col">
       <h5>Tautan Cepat</h5>
