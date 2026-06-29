@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Status Akreditasi – Politeknik Negeri Padang</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1a2b4a; --navy-dk: #0f1c32; --orange: #e85c1a; --orange-lt: #f47c44;
+      --white: #ffffff; --gray-50: #f8f9fb; --gray-100: #eef0f4; --gray-400: #9aa3b2;
+      --gray-600: #5a6478; --gray-800: #2d3444;
+      --shadow: 0 2px 12px rgba(26,43,74,.10); --shadow-lg: 0 8px 32px rgba(26,43,74,.14); --r-lg: 16px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--gray-800); line-height: 1.6; }
+    nav {
+      position: sticky; top: 0; z-index: 100; background: var(--white);
+      border-bottom: 1px solid var(--gray-100); box-shadow: 0 1px 8px rgba(0,0,0,.06);
+      display: flex; align-items: center; padding: 0 2rem; height: 64px; gap: 1.5rem;
+    }
+    .nav-brand { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
+    .nav-logo { width: 42px; height: 42px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+    .nav-logo img { width: 100%; height: 100%; object-fit: cover; }
+    .nav-brand-text .inst { font-size: .68rem; font-weight: 700; color: var(--navy); letter-spacing: .04em; text-transform: uppercase; }
+    .nav-links { display: flex; gap: .25rem; margin-left: auto; align-items: center; list-style: none; }
+    .nav-links > li > a {
+      display: flex; align-items: center; gap: .4rem; padding: .45rem .85rem; border-radius: 6px;
+      font-size: .85rem; font-weight: 500; color: var(--gray-600); text-decoration: none; transition: background .15s, color .15s;
+    }
+    .nav-links > li > a:hover { background: var(--gray-50); color: var(--navy); }
+    .btn-login { background: var(--orange) !important; color: var(--white) !important; border-radius: 6px !important; padding: .45rem .9rem !important; font-size: .85rem; font-weight: 600; }
+    .btn-login:hover { background: var(--orange-lt) !important; }
+    .nav-icon { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+    .nav-item { position: relative; list-style: none; }
+    .nav-item > a {
+      position: relative; display: flex; align-items: center; gap: .4rem; padding: .45rem .85rem; border-radius: 6px;
+      font-size: .85rem; font-weight: 500; color: var(--gray-600); text-decoration: none; transition: background .15s, color .15s; cursor: pointer;
+    }
+    .nav-item > a:hover, .nav-item > a.active { background: var(--navy); color: var(--white); border-radius: 8px; }
+    .nav-item > a::after { content: ''; position: absolute; bottom: -8px; left: 0; right: 0; height: 8px; }
+    .chevron { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.5; transition: transform .2s; }
+    .dropdown-menu {
+      display: none; position: absolute; top: calc(100% + 8px); left: 0;
+      background: var(--white); border: 1px solid var(--gray-100); border-radius: 10px;
+      box-shadow: var(--shadow-lg); min-width: 220px; padding: .4rem 0; z-index: 200;
+      margin-top: -8px; padding-top: 12px;
+    }
+    .dropdown-menu a {
+      display: flex; align-items: center; gap: .5rem; padding: .55rem 1rem;
+      font-size: .82rem; font-weight: 500; color: var(--gray-600); text-decoration: none; transition: background .12s, color .12s;
+    }
+    .dropdown-menu a:hover { background: var(--gray-50); color: var(--navy); }
+    .dropdown-menu a.active-sub { color: var(--orange); font-weight: 600; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+    .hero {
+      position: relative; min-height: 280px;
+      background: linear-gradient(125deg, #071b3e 0%, #0d2a5e 50%, #102f6e 100%);
+      display: grid; grid-template-columns: 1fr 1fr; overflow: hidden;
+    }
+    .hero-arc { position: absolute; right: -80px; top: -60px; width: 500px; height: 500px; border-radius: 50%; border: 70px solid var(--orange); opacity: .15; z-index: 1; pointer-events: none; }
+    .hero-dots-tr { position: absolute; top: 16px; right: 16px; width: 90px; height: 60px; background-image: radial-gradient(circle, rgba(232,92,26,.5) 1.5px, transparent 1.5px); background-size: 10px 10px; z-index: 2; pointer-events: none; }
+    .hero-content { position: relative; z-index: 3; display: flex; flex-direction: column; justify-content: center; padding: 3rem 2rem 3rem 2.5rem; }
+    .hero-breadcrumb { display: flex; align-items: center; gap: .4rem; font-size: .78rem; color: rgba(160,195,225,.7); margin-bottom: 1.2rem; flex-wrap: wrap; }
+    .hero-breadcrumb a { color: var(--orange); text-decoration: none; font-weight: 600; }
+    .hero-breadcrumb .sep { color: rgba(160,195,225,.4); }
+    .hero-eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); margin-bottom: .5rem; }
+    .hero-main-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 3rem; font-weight: 800; line-height: 1; color: var(--white); letter-spacing: -.02em; margin-bottom: .1rem; }
+    .hero-main-title span { color: var(--orange); display: block; }
+    .hero-sub { font-size: .95rem; font-weight: 600; color: rgba(200,220,240,.85); margin-top: .6rem; }
+    .hero-desc-block { margin-top: 1rem; max-width: 420px; }
+    .hero-desc-block p { font-size: .82rem; color: rgba(160,195,225,.85); line-height: 1.7; }
+    .hero-visual { position: relative; z-index: 3; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+    .hero-bottom-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 5px; background: var(--orange); z-index: 10; }
+    .content-wrap { padding: 2rem 2.5rem; }
+    .toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.2rem; }
+    .toolbar-left { display: flex; align-items: center; gap: .75rem; }
+    .toolbar-icon { width: 42px; height: 42px; border-radius: 10px; background: #fff7ed; display: flex; align-items: center; justify-content: center; }
+    .toolbar-icon svg { width: 22px; height: 22px; stroke: var(--orange); fill: none; stroke-width: 1.8; }
+    .toolbar-text h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: .95rem; font-weight: 700; color: var(--navy); }
+    .toolbar-text p { font-size: .75rem; color: var(--gray-600); margin-top: .1rem; }
+    .tbl-wrap { border: 1px solid #c8d3e6; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+    thead tr { background: #d6e4f7; }
+    thead th { padding: .75rem 1rem; border: 1px solid #b0b8c9; color: var(--navy); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: .78rem; text-align: center; }
+    tbody tr:nth-child(odd) { background: #fff; }
+    tbody tr:nth-child(even) { background: #f4f7fc; }
+    tbody tr:hover { background: #edf3fb; }
+    tbody td { padding: .75rem 1rem; border: 1px solid #c8d3e6; vertical-align: middle; font-size: .8rem; }
+    .td-no { text-align: center; font-weight: 700; color: var(--navy); width: 48px; }
+    .td-center { text-align: center; }
+    .badge {
+      display: inline-block; padding: .25rem .8rem; border-radius: 20px;
+      font-size: .72rem; font-weight: 700;
+    }
+    .badge-unggul { background: #dcfce7; color: #15803d; }
+    .badge-baik-sekali { background: #dbeafe; color: #1d4ed8; }
+    .badge-baik { background: #fef9c3; color: #a16207; }
+    .badge-proses { background: #fee2e2; color: #b91c1c; }
+    footer { background: var(--navy-dk); padding: 2.5rem 2.5rem 1.2rem; color: #7fa0bc; margin-top: 3rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 2rem; margin-bottom: 2rem; }
+    .footer-col h5 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: .82rem; font-weight: 700; color: var(--white); margin-bottom: .8rem; }
+    .footer-col p, .footer-col a { font-size: .76rem; color: #7fa0bc; line-height: 1.8; text-decoration: none; display: block; }
+    .footer-col a:hover { color: var(--orange-lt); }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: .5rem; font-size: .76rem; color: #7fa0bc; margin-bottom: .4rem; line-height: 1.4; }
+    .footer-contact-item svg { width: 13px; height: 13px; stroke: var(--orange); fill: none; stroke-width: 1.8; flex-shrink: 0; margin-top: 2px; }
+    .footer-bottom { border-top: 1px solid #1e3a60; padding-top: 1.1rem; text-align: center; font-size: .73rem; color: #4a6580; }
+  
+  .hero-img-wrap { position: relative; width: 100%; max-width: 420px; height: 280px; }
+.hero-img-bg {
+  position: absolute; right: -30px; top: 50%; transform: translateY(-50%);
+  width: 110%; height: 120%;
+  background: linear-gradient(160deg, #0d3a8a 0%, #072060 100%);
+  border-radius: 50% 20% 50% 20%; z-index: 0;
+}
+.hero-img-container {
+  position: relative; z-index: 2; width: 100%; height: 100%;
+  border-radius: 50% 45% 50% 45% / 50% 50% 50% 50%;
+  overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.45);
+}
+.hero-img-container img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 20%; }
+.deco-dots {
+  position: absolute; top: 8px; right: -8px; width: 70px; height: 50px;
+  background-image: radial-gradient(circle, rgba(232,92,26,.6) 1.5px, transparent 1.5px);
+  background-size: 9px 9px; z-index: 5;
+}
+  
+  .hero-chevrons {
+  position: absolute; left: 95%; top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4; display: flex; gap: 4px;
+}
+.chev {
+  display: block; width: 0; height: 0;
+  border-top: 24px solid transparent;
+  border-bottom: 24px solid transparent;
+  border-left: 18px solid rgba(232,92,26,.7);
+}
+.chev.dim { border-left-color: rgba(232,92,26,.3); }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-brand">
+    <div class="nav-logo"><img src="logopnp.png" alt="Logo PNP"></div>
+    <div class="nav-brand-text"><div class="inst">Politeknik Negeri Padang</div></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 12L12 3l9 9M5 10v9h5v-5h4v5h5v-9"/></svg>Beranda</a></li>
+    <li><a href="instrumen.html"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>Instrumen Akreditasi</a></li>
+    <li class="nav-item">
+      <a href="#">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+        Dokumen Akreditasi
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </a>
+      <div class="dropdown-menu">
+        <a href="d3tme.html"><span class="dot"></span>D3 Teknik Mesin</a>
+        <a href="d3tab.html"><span class="dot"></span>D3 Teknik Alat Berat</a>
+        <a href="d4rpm.html"><span class="dot"></span>D4 Rekayasa Perancangan Mekanik</a>
+        <a href="d4tma.html"><span class="dot"></span>D4 Teknik Manufaktur</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="active">
+        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Informasi Akreditasi
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </a>
+      <div class="dropdown-menu">
+        <a href="status-akreditasi.html" class="active-sub"><span class="dot"></span>Status Akreditasi</a>
+        <a href="tim-akreditasi.html"><span class="dot"></span>Tim Akreditasi</a>
+        <a href="kegiatan-akreditasi.html"><span class="dot"></span>Kegiatan Akreditasi</a>
+      </div>
+    </li>
+    <li><a href="portal.html" class="btn-login"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Portal Login</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-arc"></div>
+  <div class="hero-dots-tr"></div>
+  <div class="hero-content">
+    <div class="hero-chevrons">
+  <span class="chev dim"></span>
+  <span class="chev dim"></span>
+  <span class="chev"></span>
+</div>
+    <div class="hero-breadcrumb">
+      <a href="index.html">Beranda</a><span class="sep">/</span>
+      <span>Informasi Akreditasi</span><span class="sep">/</span>
+      <span>Status Akreditasi</span>
+    </div>
+    <div class="hero-eyebrow">Informasi Akreditasi</div>
+    <h1 class="hero-main-title">STATUS<br><span>AKREDITASI</span></h1>
+    <div class="hero-sub">Politeknik Negeri Padang</div>
+    <div class="hero-desc-block">
+      <p>Informasi status akreditasi seluruh Program Studi di Jurusan Teknik Mesin Politeknik Negeri Padang berdasarkan penilaian LAM Teknik.</p>
+    </div>
+  </div>
+  <div class="hero-visual">
+  <div class="hero-img-wrap">
+    <div class="hero-img-bg"></div>
+    <div class="deco-dots"></div>
+    <div class="hero-img-container">
+      <img src="gambar gedung.png" alt="Gedung Politeknik Negeri Padang">
+    </div>
+  </div>
+</div>
+  <div class="hero-bottom-bar"></div>
+</section>
+
+<div class="content-wrap">
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <div class="toolbar-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+      <div class="toolbar-text">
+        <h2>Status Akreditasi Program Studi</h2>
+        <p>Data status akreditasi LAM Teknik seluruh program studi Jurusan Teknik Mesin.</p>
+      </div>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Program Studi</th>
+          <th>Jenjang</th>
+          <th>Lembaga Akreditasi</th>
+          <th>Nilai</th>
+          <th>Tahun Akreditasi</th>
+          <th>Masa Berlaku</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-no">1</td>
+          <td><strong>Teknik Mesin</strong></td>
+          <td class="td-center">D3</td>
+          <td class="td-center">LAM Teknik</td>
+          <td class="td-center"><strong>A</strong></td>
+          <td class="td-center">2023</td>
+          <td class="td-center">2028</td>
+          <td class="td-center"><span class="badge badge-unggul">Unggul</span></td>
+        </tr>
+        <tr>
+          <td class="td-no">2</td>
+          <td><strong>Teknik Alat Berat</strong></td>
+          <td class="td-center">D3</td>
+          <td class="td-center">LAM Teknik</td>
+          <td class="td-center"><strong>B</strong></td>
+          <td class="td-center">2022</td>
+          <td class="td-center">2027</td>
+          <td class="td-center"><span class="badge badge-baik-sekali">Baik Sekali</span></td>
+        </tr>
+        <tr>
+          <td class="td-no">3</td>
+          <td><strong>Rekayasa Perancangan Mekanik</strong></td>
+          <td class="td-center">D4</td>
+          <td class="td-center">LAM Teknik</td>
+          <td class="td-center"><strong>B</strong></td>
+          <td class="td-center">2023</td>
+          <td class="td-center">2028</td>
+          <td class="td-center"><span class="badge badge-baik">Baik</span></td>
+        </tr>
+        <tr>
+          <td class="td-no">4</td>
+          <td><strong>Teknik Manufaktur</strong></td>
+          <td class="td-center">D4</td>
+          <td class="td-center">LAM Teknik</td>
+          <td class="td-center"><strong>—</strong></td>
+          <td class="td-center">—</td>
+          <td class="td-center">—</td>
+          <td class="td-center"><span class="badge badge-proses">Dalam Proses</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h5>Tentang Sistem</h5>
+      <p>Sistem Informasi Arsip Akreditasi Jurusan Teknik Mesin Politeknik Negeri Padang merupakan platform digital untuk pengelolaan dokumen akreditasi yang terstruktur, aman, dan mudah diakses.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Menu Utama</h5>
+      <a href="index.html">Beranda</a>
+      <a href="instrumen.html">Instrumen Akreditasi</a>
+      <a href="#">Dokumen Akreditasi</a>
+      <a href="#">Informasi Akreditasi</a>
+      <a href="portal.html">Portal Login</a>
+    </div>
+    <div class="footer-col">
+      <h5>Tautan Cepat</h5>
+      <a href="#">Politeknik Negeri Padang</a>
+      <a href="#">Jurusan Teknik Mesin</a>
+      <a href="#">Unit Penjaminan Mutu</a>
+      <a href="#">Pusat Teknologi Informasi</a>
+      <a href="#">Kementerian Pendidikan</a>
+    </div>
+    <div class="footer-col">
+      <h5>Kontak Kami</h5>
+      <div class="footer-contact-item"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Politeknik Negeri Padang, Jl. Kampus, Limau Manis, Padang 25164</div>
+      <div class="footer-contact-item"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.29 6.29l1.51-1.52a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>(0751) 72590</div>
+      <div class="footer-contact-item"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>info@pnp.ac.id</div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Politeknik Negeri Padang. All rights reserved.</div>
+</footer>
+
+<script>
+document.querySelectorAll('.nav-item').forEach(item => {
+  const menu = item.querySelector('.dropdown-menu');
+  if (!menu) return;
+  let timeout;
+  item.addEventListener('mouseenter', () => { clearTimeout(timeout); document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none'); menu.style.display = 'block'; });
+  item.addEventListener('mouseleave', () => { timeout = setTimeout(() => { menu.style.display = 'none'; }, 500); });
+  menu.addEventListener('mouseenter', () => { clearTimeout(timeout); });
+  menu.addEventListener('mouseleave', () => { timeout = setTimeout(() => { menu.style.display = 'none'; }, 500); });
+});
+</script>
+</body>
+</html>
