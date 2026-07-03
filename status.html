@@ -107,36 +107,51 @@
     .footer-bottom { border-top: 1px solid #1e3a60; padding-top: 1.1rem; text-align: center; font-size: .73rem; color: #4a6580; }
   
   .hero-img-wrap { position: relative; width: 100%; max-width: 420px; height: 280px; }
-.hero-img-bg {
-  position: absolute; right: -30px; top: 50%; transform: translateY(-50%);
-  width: 110%; height: 120%;
-  background: linear-gradient(160deg, #0d3a8a 0%, #072060 100%);
-  border-radius: 50% 20% 50% 20%; z-index: 0;
-}
-.hero-img-container {
-  position: relative; z-index: 2; width: 100%; height: 100%;
-  border-radius: 50% 45% 50% 45% / 50% 50% 50% 50%;
-  overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.45);
-}
-.hero-img-container img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 20%; }
-.deco-dots {
-  position: absolute; top: 8px; right: -8px; width: 70px; height: 50px;
-  background-image: radial-gradient(circle, rgba(232,92,26,.6) 1.5px, transparent 1.5px);
-  background-size: 9px 9px; z-index: 5;
-}
-  
+  .hero-img-bg {
+    position: absolute; right: -30px; top: 50%; transform: translateY(-50%);
+    width: 110%; height: 120%;
+    background: linear-gradient(160deg, #0d3a8a 0%, #072060 100%);
+    border-radius: 50% 20% 50% 20%; z-index: 0;
+  }
+  .hero-img-container {
+    position: relative; z-index: 2; width: 100%; height: 100%;
+    border-radius: 50% 45% 50% 45% / 50% 50% 50% 50%;
+    overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.45);
+  }
+  .hero-img-container img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 20%; }
+  .deco-dots {
+    position: absolute; top: 8px; right: -8px; width: 70px; height: 50px;
+    background-image: radial-gradient(circle, rgba(232,92,26,.6) 1.5px, transparent 1.5px);
+    background-size: 9px 9px; z-index: 5;
+  }
   .hero-chevrons {
-  position: absolute; left: 95%; top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 4; display: flex; gap: 4px;
-}
-.chev {
-  display: block; width: 0; height: 0;
-  border-top: 24px solid transparent;
-  border-bottom: 24px solid transparent;
-  border-left: 18px solid rgba(232,92,26,.7);
-}
-.chev.dim { border-left-color: rgba(232,92,26,.3); }
+    position: absolute; left: 95%; top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4; display: flex; gap: 4px;
+  }
+  .chev {
+    display: block; width: 0; height: 0;
+    border-top: 24px solid transparent;
+    border-bottom: 24px solid transparent;
+    border-left: 18px solid rgba(232,92,26,.7);
+  }
+  .chev.dim { border-left-color: rgba(232,92,26,.3); }
+
+  /* === Kolom Aksi (Download SK & Download Sertifikat) === */
+  .td-aksi { text-align: center; white-space: nowrap; }
+  .aksi-group { display: inline-flex; align-items: center; gap: .5rem; }
+  .btn-aksi {
+    display: inline-flex; align-items: center; gap: .35rem;
+    padding: .4rem .8rem; border-radius: 7px; font-size: .76rem; font-weight: 600;
+    text-decoration: none; border: 1px solid transparent; cursor: pointer;
+    transition: background .15s, border-color .15s, transform .1s;
+  }
+  .btn-aksi svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; }
+  .btn-sk { background: var(--white); color: var(--navy); border-color: #c8d3e6; }
+  .btn-sk:hover { background: var(--gray-50); border-color: var(--navy); }
+  .btn-sertifikat { background: #fff1e8; color: var(--orange); border-color: #fbdcc7; }
+  .btn-sertifikat:hover { background: #ffe4d3; border-color: var(--orange); }
+  .btn-aksi:active { transform: scale(.97); }
   </style>
 </head>
 <body>
@@ -157,8 +172,8 @@
       <div class="dropdown-menu">
         <a href="d3tme.html"><span class="dot"></span>D3 Teknik Mesin</a>
         <a href="d3tab.html"><span class="dot"></span>D3 Teknik Alat Berat</a>
-        <a href="d4rpm.html"><span class="dot"></span>D4 Rekayasa Perancangan Mekanik</a>
         <a href="d4tma.html"><span class="dot"></span>D4 Teknik Manufaktur</a>
+        <a href="d4rpm.html"><span class="dot"></span>D4 Rekayasa Perancangan Mekanik</a>
       </div>
     </li>
     <li class="nav-item">
@@ -169,8 +184,8 @@
       </a>
       <div class="dropdown-menu">
         <a href="status-akreditasi.html" class="active-sub"><span class="dot"></span>Status Akreditasi</a>
-        <a href="tim-akreditasi.html"><span class="dot"></span>Tim Akreditasi</a>
-        <a href="kegiatan-akreditasi.html"><span class="dot"></span>Kegiatan Akreditasi</a>
+        <a href="tim.html"><span class="dot"></span>Tim Akreditasi</a>
+        <a href="kegiatan.html"><span class="dot"></span>Kegiatan Akreditasi</a>
       </div>
     </li>
     <li><a href="portal.html" class="btn-login"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Portal Login</a></li>
@@ -182,10 +197,10 @@
   <div class="hero-dots-tr"></div>
   <div class="hero-content">
     <div class="hero-chevrons">
-  <span class="chev dim"></span>
-  <span class="chev dim"></span>
-  <span class="chev"></span>
-</div>
+      <span class="chev dim"></span>
+      <span class="chev dim"></span>
+      <span class="chev"></span>
+    </div>
     <div class="hero-breadcrumb">
       <a href="index.html">Beranda</a><span class="sep">/</span>
       <span>Informasi Akreditasi</span><span class="sep">/</span>
@@ -199,14 +214,14 @@
     </div>
   </div>
   <div class="hero-visual">
-  <div class="hero-img-wrap">
-    <div class="hero-img-bg"></div>
-    <div class="deco-dots"></div>
-    <div class="hero-img-container">
-      <img src="gambar gedung.png" alt="Gedung Politeknik Negeri Padang">
+    <div class="hero-img-wrap">
+      <div class="hero-img-bg"></div>
+      <div class="deco-dots"></div>
+      <div class="hero-img-container">
+        <img src="gambar gedung.png" alt="Gedung Politeknik Negeri Padang">
+      </div>
     </div>
   </div>
-</div>
   <div class="hero-bottom-bar"></div>
 </section>
 
@@ -228,10 +243,10 @@
           <th>Program Studi</th>
           <th>Jenjang</th>
           <th>Lembaga Akreditasi</th>
-          <th>Nilai</th>
           <th>Tahun Akreditasi</th>
           <th>Masa Berlaku</th>
           <th>Status</th>
+          <th>Aksi</th>
         </tr>
       </thead>
       <tbody>
@@ -240,40 +255,76 @@
           <td><strong>Teknik Mesin</strong></td>
           <td class="td-center">D3</td>
           <td class="td-center">LAM Teknik</td>
-          <td class="td-center"><strong>A</strong></td>
-          <td class="td-center">2023</td>
-          <td class="td-center">2028</td>
-          <td class="td-center"><span class="badge badge-unggul">Unggul</span></td>
+          <td class="td-center">2024</td>
+          <td class="td-center">2029</td>
+          <td class="td-center"><span class="badge badge-baik-sekali">Baik Sekali</span></td>
+          <td class="td-aksi">
+            <div class="aksi-group">
+              <a href="#" class="btn-aksi btn-sk">
+                <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>Download SK
+              </a>
+              <a href="#" class="btn-aksi btn-sertifikat">
+                <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>Download Sertifikat
+              </a>
+            </div>
+          </td>
         </tr>
         <tr>
           <td class="td-no">2</td>
           <td><strong>Teknik Alat Berat</strong></td>
           <td class="td-center">D3</td>
           <td class="td-center">LAM Teknik</td>
-          <td class="td-center"><strong>B</strong></td>
-          <td class="td-center">2022</td>
-          <td class="td-center">2027</td>
+          <td class="td-center">2023</td>
+          <td class="td-center">2028</td>
           <td class="td-center"><span class="badge badge-baik-sekali">Baik Sekali</span></td>
+          <td class="td-aksi">
+            <div class="aksi-group">
+              <a href="#" class="btn-aksi btn-sk">
+                <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>Download SK
+              </a>
+              <a href="#" class="btn-aksi btn-sertifikat">
+                <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>Download Sertifikat
+              </a>
+            </div>
+          </td>
         </tr>
         <tr>
           <td class="td-no">3</td>
-          <td><strong>Rekayasa Perancangan Mekanik</strong></td>
-          <td class="td-center">D4</td>
-          <td class="td-center">LAM Teknik</td>
-          <td class="td-center"><strong>B</strong></td>
-          <td class="td-center">2023</td>
-          <td class="td-center">2028</td>
-          <td class="td-center"><span class="badge badge-baik">Baik</span></td>
-        </tr>
-        <tr>
-          <td class="td-no">4</td>
           <td><strong>Teknik Manufaktur</strong></td>
           <td class="td-center">D4</td>
           <td class="td-center">LAM Teknik</td>
-          <td class="td-center"><strong>—</strong></td>
-          <td class="td-center">—</td>
-          <td class="td-center">—</td>
-          <td class="td-center"><span class="badge badge-proses">Dalam Proses</span></td>
+          <td class="td-center">2023</td>
+          <td class="td-center">2028</td>
+          <td class="td-center"><span class="badge badge-unggul">Unggul</span></td>
+          <td class="td-aksi">
+            <div class="aksi-group">
+              <a href="#" class="btn-aksi btn-sk">
+                <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>Download SK
+              </a>
+              <a href="#" class="btn-aksi btn-sertifikat">
+                <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>Download Sertifikat
+              </a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="td-no">4</td>
+          <td><strong>Rekayasa Perancangan Mekanik</strong></td>
+          <td class="td-center">D4</td>
+          <td class="td-center">LAM Teknik</td>
+          <td class="td-center">2024</td>
+          <td class="td-center">2029</td>
+          <td class="td-center"><span class="badge badge-baik">Baik</span></td>
+          <td class="td-aksi">
+            <div class="aksi-group">
+              <a href="#" class="btn-aksi btn-sk">
+                <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>Download SK
+              </a>
+              <a href="#" class="btn-aksi btn-sertifikat">
+                <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>Download Sertifikat
+              </a>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>

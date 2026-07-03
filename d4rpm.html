@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dokumen Akreditasi – D3 Teknik Mesin – Politeknik Negeri Padang</title>
+  <title>Dokumen Akreditasi – D4 Rekayasa Perancangan Mekanik – Politeknik Negeri Padang</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -51,6 +51,7 @@
       background: var(--orange) !important; color: var(--white) !important;
       border-radius: 6px !important; padding: .45rem .9rem !important;
       font-size: .85rem; font-weight: 600;
+      text-decoration: none !important;
     }
     .btn-login:hover { background: var(--orange-lt) !important; }
     .nav-icon { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
@@ -65,10 +66,11 @@
     .nav-item > a:hover, .nav-item > a.active { background: var(--navy); color: var(--white); border-radius: 8px; }
     .chevron { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.5; transition: transform .2s; }
     .dropdown-menu {
-      display: none; position: absolute; top: calc(100% + 8px); left: 0;
+      display: none; position: absolute; top: 100%; left: 0;
       background: var(--white); border: 1px solid var(--gray-100);
       border-radius: 10px; box-shadow: var(--shadow-lg);
       min-width: 220px; padding: .4rem 0; z-index: 200;
+      margin-top: 8px; padding-top: 8px;
     }
     .dropdown-menu a {
       display: flex; align-items: center; gap: .5rem;
@@ -183,7 +185,8 @@
     .toolbar-icon svg { width: 22px; height: 22px; stroke: var(--orange); fill: none; stroke-width: 1.8; }
     .toolbar-text h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: .95rem; font-weight: 700; color: var(--navy); }
     .toolbar-text p { font-size: .75rem; color: var(--gray-600); margin-top: .1rem; }
-    .toolbar-right { display: flex; align-items: center; gap: .5rem; }
+    .toolbar-right { display: flex; align-items: center; gap: .5rem; margin-left: auto; }
+    .year-group { display: flex; align-items: center; gap: .5rem; }
     .year-label { font-size: .8rem; color: var(--gray-600); font-weight: 500; }
     .year-btn {
       padding: .38rem 1rem; border-radius: 6px; font-size: .8rem; font-weight: 600;
@@ -193,65 +196,148 @@
     .year-btn:hover { border-color: var(--navy); color: var(--navy); }
     .year-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
 
-    /* ===== AKREDITASI TABLE ===== */
+    /* ===== TOGGLE SKOR CAPAIAN BUTTON (diperkecil) ===== */
+    .toggle-skor-btn {
+      display: flex; align-items: center; gap: .35rem;
+      padding: .3rem .75rem; border-radius: 6px; font-size: .72rem; font-weight: 600;
+      border: 1.5px solid var(--orange); background: #fff7ed; color: var(--orange);
+      cursor: pointer; transition: all .15s;
+      margin-left: 2rem;
+    }
+    .toggle-skor-btn:hover { background: var(--orange); color: var(--white); }
+    .toggle-skor-btn.is-open { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .toggle-skor-btn .chevron-icon {
+      width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.5;
+      transition: transform .25s ease;
+    }
+    .toggle-skor-btn.is-open .chevron-icon { transform: rotate(180deg); }
+
+    /* ===== AKREDITASI TABLE (matrik style) ===== */
     .akred-table-wrap {
-      border: 1px solid #c8d3e6;
-      border-radius: 10px; overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    .akred-table { width: 100%; border-collapse: collapse; font-size: .78rem; table-layout: fixed; }
-    .akred-table thead tr { background: #d6e4f7; }
-    .akred-table thead th {
-      padding: .65rem .75rem;
+      position: relative;
       border: 1px solid #b0b8c9;
-      color: var(--navy); font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 700; font-size: .75rem; text-align: center;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
     }
-    .akred-table thead th:nth-child(1) { width: 44px; }
-    .akred-table thead th:nth-child(2) { width: 120px; }
-    .akred-table thead th:nth-child(3) { width: 22%; }
-    .akred-table thead th:nth-child(4) { width: auto; }
-    .akred-table thead th:nth-child(5) { width: 80px; }
-    .akred-table thead th:nth-child(6) { width: 130px; }
-    .akred-table tbody tr:nth-child(odd)  { background: #ffffff; }
-    .akred-table tbody tr:nth-child(even) { background: #f4f7fc; }
-    .akred-table tbody tr:hover { background: #edf3fb; }
-    .akred-table tbody td {
-      padding: .65rem .75rem;
+    .akred-table-wrap::-webkit-scrollbar { height: 10px; }
+    .akred-table-wrap::-webkit-scrollbar-track { background: var(--gray-50); }
+    .akred-table-wrap::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 10px; }
+    .scroll-hint {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .72rem; color: var(--gray-600);
+      margin-bottom: .5rem;
+    }
+    .scroll-hint svg { width: 14px; height: 14px; stroke: var(--orange); fill: none; stroke-width: 2; }
+    .akred-table { width: 100%; border-collapse: collapse; font-size: .68rem; table-layout: fixed; }
+    .akred-table th, .akred-table td {
       border: 1px solid #c8d3e6;
-      color: var(--gray-800);
+      padding: .5rem .55rem;
       vertical-align: top;
-      font-size: .76rem;
-      line-height: 1.55;
+      line-height: 1.5;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
-    .td-no { text-align: center; font-weight: 700; color: var(--navy); font-family: 'Plus Jakarta Sans', sans-serif; }
-    .td-kriteria { color: var(--navy); font-weight: 600; }
-    .td-skor { text-align: center; vertical-align: middle !important; }
+    .akred-table thead th {
+      background: #d6e4f7; color: var(--navy);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700; font-size: .72rem; text-align: center;
+      vertical-align: middle;
+      padding: .6rem .5rem;
+      white-space: nowrap;
+    }
+    .akred-table .penilaian-head { background: #c3d8f2; letter-spacing: .02em; }
+    .akred-table .skor-head-row th { background: #eaf1fb; font-size: .82rem; padding: .4rem; }
+    .th-lkps {
+      width: 1% !important;
+      white-space: normal !important;
+      word-break: break-word;
+      padding: .4rem .1rem !important;
+      font-size: .65rem !important;
+    }
+
+    .th-no { width: 2.2%; font-size: .67rem !important; }
+    .th-kriteria { width: 8%; }
+    .th-indikator { width: 12.5%; }
+    .th-p { width: 11.8%; }
+    .th-skor {
+      width: 5%; line-height: 1.25; font-size: .67rem !important;
+      cursor: pointer; user-select: none;
+    }
+    .th-skor .th-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .2rem; }
+    .th-skor .chevron-icon { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2.5; transition: transform .25s ease; }
+    .th-skor.is-open .chevron-icon { transform: rotate(180deg); }
+    .th-datadukung { width: 12.8%; font-size: .71rem !important; }
+
+    .akred-table .section-row td {
+      background: linear-gradient(90deg, #2eab6e, #38c27d);
+      color: var(--white);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700; font-size: .82rem;
+      padding: .6rem .85rem;
+      letter-spacing: .01em;
+      width: 100%;
+      border-left: none; border-right: none;
+    }
+    .akred-table .sub-row td {
+      background: #dceaf0; color: var(--navy);
+      font-weight: 700; font-size: .75rem;
+      padding: .45rem .85rem;
+      border-top: 1px solid #b9d4e0;
+      border-bottom: 1px solid #b9d4e0;
+      border-left: none; border-right: none;
+      width: 100%;
+    }
+    .akred-table tbody tr:not(.section-row):not(.sub-row):hover td {
+      background: #f7faff;
+    }
+
+    .td-no { text-align: center; font-weight: 700; color: var(--navy); font-family: 'Plus Jakarta Sans', sans-serif; width: 2.2%; font-size: .72rem; white-space: nowrap; }
+    .td-kriteria { color: var(--navy); font-weight: 600; width: 8%; white-space: pre-line; }
+    .td-indikator { width: 12.5%; white-space: pre-line; color: var(--gray-800); }
+    .td-penilaian { width: 11.5%; white-space: pre-line; color: var(--gray-800); }
+    .td-penilaian.skor-4 { background: #f3fff6; }
+    .td-skor { text-align: center; vertical-align: middle !important; width: 5%; }
     .skor-badge {
-      display: inline-block; padding: .2rem .65rem;
-      border-radius: 5px; background: #d6e4f7;
-      color: var(--navy); font-weight: 700; font-size: .78rem;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px;
+      border-radius: 50%; background: #d6e4f7;
+      color: var(--navy); font-weight: 700; font-size: .76rem;
     }
-    .td-bukti { text-align: center; vertical-align: middle !important; }
-    .btn-lihat {
-      display: inline-flex; align-items: center; gap: .25rem;
-      padding: .3rem .65rem; border-radius: 5px;
-      font-size: .72rem; font-weight: 600; color: var(--navy);
-      background: var(--white); border: 1.5px solid #d1d5db;
-      cursor: pointer; text-decoration: none; transition: all .15s; margin: 2px;
+    .td-lkps { text-align: center; vertical-align: middle !important; width: 1%; padding: .5rem .1rem; }
+    .td-datadukung { width: 12.8%; white-space: pre-line; }
+    .link-doc { color: #1a56db; text-decoration: underline; font-size: .72rem; display: block; }
+    .link-doc:hover { color: var(--orange); }
+    .btn-lkps {
+      display: inline-block;
+      color: #1a56db;
+      font-size: .68rem; font-weight: 700;
+      text-decoration: underline;
+      cursor: pointer;
+      white-space: normal;
+      word-break: break-word;
+      line-height: 1.3;
     }
-    .btn-lihat:hover { border-color: var(--navy); background: var(--gray-50); }
-    .btn-lihat svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; }
-    .btn-download {
-      display: inline-flex; align-items: center; gap: .25rem;
-      padding: .3rem .65rem; border-radius: 5px;
-      font-size: .72rem; font-weight: 600; color: var(--orange);
-      background: #fff7ed; border: 1.5px solid #fed7aa;
-      cursor: pointer; text-decoration: none; transition: all .15s; margin: 2px;
+    .btn-lkps:hover { color: var(--orange); }
+
+    /* ===== KOLOM SKOR CAPAIAN: collapsible & dipindah ke ujung kanan ===== */
+    /* Kolom "Skor Capaian" disembunyikan secara default (tertutup),
+       diletakkan paling kanan setelah kolom Dokumen (LKPS & Data Dukung).
+       Dibuka/ditutup lewat tombol toolbar atau klik header "Skor Capaian". */
+    col.col-skor { transition: width .28s ease; }
+    th.col-skor, td.col-skor { transition: padding .2s ease, border-width .2s ease; }
+    .skor-content { display: block; }
+
+    .akred-table-wrap.skor-collapsed col.col-skor { width: 0 !important; }
+    .akred-table-wrap.skor-collapsed th.col-skor,
+    .akred-table-wrap.skor-collapsed td.col-skor {
+      width: 0 !important; min-width: 0 !important; max-width: 0 !important;
+      padding: 0 !important; border-left: 0 !important; border-right: 0 !important;
+      overflow: hidden;
     }
-    .btn-download:hover { background: var(--orange); color: var(--white); border-color: var(--orange); }
-    .btn-download svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; }
-    .empty-row td { height: 34px; }
+    .akred-table-wrap.skor-collapsed .skor-content { display: none; }
 
     /* ===== FOOTER ===== */
     footer { background: var(--navy-dk); padding: 2.5rem 2.5rem 1.2rem; color: #7fa0bc; }
@@ -271,12 +357,14 @@
       .nav-links li:not(:last-child) { display: none; }
       .content-wrap { padding: 1.5rem; }
       .footer-grid { grid-template-columns: 1fr; }
-      .akred-table-wrap { overflow-x: auto; }
       .toolbar { flex-direction: column; align-items: flex-start; }
+      .toolbar-right { margin-left: 0; flex-wrap: wrap; }
+      .toggle-skor-btn { margin-left: 0; }
     }
   </style>
 </head>
 <body>
+  <script src="guard.js"></script>
 
 <!-- NAVBAR -->
 <nav>
@@ -310,11 +398,11 @@
       <div class="dropdown-menu">
         <a href="d3tme.html"><span class="dot"></span>D3 Teknik Mesin</a>
         <a href="d3tab.html"><span class="dot"></span>D3 Teknik Alat Berat</a>
-        <a href="d4rpm.html" class="active-sub"><span class="dot"></span>D4 Rekayasa Perancangan Mekanik</a>
         <a href="d4tma.html"><span class="dot"></span>D4 Teknik Manufaktur</a>
+        <a href="d4rpm.html" class="active-sub"><span class="dot"></span>D4 Rekayasas Perancangan Mekanik</a>
       </div>
     </li>
-    <!-- Informasi Akreditasi — ADA dropdown -->
+   <!-- Informasi Akreditasi — ADA dropdown -->
     <li class="nav-item">
       <a href="#">
         <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
@@ -347,15 +435,15 @@
       <span class="sep">/</span>
       <a href="#">Dokumen Akreditasi</a>
       <span class="sep">/</span>
-      <span>D3 Teknik Mesin</span>
+      <span>D4 Rekayasa Perancangan Mekanik</span>
     </div>
     <div class="hero-eyebrow">Dokumen Akreditasi</div>
     <h1 class="hero-main-title">
-      ARSIP<br><span>D3 TEKNIK MESIN</span>
+      ARSIP<br><span>D4 REKAYASA PERANCANGAN MEKANIK</span>
     </h1>
     <div class="hero-sub">Politeknik Negeri Padang</div>
     <div class="hero-desc-block">
-      <p>Sistem informasi pengelolaan dokumen akreditasi Program Studi D3 Teknik Mesin yang terstruktur, aman, dan mudah diakses.</p>
+      <p>Sistem informasi pengelolaan dokumen akreditasi Program Studi D4 Rekayasa Perancangan Mekanik yang terstruktur, aman, dan mudah diakses.</p>
       <p>Dokumen mencakup kriteria penilaian, indikator capaian, skor, dan bukti pendukung proses akreditasi LAM Teknik.</p>
     </div>
   </div>
@@ -385,26 +473,60 @@
       </div>
       <div class="toolbar-text">
         <h2>Dokumen Akreditasi – D3 Teknik Mesin</h2>
-        <p>Data kriteria, indikator, dan bukti dokumen akreditasi LAM Teknik.</p>
+        <p>Matrik penilaian LKPS sesuai kriteria, indikator, dan bukti dokumen akreditasi LAM Teknik.</p>
       </div>
     </div>
     <div class="toolbar-right">
-      <span class="year-label">Tahun:</span>
-      <button class="year-btn active" onclick="setYear(2023, this)">2023</button>
-      <button class="year-btn" onclick="setYear(2028, this)">2028</button>
+      <div class="year-group">
+        <span class="year-label">Tahun:</span>
+        <button class="year-btn active" onclick="setYear(2023, this)">2023</button>
+        <button class="year-btn" onclick="setYear(2028, this)">2028</button>
+      </div>
+      <button class="toggle-skor-btn" id="toggleSkorBtn" onclick="toggleSkor()" type="button">
+        <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        <span id="toggleSkorLabel">Tampilkan Skor Capaian</span>
+      </button>
     </div>
   </div>
 
-  <div class="akred-table-wrap">
+  <div class="akred-table-wrap skor-collapsed" id="akredTableWrap">
     <table class="akred-table">
+  <colgroup>
+    <col style="width:2.5%">   <!-- No -->
+    <col style="width:8%">     <!-- Kriteria -->
+    <col style="width:12.5%">  <!-- Indikator -->
+    <col style="width:11.8%">  <!-- Skor 4 -->
+    <col style="width:11.8%">  <!-- Skor 3 -->
+    <col style="width:11.8%">  <!-- Skor 2 -->
+    <col style="width:10.5%">  <!-- Skor 1 -->
+    <col style="width:10.5%">  <!-- Skor 0 -->
+    <col style="width:5%">   <!-- LKPS -->
+    <col style="width:12.8%">  <!-- Data Dukung -->
+    <col class="col-skor" style="width:5%">     <!-- Skor Capaian (dipindah ke ujung kanan) -->
+  </colgroup>
+  <thead>
       <thead>
         <tr>
-          <th>No</th>
-          <th>Kriteria</th>
-          <th>Indikator</th>
-          <th>Kriteria Penilaian</th>
-          <th>Skor Capaian</th>
-          <th>Bukti Dokumen</th>
+          <th rowspan="2" class="th-no">No</th>
+          <th rowspan="2" class="th-kriteria">Kriteria</th>
+          <th rowspan="2" class="th-indikator">Indikator</th>
+          <th colspan="5" class="penilaian-head">Kriteria Penilaian</th>
+          <th colspan="2">Dokumen</th>
+          <th rowspan="2" class="th-skor col-skor" id="thSkorCapaian" onclick="toggleSkor()">
+            <span class="th-inner">
+              <span class="skor-content"><span style="white-space:nowrap">Skor</span><br><span style="white-space:nowrap">Capaian</span></span>
+              <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </th>
+        </tr>
+        <tr class="skor-head-row">
+          <th class="th-p">4</th>
+          <th class="th-p">3</th>
+          <th class="th-p">2</th>
+          <th class="th-p">1</th>
+          <th class="th-p">0</th>
+          <th class="th-lkps">LKPS</th>
+          <th class="th-datadukung">Data Dukung</th>
         </tr>
       </thead>
       <tbody id="tbl-body"></tbody>
@@ -456,101 +578,36 @@
 
 <script>
   /* ===================================================
-     DATA TABEL AKREDITASI
-     Ganti isi array di bawah sesuai data asli Anda.
-     skor: null  = kolom kosong
-     hasDok: false = tidak tampilkan tombol
+     DATA TABEL AKREDITASI — Matrik Penilaian LKPS
+     Diambil dari file Excel matrik penilaian.
+     Ganti isi "data2023" / sesuaikan untuk tahun lain.
   =================================================== */
+  const sections2023 = [{"title": "I. Diferensiasi Misi (Visi, Misi, Tujuan, dan Strategi)", "items": [{"no": 1, "sub": "Visi, Misi Tujuan dan Sasaran (Indikator Kinerja Utama)", "kriteria": "Kekhasan VMTS", "indikator": "Pernyataan VMTS yang unik dan spesifik sebagai identitas PT, UPPS, dan visi keilmuan program studi sebagai keunggulan kompetitif yang didukung dengan renstra dan kurikulum yang memadai.\n\nTabel 1 LKPS.", "p4": "VMTS UPPS dan visi keilmuan prodi dengan mempertimbangkan:\n(1) Linearitas visi PT yang diturunkan ke VMTS UPPS sebagai identitas UPPS;\n(2) Kesesuaian VMTS UPPS dengan renstra;\n(3) Kesesuaian visi keilmuan program studi dengan kurikulum;\n(4) Tinjau ulang VMTS UPPS dan visi keilmuan prodi secara periodik.", "p3": "VMTS UPPS dan\nvisi keilmuan prodi dengan mempertimbangkan:\n(1) Linearitas visi PT yang diturunkan ke VMTS UPPS\nsebagai identitas UPPS;\n(2) Kesesuaian VMTS UPPS\ndengan renstra;\n(3) Kesesuaian visi keilmuan program studi dengan kurikulum.", "p2": "VMTS UPPS dan visi keilmuan prodi dengan mempertimbangkan:\n(1) Linearitas visi PT yang diturunkan ke VMTS UPPS sebagai identitas UPPS;\n(2) Kesesuaian VMTS UPPS dengan renstra.", "p1": "Tidak ada skor kurang dari 2.", "p0": "", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": 2, "sub": "Visi, Misi Tujuan dan Sasaran (Indikator Kinerja Utama)", "kriteria": "Mekanisme penyusunan VMTS", "indikator": "Mekanisme dan keterlibatan pemangku kepentingan dalam penyusunan VMTS UPPS dan tujuan utama yang ingin dicapai dalam penyusunan visi keilmuan program studi dengan mempertimbangkan kebutuhan masyarakat dan tantangan global.", "p4": "Mekanisme dalam penyusunan dan penetapan VMTS dengan mempertimbangkan aspek:\n(1) Keterlibatan pemangku kepentingan internal yang terdiri dari dosen, mahasiswa, dan tenaga kependidikan;\n(2) Pemangku kepentingan eksternal yang terdiri dari lulusan, pengguna lulusan, dan pakar.", "p3": "Mekanisme dalam penyusunan dan penetapan VMTS dengan mempertimbangkan aspek:\n(1) Keterlibatan pemangku kepentingan internal yang terdiri dari dosen, mahasiswa, dan tenaga kependidikan;\n(2) Pemangku kepentingan eksternal yang terdiri dari lulusan dan pengguna lulusan.", "p2": "Mekanisme dalam penyusunan dan penetapan VMTS dengan mempertimbangkan aspek:\n(1) Keterlibatan pemangku kepentingan internal yang terdiri dari dosen, mahasiswa, dan tenaga kependidikan;\n(2) Pemangku kepentingan eksternal yang terdiri dari lulusan.", "p1": "Mekanisme dalam penyusunan dan penetapan VMTS dengan mempertimbangk an aspek:\n(1) Keterlibatan pemangku kepentingan internal yang terdiri dari dosen, mahasiswa, dan tenaga kependidikan;\n(2) Tidak melibatkan pemangku kepentingan eksternal.", "p0": "Tidak ada skor kurang dari 1.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}]}, {"title": "II. Akuntabilitas", "items": [{"no": 3, "sub": "Tata Pamong dan Tata Kelola (Indikator Kinerja Utama)", "kriteria": "Sistem tata pamong\nSkor = (I + II) / 2", "indikator": "I. Kelengkapan struktur organisasi dan kebijakan operasional yang berpedoman pada statuta Perguruan Tinggi yang digunakan.", "p4": "Sistem tata pamong UPPS yang mencakup:\n(1) Tersedianya statuta Perguruan Tinggi yang mengatur struktur organisasi dan kebijakan operasional;\n(2) Tersedianya kewenangan dan tugas yang dijalankan secara efektif;\n(3) Bukti sahih pelaksanaan struktur organisasi dan kebijakan operasional;\n(4) aras kewenangan organ pokok dijalankan secara efektif untuk mendukung perkembangan jangka panjang.", "p3": "Sistem tata pamong UPPS yang mencakup:\n(1) Tersedianya statuta Perguruan Tinggi yang mengatur struktur organisasi dan kebijakan operasional;\n(2) Tersedianya kewenangan dan tugas yang dijalankan secara efektif;\n(3) Bukti sahih pelaksanaan struktur organisasi dan kebijakan operasional.", "p2": "Sistem tata pamong UPPS yang mencakup:\n(1) Tersedianya statuta Perguruan Tinggi yang mengatur struktur organisasi dan kebijakan operasional;\n(2) Tersedianya kewenangan dan tugas yang dijalankan secara efektif.", "p1": "Sistem tata pamong UPPS yang mencakup:\n(1) Tersedianya statuta Perguruan yang mengatur struktur organisasi dan kebijakan operasional;\n(2) Tersedianya kewenangan dan tugas namun belum dijalankan secara efektif.", "p0": "Tidak ada skor kurang dari 1.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": null, "sub": null, "kriteria": "Komitmen pimpinan dan kemampuan manajerial", "indikator": "II. Pimpinan UPPS memiliki komitmen pada:\n(1) Visi dan tujuan organisasi;\n(2) Integritas dan transparansi;\n(3) Pengembangan sumber daya.", "p4": "Pimpinan UPPS memiliki komitmen pada butir (1), (2),\ndan (3).", "p3": "Pimpinan UPPS memiliki komitmen pada butir (1) dan\n(2) atau (1) dan (3).", "p2": "Pimpinan UPPS memiliki komitmen pada butir (1).", "p1": "Pimpinan UPPS tidak memiliki komitmen.", "p0": "Tidak ada skor kurang dari 1.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}]}, {"title": "III. Relevansi Pendidikan, Penelitian, dan PkM", "items": [{"no": 4, "sub": "3.1. Pendidikan", "kriteria": "Pemutakhiran kurikulum", "indikator": "Keterlibatan pemangku kepentingan dalam proses evaluasi dan pemutakhiran kurikulum.", "p4": "Evaluasi dan pemutakhiran kurikulum secara berkala tiap 4 s.d. 5 tahun yang melibatkan pemangku kepentingan internal dan eksternal, serta direview oleh pakar bidang ilmu program studi serta sesuai perkembangan ipteks dan kebutuhan\npengguna.", "p3": "Evaluasi dan pemutakhiran kurikulum secara berkala tiap 4 s.d. 5 tahun yang melibatkan pemangku kepentingan internal dan eksternal, serta direview oleh pakar bidang ilmu namun belum menunjukkan perkembangan ipteks.", "p2": "Evaluasi dan pemutakhiran kurikulum secara berkala tiap 4 s.d. 5 tahun yang melibatkan pemangku kepentingan internal dan eksternal.", "p1": "Evaluasi dan pemutakhiran kurikulum secara berkala tiap 4 s.d. 5 tahun yang melibatkan pemangku kepentingan internal", "p0": "Evaluasi dan pemutakhiran kurikulum secara berkala tiap 4 s.d. 5 tahun namun tidak melibatkan pemangku kepentingan", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": 5, "sub": "3.1. Pendidikan", "kriteria": "Profil lulusan dan CPL.\nSkor = (I + II) / 2", "indikator": "I. Profil lulusan yang ditetapkan oleh Program Studi.", "p4": "Program Studi menetapkan profil lulusan dengan mempertimbangkan visi UPPS dan visi keilmuan program studi, kebutuhan pengguna, sumber daya yang dimiliki, serta kepentingan lokal, nasional, dan global.", "p3": "Program Studi menetapkan profil lulusan dengan mempertimbangkan visi UPPS dan visi keilmuan program studi, kebutuhan pengguna, sumber daya yang dimiliki, serta kepentingan lokal atau nasional.\n\nTabel 3.a.1. LKPS.", "p2": "Program Studi menetapkan profil lulusan dengan mempertimbangkan visi UPPS dan visi keilmuan program studi, kebutuhan pengguna, serta sumber daya yang dimiliki.", "p1": "Program Studi menetapkan profil lulusan dengan mempertimbangk an  visi UPPS dan visi keilmuan program studi, serta kebutuhan pengguna.", "p0": "Program Studi menetapkan profil lulusan dengan mempertimbangka n visi UPPS dan visi keilmuan program studi.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": null, "sub": null, "kriteria": "", "indikator": "II. Kesesuaian Profil lulusan dengan capaian pembelajaran (CPL)", "p4": "CPL diturunkan dari profil lulusan yang mencakup:\n(1) Kesesuaian dengan kebutuhan pengguna;\n(2) Mengikuti perkembangan ipteks\ndan industri;\n(3) Memiliki kompetensi dalam menghadapi persaingan global;\n(4) Dilakukan pengukuran CPL dan ditinjau secara rutin.", "p3": "CPL diturunkan dari profil lulusan yang mencakup:\n(1) Kesesuaian dengan kebutuhan pengguna;\n(2) Mengikuti perkembangan\nipteks dan industri;\n(3) Memiliki kompetensi dalam menghadapi persaingan global.", "p2": "CPL diturunkan dari profil lulusan yang mencakup:\n(1) Kesesuaian dengan kebutuhan pengguna;\n(2) Mengikuti perkembangan ipteks\ndan industri.", "p1": "CPL diturunkan dari profil lulusan hanya mencakup kesesuaian dengan kebutuhan pengguna .", "p0": "Tidak ada skor kurang dari 1.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": 6, "sub": "3.1. Pendidikan", "kriteria": "Rencana Proses Pembelajaran (RPS)\nSkor = (I + (2 x II)) / 3", "indikator": "I. Ketersediaan dan kelengkapan dokumen RPS yang terdiri dari:\n1. Nama program studi, nama dan kode mata kuliah, semester, sks, nama dosen pengampu;\n2. Capaian pembelajaran lulusan yang dibebankan pada capaian pembelajaran mata kuliah;\n3. Kemampuan akhir yang direncanakan pada tiap tahap pembelajaran untuk memenuhi capaian pembelajaran lulusan;\n4. Bahan kajian yang terkait dengan kemampuan yang akan dicapai;\n5. Metode pembelajaran;\n6. Waktu yang disediakan untuk mencapai kemampuan pada tiap tahap pembelajaran;\n7. Pengalaman belajar mahasiswa yang diwujudkan dalam\ndeskripsi tugas yang harus dikerjakan oleh mahasiswa seiama satu semester;\n8. Kriteria, indikator, dan bobot penilaian; dan\n9. Daftar referensi yang digunakan.\n\nTabel 3.a.1. LKPS.", "p4": "Dokumen RPS mencakup sembilan\n(9) komponen yang dapat diakses oleh mahasiswa dan dilaksanakan secara konsisten.", "p3": "Dokumen RPS mencakup sembilan\n(9) komponen yang dapat diakses oleh mahasiswa.", "p2": "Dokumen RPS mencakup sembilan\n(9) komponen yang tidak dapat diakses oleh mahasiswa.", "p1": "Kelengkapan RPS dan komponen belum terpenuhi.", "p0": "Tidak ada RPS.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": null, "sub": null, "kriteria": "", "indikator": "II. Proses tinjauan rutin RPS.", "p4": "Proses tinjauan rutin terhadap RPS dilakukan secara berkala untuk memastikan relevansi, kesesuaian dengan CPL dan perkembangan keilmuan terbaru yang mencakup:\n(1) Analisis CPL;\n(2) Evaluasi kesesuaian materi dan metode pembelajaran;\n(3) Peninjauan metode penilaian;\n(4) Penyesuaian kurikulum dan\npembaruan materi.", "p3": "Proses tinjauan rutin terhadap RPS dilakukan secara berkala untuk memastikan relevansi, kesesuaian dengan CPL dan perkembangan keilmuan terbaru yang mencakup:\n(1) Analisis CPL;\n(2) Evaluasi kesesuaian materi dan metode pembelajaran;\n(3) Peninjauan metode penilaian.", "p2": "Proses tinjauan rutin terhadap RPS dilakukan secara berkala untuk memastikan relevansi, kesesuaian dengan CPL dan perkembangan keilmuan terbaru yang mencakup:\n(1) Analisis CPL;\n(2) Evaluasi kesesuaian materi dan metode pembelajaran.", "p1": "Proses tinjauan rutin terhadap RPS dilakukan secara berkala untuk memastikan relevansi, kesesuaian dengan CPL dan perkembangan keilmuan terbaru yang hanya mencakup analisis CPL.", "p0": "Tidak dilakukan proses tinjauan rutin terhadap RPS secara berkala.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": 7, "sub": "3.1. Pendidikan", "kriteria": "Proses Pembelajaran\nSkor = (I + II) / 2", "indikator": "I. Proses pembelajaran untuk memastikan efektivitas, kualitas, dan keberhasilan pencapaian CPL.", "p4": "Proses pembelajaran yang efektif dalam mencapai CPL dengan mempertimbangkan:\n(1) Metode pembelajaran;\n(2) Media dan\nsumber belajar;\n(3) Interakasi dosen dan mahasiswa; dan\n(4) Peningkatan daya analisis kritis.", "p3": "Proses pembelajaran yang efektif dalam mencapai CPL dengan mempertimbangkan:\n(1) Metode pembelajaran;\n(2) Media dan sumber belajar;\n(3) Interakasi dosen dan mahasiswa.", "p2": "Proses pembelajaran yang efektif dalam mencapai CPL dengan mempertimbangkan:\n(1) Metode pembelajaran;\n(2) Media dan\nsumber belajar.", "p1": "Proses pembelajaran yang efektif dalam mencapai CPL yang hanya mempertimbangk an metode pembelajaran.", "p0": "Tidak ada skor kurang dari 1.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": null, "sub": null, "kriteria": "", "indikator": "II. Tinjauan rutin proses pembelajaran.", "p4": "Terdapat bukti sahih adanya sistem dan pelaksanaan pemantauan proses pembelajaran yang dilakukan secara berkala untuk memastikan kesesuaian dengan RPS. Pelaksanaan pemantauan proses pembelajaran mencakup:\n(1) Peninjauan kesesuaian dengan RPS;\n(2) Evaluasi metode pembelajaran;\n(3) Identifikasi peluang perbaikan; dan\n(4) Tindakan perbaikan", "p3": "Terdapat bukti sahih adanya sistem dan pelaksanaan pemantauan proses pembelajaran yang dilakukan secara berkala untuk memastikan kesesuaian dengan RPS. Pelaksanaan pemantauan proses pembelajaran mencakup:\n(1) Peninjauan kesesuaian dengan RPS;\n(2) Evaluasi metode pembelajaran; dan\n(3) Identifikasi peluang perbaikan.", "p2": "Terdapat bukti sahih adanya sistem dan pelaksanaan pemantauan proses pembelajaran yang dilakukan secara berkala untuk memastikan kesesuaian dengan RPS. Pelaksanaan pemantauan proses pembelajaran mencakup:\n(1) Peninjauan kesesuaian dengan RPS; dan\n(2) Evaluasi metode pembelajaran.", "p1": "Terdapat bukti sahih adanya sistem dan pelaksanaan pemantauan proses pembelajaran yang dilakukan secara berkala untuk memastikan kesesuaian dengan RPS. Pelaksanaan pemantauan proses pembelajaran hanya dilakukan dengan peninjauan kesesuaian dengan RPS.", "p0": "Belum ada bukti sahih adanya sistem dan pelaksanaan pemantauan proses pembelajaran yang dilakukan secara berkala untuk memastikan kesesuaian dengan RPS.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": 8, "sub": "3.1. Pendidikan", "kriteria": "Basic sciences dan\nmatematika", "indikator": "Ketersediaan mata kuliah basic sciences dan matematika.\n\nTabel 3.a.4. LKPS.", "p4": "PS menyediakan mata kuliah basic sciences dan\nmatematika  ≥  4 SKS", "p3": "PS menyediakan mata\nkuliah basic sciences dan matematika 3 SKS", "p2": "PS menyediakan mata\nkuliah basic sciences dan\nmatematika 2 SKS", "p1": "PS menyediakan mata\nkuliah basic\nsciences dan matematika < 2 SKS", "p0": "Tidak ada\nkurang dari 1", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": 9, "sub": "3.1. Pendidikan", "kriteria": "Proyek rekayasa penciri bidang prodi (Capstone Project)", "indikator": "Terselenggaranya capstone project yang memiliki:\n(1) Panduan pelaksanaan.\n(2) Memiliki rumusan capaian pembelajaran mata kuliah.\n(3) Menggunakan standar-standar keteknikan dan batasan-batasan realistis berdasarkan pada pengetahuan dan keterampilan yang telah diperoleh di perkuliahan sebelumnya.\n(4) Mempunyai bukti sahih pelaksanaan.\n\nTabel 3.a.5. LKPS.", "p4": "PS memiliki aspek (1) sampai (4).", "p3": "PS memiliki aspek\n(1) sampai (3).", "p2": "PS memiliki aspek (1) dan aspek (2).", "p1": "PS hanya memiliki aspek (1).", "p0": "Tidak menyelenggarakan", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": 10, "sub": "3.2. Penelitian dan Pengabdian kepada Masyarakat (PkM)", "kriteria": "Penelitian dan PkM", "indikator": "Persentase kegiatan penelitian dan PkM DTPS yang sesuai dengan peta jalan penelitian dan PkM yang mendukung VMTS UPPS dan visi keilmuan program studi (PPPkM)", "p4": "Jika PPPkM ≥ 25%, maka Skor = 4", "p3": "Jika PPPkM < 25% ,\nmaka Skor = 2 + (8 x PPPkM)", "p2": "", "p1": "Tidak ada skor kurang dari 2", "p0": "", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}]}, {"title": "IV. Sumber Daya Manusia", "items": [{"no": 11, "sub": "Profil Dosen (Indikator Kinerja Utama)", "kriteria": "Profil Dosen", "indikator": "Kecukupan dosen\nhomebase (DHB)\n\nTabel 4 LKPS", "p4": "DHB ≥ 5", "p3": "Tidak ada skor 1 s.d. 3", "p2": "", "p1": "", "p0": "DHB < 5", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": 12, "sub": "Profil Dosen (Indikator Kinerja Utama)", "kriteria": "", "indikator": "Dosen pembagi rasio untuk disesuaikan sebagai DTPS.\n\n\nTabel 4 LKPS", "p4": "Jika NDTPS ≥ 12 dan PDTT ≤ 10%,\nmaka Skor = 4", "p3": "Jika 5 ≤ NDTPS < 12 dan PDTT ≤ 40% , maka Skor = 2 + 2 (A x B)\njika NDTPS ≥ 12 dan 10% < PDTT ≤ 40% ,\nMaka Skor = 2 + (2 x B)", "p2": "", "p1": "Jika NDTPS ≥ 5 dan PDTT > 40%,\nmaka skor =2", "p0": "Jika NDTPS < 5,\nmaka Skor = 0", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": null, "sub": null, "kriteria": "", "indikator": "", "p4": "NDTPS = Jumlah dosen tetap yang ditugaskan sebagai pengampu mata kuliah dengan bidang keahlian yang sesuai dengan kompetensi inti program studi yang diakreditasi.\nNDTT = Jumlah dosen tidak tetap yang ditugaskan sebagai pengampu mata kuliah di program studi yang diakreditasi.\nNDT = Jumlah dosen tetap yang ditugaskan sebagai pengampu mata kuliah di program studi yang diakreditasi. PDTT = (NDTT / (NDT + NDTT)) x 100%.\nA= ((NDTPS – 5) / 7).\nB = (40%-PDTT)/40%, Jika PDTT ≤ 40%.\nB = (40%-PDTT)/30%, Jika 10% < PDTT ≤ 40%.", "p3": "", "p2": "", "p1": "", "p0": "", "lkps": "", "datadukung": ""}, {"no": 13, "sub": "Profil Dosen (Indikator Kinerja Utama)", "kriteria": "", "indikator": "Kualifikasi akademik DTPS.\n\nTabel 4 LKPS.", "p4": "Jika PDS3 ≥ 20%, maka Skor = 4.", "p3": "Jika PDS3 < 20%,\nmaka Skor = 2 + (PDS3 x 10).", "p2": "", "p1": "Tidak ada skor kurang dari 2.", "p0": "", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": null, "sub": null, "kriteria": "", "indikator": "", "p4": "NDS3 = Jumlah DTPS yang berpendidikan tertinggi Doktor/Doktor Terapan.\nNDTPS = Jumlah dosen tetap yang ditugaskan sebagai pengampu mata kuliah dengan bidang keahlian yang sesuai dengan kompetensi inti program studi yang diakreditasi.\nPDS3 = (NDS3 / NDTPS) x 100%", "p3": "", "p2": "", "p1": "", "p0": "", "lkps": "", "datadukung": ""}, {"no": 14, "sub": "Profil Dosen (Indikator Kinerja Utama)", "kriteria": "", "indikator": "Jabatan akademik DTPS.\n\n\nTabel 4 LKPS.", "p4": "Jika PGBLKL ≥ 50%,\nmaka Skor = 4.", "p3": "Jika PGBLKL < 50%,\nmaka Skor = 2 + (PGBLKL x 4)", "p2": "", "p1": "Tidak ada skor kurang dari 2.", "p0": "", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": null, "sub": null, "kriteria": "", "indikator": "", "p4": "NDGB = Jumlah DTPS yang memiliki jabatan akademik Guru Besar.\nNDLK = Jumlah DTPS yang memiliki jabatan akademik Lektor Kepala.\nNDL = Jumlah DTPS yang memiliki jabatan akademik Lektor.\nNDTPS = Jumlah dosen tetap yang ditugaskan sebagai pengampu mata ku liah dengan bidang keahlian yang sesuai dengan kompetensi inti program studi yang diakreditasi.\nPGBLKL = ((NDGB + NDLK + NDL) / NDTPS) x 100%.", "p3": "", "p2": "", "p1": "", "p0": "", "lkps": "", "datadukung": ""}]}, {"title": "V. Sarana  dan Prasarana", "items": [{"no": 15, "sub": null, "kriteria": "Sarana dan Prasarana", "indikator": "Kecukupan dan mutu sarana dan prasarana untuk mendukung kegiatan akademik yang meliputi:\n(1) Ketersediaan media pembelajaran, perangkat elektronik, alat praktik laboratorium;\n(2) Ketersediaan ruang kelas, laboratorium sesuai dengan panduan asosiasi penyelenggara program studi, dan perpustakaan;\n(3) Kelayakan sarana dan prasarana;\n(4) Kemudahan akses sarana prasarana.\n\nTabel 5 LKPS.", "p4": "Memenuhi empat unsur kecukupan dan mutu sarana prasarana kegiatan akademik", "p3": "Memenuhi unsur (1),\n(2), dan (3) kecukupan dan mutu sarana prasarana kegiatan akademik.", "p2": "Memenuhi unsur (1)\ndan (2) kecukupan dan mutu sarana prasarana kegiatan akademik.", "p1": "Hanya memenuhi unsur (1) kecukupan dan mutu sarana prasarana kegiatan akademik.", "p0": "Tidak ada skor kurang dari 1.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}]}, {"title": "VI. Mahasiswa", "items": [{"no": 16, "sub": null, "kriteria": "Masa studi", "indikator": "Masa studi.\nMS = Rata-rata masa studi lulusan (tahun). \n\nTabel 6.a dan 6.b LKPS.", "p4": "Jika 3,5 < MS ≤ 4,5 ,\nmaka Skor = 4", "p3": "Jika 4,5 < MS ≤ 8 ,\nmaka Skor = (55 - (6 x MS)) / 7", "p2": "", "p1": "", "p0": "Jika MS ≤ 3 , maka Skor = 0", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": 17, "sub": null, "kriteria": "Persentase lulusan Tepat waktu", "indikator": "Persentase kelulusan tepat waktu (PTW)\nRumus perhitungan: PTW = ((f/d) x 100%)\n\nTabel 6.a dan 6.b LKPS.", "p4": "Jika PTW ≥ 80%, maka skor = 4.", "p3": "Jika 0% < PTW < 80%,\nmaka skor = 1 + (30 x PTW) / 8", "p2": "", "p1": "", "p0": "Tidak ada skor kurang dari 1.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}]}, {"title": "VII. Sistem Penjaminan Mutu", "items": [{"no": 18, "sub": null, "kriteria": "Keberadaan unit penjaminan mutu dan komitmen pimpinan\nSkor = (I + II) / 2", "indikator": "I. Keberadaan unit penjaminan mutu UPPS dan komitmen pimpinan dengan keberadaan 4 aspek:\n(1) Dokumen legal pembentukan unsur pelaksana penjaminan mutu;\n(2) Dokumen legal bahwa auditor bersifat independen;\n(3) Dokumen pelaksanaan audit mutu internal;\n(4)Dokumen Rapat Tinjauan Manajemen (RTM).", "p4": "UPPS memilki aspek nomor (1) sampai dengan nomor (4).", "p3": "UPPS memilki aspek nomor (1) sampai dengan nomor (3).", "p2": "UPPS memilki aspek nomor (1) dan aspek nomor (2).", "p1": "UPPS memilki aspek nomor (1).", "p0": "UPPS tidak memilki dokumen.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": null, "sub": null, "kriteria": "Ketersediaan perangkat SPMI dan pengakuan mutu eksternal", "indikator": "II. Ketersediaan perangkat SPMI yang minimal mencakup: 1.\nKebijakan SPMI; 2. Pedoman penerapan siklus PPEPP standar pendidikan tinggi dalam SPMI; 3. Standar\ndan/atau kriteria, norma, acuan mutu penyelenggaraan pendidikan dan pengelolaan perguruan tinggi; dan 4. Tata cara pendokumentasian implementasi SPMI, serta sistem penjaminan mutu memiliki pengakuan mutu dari lembaga audit eksternal, lembaga akreditasi, dan lembaga sertifikasi.\n\nTabel 7.a. LKPS.", "p4": "UPPS memiliki perangkat SPMI yang minimal mencakup:\n1. Kebijakan SPMI; 2. Pedoman penerapan siklus PPEPP standar pendidikan tinggi dalam SPMI; 3.\nStandar dan/atau kriteria, norma, acuan mutu penyelenggaraan pendidikan dan pengelolaan perguruan tinggi; dan\n4. Tata cara pendokumentasian implementasi SPMI yang lengkap dan dikembangkan secara berkelanjutan serta memiliki pengakuan mutu internasional.", "p3": "UPPS memiliki perangkat SPMI yang minimal mencakup: 1.\nKebijakan SPMI; 2. Pedoman penerapan siklus\nPPEPP standar pendidikan tinggi dalam SPMI; 3. Standar dan/atau kriteria, norma, acuan mutu penyelenggaraan pendidikan dan pengelolaan perguruan tinggi; dan 4. Tata cara pendokumentasian implementasi SPMI yang lengkap dan dikembangkan secara berkelanjutan serta memiliki pengakuan\nmutu nasional.", "p2": "UUPPS memiliki perangkat SPMI yang minimal mencakup:\n1. Kebijakan SPMI; 2. Pedoman penerapan siklus PPEPP standar pendidikan tinggi dalam SPMI; 3.\nStandar dan/atau kriteria, norma, acuan mutu penyelenggaraan pendidikan dan pengelolaan perguruan tinggi; dan\n4. Tata cara pendokumentasian implementasi SPMI yang lengkap dan belum dikembangkan secara berkelanjutan serta memiliki pengakuan mutu nasional.", "p1": "UPPS belum memiliki perangkat SPMI yang minimal mencakup: 1.\nKebijakan SPMI;\n2. Pedoman\npenerapan siklus PPEPP standar pendidikan tinggi dalam SPMI; 3. Standar dan/atau kriteria, norma, acuan mutu penyelenggaraan pendidikan dan pengelolaan perguruan tinggi; dan 4. Tata cara pendokumentasia n implementasi SPMI.", "p0": "Tidak ada skor dibawah 1.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": 19, "sub": null, "kriteria": "Indikator Kinerja Tambahan (IKT)", "indikator": "IKT disusun sesuai dengan unsur:\n(1) Tujuan strategis organisasi;\n(2) Memberikan dampak positif dan terukur;\n(3) Menunjukkan daya saing internasional;\n(4) Telah diukur dan dianalisis untuk perbaikan UPPS dan\nProgram studi.", "p4": "Memenuhi unsur (1),\n(2), (3), dan (4) IKT.", "p3": "Memenuhi unsur (1),\n(2), dan (3) IKT.", "p2": "Memenuhi unsur (1)\ndan (2) IKT.", "p1": "Hanya memenuhi unsur (1) IKT.", "p0": "Tidak ada skor kurang dari 1.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}, {"no": 20, "sub": null, "kriteria": "Keterlaksanaan Penjaminan Mutu dan Audit Mutu Internal", "indikator": "Keterlaksanaan Sistem Penjaminan Mutu Internal (SPMI) yang memenuhi aspek berikut:\n(1) Tersedianya dokumen IKU dan IKT Pendidikan, Penelitian dan PkM;\n(2)Terlaksananya siklus penjaminan mutu (siklus PPEPP);\n(3) Bukti sahih efektivitas pelaksanaan penjaminan mutu;\n(4)Tersedianya bukti peningkatan standar.\n\nTabel 7.b. LKPS.", "p4": "UPPS dan PS telah melaksanakan SPMI yang memenuhi 4 aspek.", "p3": "UPPS dan PS telah melaksanakan SPMI yang memenuhi aspek nomor (1)\nsampai dengan (3).", "p2": "UPPS dan PS telah melaksanakan SPMI yang memenuhi aspek nomor (1)\nsampai dengan (2).", "p1": "UPPS dan PS telah melaksanakan SPMI yang memenuhi aspek nomor (1).", "p0": "Tidak ada skor kurang dari 1.", "lkps": "LKPS", "datadukung": "1. Dokumen a\n2. Dokumen b\n3. Dokumen c\n4. Dokumen d\ndst…."}]}]
+;
+
+  // Untuk tahun 2028, sementara pakai data yang sama (silakan ganti dengan data baru jika ada)
   const data = {
-    2023: [
-      {
-        no: 1,
-        kriteria: "Kekhasan VMTS",
-        indikator: "Pernyataan VMTS yang unik dan spesifik sebagai identitas PT, UPPS, dan visi keilmuan program studi sebagai keunggulan kompetitif yang didukung dengan renstra dan kurikulum yang memadai.",
-        penilaian: "Nilai 4: VMTS UPPS dan visi keilmuan prodi dengan mempertimbangkan: (1) Linearitas visi PT yang diturunkan ke VMTS UPPS sebagai identitas UPPS; (2) Kesesuaian VMTS UPPS dengan renstra; (3) Kesesuaian visi keilmuan program studi dengan kurikulum; (4) Tinjau ulang VMTS UPPS dan visi keilmuan prodi secara periodik.",
-        skor: 4,
-        hasDok: true,
-        linkLihat: "#",
-        linkDownload: "#"
-      },
-      {
-        no: 2,
-        kriteria: "Strategi Pencapaian VMTS",
-        indikator: "Ketepatan mekanisme penyusunan dan penetapan strategi pencapaian VMTS yang mencakup sumber daya, waktu, dan indikator kinerja.",
-        penilaian: "Nilai 3: Strategi pencapaian memuat: (1) Sumber daya; (2) Tahapan waktu; (3) Indikator kinerja yang terukur; (4) Monitoring dan evaluasi berkala.",
-        skor: 3,
-        hasDok: true,
-        linkLihat: "#",
-        linkDownload: "#"
-      },
-      {
-        no: 3,
-        kriteria: "Tata Pamong",
-        indikator: "Ketersediaan dokumen formal tata pamong yang mencakup struktur organisasi, tugas pokok, dan fungsi masing-masing unit.",
-        penilaian: "Nilai 4: Tata pamong memiliki: (1) Struktur organisasi lengkap; (2) Uraian tupoksi; (3) SOP yang terdokumentasi; (4) Evaluasi berkala terhadap efektivitas tata pamong.",
-        skor: 4,
-        hasDok: true,
-        linkLihat: "#",
-        linkDownload: "#"
-      },
-      {
-        no: 4,
-        kriteria: "Kepemimpinan",
-        indikator: "Efektivitas kepemimpinan operasional, organisasional, dan publik pimpinan UPPS dalam mendukung pengembangan program studi.",
-        penilaian: "Nilai 3: Kepemimpinan mencakup: (1) Kepemimpinan operasional; (2) Kepemimpinan organisasional; (3) Kepemimpinan publik yang terukur.",
-        skor: 3,
-        hasDok: true,
-        linkLihat: "#",
-        linkDownload: "#"
-      },
-      {
-        no: 5,
-        kriteria: "Sistem Penjaminan Mutu",
-        indikator: "Ketersediaan dan efektivitas implementasi sistem penjaminan mutu internal (SPMI) yang mencakup kebijakan, standar, dan mekanisme evaluasi.",
-        penilaian: "Nilai 4: SPMI meliputi: (1) Kebijakan mutu; (2) Standar mutu yang terukur; (3) Pelaksanaan audit internal; (4) Tindak lanjut hasil audit secara konsisten.",
-        skor: 4,
-        hasDok: true,
-        linkLihat: "#",
-        linkDownload: "#"
-      },
-      { no: 6, kriteria: "", indikator: "", penilaian: "", skor: null, hasDok: false },
-      { no: 7, kriteria: "", indikator: "", penilaian: "", skor: null, hasDok: false },
-    ],
-    2028: [
-      {
-        no: 1,
-        kriteria: "Kekhasan VMTS",
-        indikator: "Pernyataan VMTS yang relevan dengan perkembangan industri 5.0 dan kebutuhan nasional serta memiliki keunikan program studi.",
-        penilaian: "Nilai 4: VMTS telah diperbarui sesuai perkembangan industri dan teknologi terkini, memuat: (1) Relevansi dengan industri 5.0; (2) Kesesuaian dengan KKNI; (3) Orientasi internasional; (4) Evaluasi periodik 3 tahunan.",
-        skor: 4,
-        hasDok: true,
-        linkLihat: "#",
-        linkDownload: "#"
-      },
-      {
-        no: 2,
-        kriteria: "Kurikulum OBE",
-        indikator: "Implementasi kurikulum berbasis outcome (OBE) yang mencakup capaian pembelajaran, rancangan pembelajaran, dan sistem evaluasi.",
-        penilaian: "Nilai 4: Kurikulum OBE memuat: (1) CPL yang terukur dan sesuai KKNI; (2) Peta kurikulum yang koheren; (3) Metode pembelajaran yang inovatif; (4) Evaluasi kurikulum berkala.",
-        skor: 4,
-        hasDok: true,
-        linkLihat: "#",
-        linkDownload: "#"
-      },
-      {
-        no: 3,
-        kriteria: "SDM Dosen",
-        indikator: "Kecukupan kualifikasi dan kompetensi dosen tetap dalam mendukung pelaksanaan Tri Dharma Perguruan Tinggi.",
-        penilaian: "Nilai 3: SDM dosen mencakup: (1) Rasio dosen:mahasiswa ideal; (2) Kualifikasi S3 ≥ 40%; (3) Sertifikasi profesi; (4) Rekam jejak penelitian dan publikasi.",
-        skor: 3,
-        hasDok: true,
-        linkLihat: "#",
-        linkDownload: "#"
-      },
-      { no: 4, kriteria: "", indikator: "", penilaian: "", skor: null, hasDok: false },
-      { no: 5, kriteria: "", indikator: "", penilaian: "", skor: null, hasDok: false },
-    ]
+    2023: sections2023,
+    2028: sections2023
   };
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function nl2br(str) {
+    return escapeHtml(str).replace(/\n/g, '<br>');
+  }
+
+  function renderDataDukung(str, links) {
+    if (!str) return '';
+    const lines = str.split('\n');
+    return lines.map((line, idx) => {
+      const url = (links && links[idx]) ? links[idx] : 'https://drive.google.com/drive/folders/GANTI_DENGAN_ID_FOLDER';
+      return `<a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="link-doc">${escapeHtml(line)}</a>`;
+    }).join('');
+  }
 
   function setYear(yr, btn) {
     document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
@@ -559,38 +616,67 @@
   }
 
   function renderTable(yr) {
-    const rows = data[yr] || [];
+    const sections = data[yr] || [];
     const tbody = document.getElementById('tbl-body');
-    tbody.innerHTML = rows.map(r => {
-      if (!r.kriteria) {
-        return `<tr class="empty-row">
-          <td class="td-no">${r.no}</td>
-          <td></td><td></td><td></td><td></td><td></td>
+    let html = '';
+    let lastSub = null;
+
+    sections.forEach(section => {
+      html += `<tr class="section-row"><td colspan="11">${escapeHtml(section.title)}</td></tr>`;
+      lastSub = null;
+      section.items.forEach(item => {
+        if (item.sub && item.sub !== lastSub) {
+          html += `<tr class="sub-row"><td colspan="11">${escapeHtml(item.sub)}</td></tr>`;
+          lastSub = item.sub;
+        }
+        html += `<tr>
+          <td class="td-no">${item.no !== null ? item.no : ''}</td>
+          <td class="td-kriteria">${nl2br(item.kriteria)}</td>
+          <td class="td-indikator">${nl2br(item.indikator)}</td>
+          <td class="td-penilaian skor-4">${nl2br(item.p4)}</td>
+          <td class="td-penilaian">${nl2br(item.p3)}</td>
+          <td class="td-penilaian">${nl2br(item.p2)}</td>
+          <td class="td-penilaian">${nl2br(item.p1)}</td>
+          <td class="td-penilaian">${nl2br(item.p0)}</td>
+          <td class="td-lkps">${item.lkps ? `<a href="${item.lkpsLink || 'https://drive.google.com/drive/folders/GANTI_DENGAN_ID_FOLDER'}" target="_blank" rel="noopener" class="btn-lkps">${escapeHtml(item.lkps)}</a>` : ''}</td>
+          <td class="td-datadukung">${renderDataDukung(item.datadukung, item.datadukungLinks)}</td>
+          <td class="td-skor col-skor"><div class="skor-content"></div></td>
         </tr>`;
-      }
-      return `<tr>
-        <td class="td-no">${r.no}</td>
-        <td class="td-kriteria">${r.kriteria}</td>
-        <td>${r.indikator}</td>
-        <td>${r.penilaian}</td>
-        <td class="td-skor">${r.skor !== null ? `<span class="skor-badge">${r.skor}</span>` : ''}</td>
-        <td class="td-bukti">
-          ${r.hasDok ? `
-            <a href="${r.linkLihat}" class="btn-lihat">
-              <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              Lihat
-            </a>
-            <a href="${r.linkDownload}" class="btn-download">
-              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-              Download
-            </a>
-          ` : '—'}
-        </td>
-      </tr>`;
-    }).join('');
+      });
+    });
+    tbody.innerHTML = html;
   }
 
   renderTable(2023);
+
+  /* ===================================================
+     TOGGLE KOLOM SKOR CAPAIAN
+     Default: tertutup (hidden), berada di ujung kanan
+     setelah kolom Dokumen (LKPS & Data Dukung).
+     Klik tombol toolbar atau header "Skor Capaian" untuk
+     membuka/menutup.
+  =================================================== */
+  let skorOpen = false; // false = tertutup di awal
+
+  function applySkorState() {
+    const wrap = document.getElementById('akredTableWrap');
+    const btn = document.getElementById('toggleSkorBtn');
+    const label = document.getElementById('toggleSkorLabel');
+    const head = document.getElementById('thSkorCapaian');
+
+    wrap.classList.toggle('skor-collapsed', !skorOpen);
+    btn.classList.toggle('is-open', skorOpen);
+    head.classList.toggle('is-open', skorOpen);
+    label.textContent = skorOpen ? 'Sembunyikan Skor Capaian' : 'Tampilkan Skor Capaian';
+  }
+
+  function toggleSkor() {
+    skorOpen = !skorOpen;
+    applySkorState();
+  }
+
+  // Set kondisi awal saat halaman dimuat
+  applySkorState();
 </script>
 <script>
 document.querySelectorAll('.nav-item').forEach(item => {
@@ -606,22 +692,27 @@ document.querySelectorAll('.nav-item').forEach(item => {
   });
 
   item.addEventListener('mouseleave', () => {
-    timeout = setTimeout(() => {
-      menu.style.display = 'none';
-    }, 200); /* ← jeda 200ms sebelum menutup, cukup waktu untuk pindah ke submenu */
+    timeout = setTimeout(() => { menu.style.display = 'none'; }, 500);
   });
 
-  menu.addEventListener('mouseenter', () => {
-    clearTimeout(timeout); /* ← kalau mouse masuk ke dropdown, batalkan penutupan */
-  });
-
+  menu.addEventListener('mouseenter', () => clearTimeout(timeout));
   menu.addEventListener('mouseleave', () => {
-    timeout = setTimeout(() => {
-      menu.style.display = 'none';
-    }, 300);
+    timeout = setTimeout(() => { menu.style.display = 'none'; }, 500);
   });
+
+  item.querySelector('a').addEventListener('click', function(e) {
+    e.preventDefault();
+    const isOpen = menu.style.display === 'block';
+    document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
+    if (!isOpen) menu.style.display = 'block';
+  });
+});
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-item')) {
+    document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
+  }
 });
 </script>
 </body>
-</html></body>
 </html>

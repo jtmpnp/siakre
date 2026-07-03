@@ -120,6 +120,12 @@ html {
       grid-template-columns: 1fr 1fr;
       overflow: hidden;
     }
+    .hero-arc {
+      position: absolute; right: -80px; top: -60px;
+      width: 500px; height: 500px; border-radius: 50%;
+      border: 70px solid var(--orange); opacity: .15;
+      z-index: 1; pointer-events: none;
+    }
     .hero::before {
       content: ''; position: absolute;
       top: 18px; right: 20px;
@@ -127,6 +133,7 @@ html {
       background-image: radial-gradient(circle, rgba(232,92,26,.55) 1.5px, transparent 1.5px);
       background-size: 10px 10px;
       pointer-events: none;
+      z-index: 2;
     }
     .hero-wave { position: absolute; bottom: 0; right: 0; width: 58%; height: 100%; pointer-events: none; z-index: 1; }
     .hero-wave svg { width: 100%; height: 100%; }
@@ -163,9 +170,9 @@ html {
     .hero-img-bg { position: absolute; right: -30px; top: 50%; transform: translateY(-50%); width: 110%; height: 120%; background: linear-gradient(160deg, #0d3a8a 0%, #072060 100%); border-radius: 50% 20% 50% 20%; z-index: 0; }
     .hero-img-container { position: relative; z-index: 2; width: 100%; height: 100%; border-radius: 50% 45% 50% 45% / 50% 50% 50% 50%; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.45); }
     .hero-img-container img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 20%; }
-    .hero-chevrons { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 4; display: flex; gap: 4px; }
-    .chev { display: block; width: 0; height: 0; border-top: 24px solid transparent; border-bottom: 24px solid transparent; border-left: 18px solid rgba(255,255,255,.18); }
-    .chev.dim { border-left-color: rgba(255,255,255,.09); }
+    .hero-chevrons { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 4; display: flex; gap: 6px; }
+    .chev { display: block; width: 0; height: 0; border-top: 32px solid transparent; border-bottom: 32px solid transparent; border-left: 26px solid rgba(232,92,26,.85); }
+    .chev.dim { border-left-color: rgba(232,92,26,.4); }
     .deco-dots { position: absolute; top: 8px; right: -8px; width: 70px; height: 50px; background-image: radial-gradient(circle, rgba(232,92,26,.6) 1.5px, transparent 1.5px); background-size: 9px 9px; z-index: 5; }
     .hero-bottom-curve { position: absolute; bottom: 0; left: 0; right: 0; height: 14px; background: var(--orange); z-index: 4; }
 
@@ -240,12 +247,74 @@ html {
     .about-feat strong { font-size: .83rem; font-weight: 700; color: var(--navy); display: block; margin-bottom: .1rem; }
     .about-feat p { font-size: .75rem; color: var(--gray-600); margin: 0; line-height: 1.4; }
 
-    /* STATS SECTION */
-    .stats-section {
+    /* PRODI STATUS SECTION (Kartu Info Program Studi) */
+    .prodi-section {
       padding: 2.5rem 2.5rem;
       background: var(--gray-50);
-      text-align: center;
+      position: relative;
     }
+    .prodi-section-title {
+      text-align: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.2rem; font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 1.5rem;
+    }
+    .prodi-more {
+      position: absolute; top: 2.4rem; right: 2.5rem;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--white); border: 1px solid var(--gray-100);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gray-400); font-weight: 700; font-size: .9rem;
+      cursor: pointer;
+    }
+    .prodi-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1.1rem; max-width: 1100px; margin: 0 auto;
+    }
+    .prodi-card {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border-bottom: 4px solid var(--prodi-color, var(--green));
+      transition: box-shadow .2s, transform .2s;
+    }
+    .prodi-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+    .prodi-card-header {
+      background: var(--navy-dk);
+      padding: .85rem 1rem .8rem;
+    }
+    .prodi-lembaga {
+      font-size: .62rem; font-weight: 700;
+      letter-spacing: .09em; text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      margin-bottom: .3rem;
+    }
+    .prodi-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .92rem; font-weight: 800;
+      color: var(--white); line-height: 1.25;
+    }
+    .prodi-card-body { padding: .95rem 1rem 1.05rem; }
+    .prodi-status {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .84rem; font-weight: 700;
+      color: var(--prodi-color, var(--green));
+      margin-bottom: .55rem;
+    }
+    .prodi-status .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--prodi-color, var(--green));
+      flex-shrink: 0;
+    }
+    .prodi-tahun {
+      display: flex; align-items: center; gap: .35rem;
+      font-size: .74rem; color: var(--gray-400); font-weight: 600;
+    }
+    .prodi-tahun svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+    /* STATS SECTION (legacy - kept for reference, unused) */
     .stats-section-title {
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 1.1rem; font-weight: 800;
@@ -261,26 +330,6 @@ html {
     }
     .stats-section-title::before { right: calc(100% + 12px); }
     .stats-section-title::after  { left:  calc(100% + 12px); }
-    .stats-row {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem; max-width: 900px; margin: 0 auto;
-    }
-    .stat-item {
-      background: var(--white); border: 1px solid var(--gray-100);
-      border-radius: var(--r-lg); padding: 1.5rem 1rem;
-      display: flex; flex-direction: column;
-      align-items: center; gap: .5rem;
-      transition: box-shadow .2s;
-    }
-    .stat-item:hover { box-shadow: var(--shadow-lg); }
-    .stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-    .stat-icon svg { width: 22px; height: 22px; fill: none; stroke-width: 1.8; }
-    .stat-icon.blue { background: #dbeafe; } .stat-icon.blue svg { stroke: #2563eb; }
-    .stat-icon.green { background: #dcfce7; } .stat-icon.green svg { stroke: var(--green); }
-    .stat-icon.amber { background: #fef3c7; } .stat-icon.amber svg { stroke: #d97706; }
-    .stat-icon.purple { background: #ede9fe; } .stat-icon.purple svg { stroke: var(--purple); }
-    .stat-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.1rem; font-weight: 800; color: var(--navy); line-height: 1; }
-    .stat-label { font-size: .75rem; font-weight: 600; color: var(--gray-600); }
 
     /* MAIN CONTENT */
     .main-content { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 2.5rem; background: var(--white); align-items: center; }
@@ -326,7 +375,7 @@ html {
     @media (max-width: 1024px) {
       .features { grid-template-columns: repeat(2, 1fr); }
       .footer-grid { grid-template-columns: 1fr 1fr; }
-      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .prodi-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
       .hero { grid-template-columns: 1fr; height: auto; }
@@ -338,8 +387,9 @@ html {
       .about-section { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
       .about-visual { display: none; }
       .about-features { grid-template-columns: 1fr; }
-      .stats-section { padding: 2rem 1.5rem; }
-      .stats-row { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .prodi-section { padding: 2rem 1.5rem; }
+      .prodi-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .prodi-more { top: 1.9rem; right: 1.5rem; }
       .main-content { grid-template-columns: 1fr; padding: 1.5rem; }
       .news-illustration { display: none; }
       nav { padding: 0 1rem; }
@@ -382,8 +432,8 @@ html {
       <div class="dropdown-menu">
         <a href="d3tme.html"><span class="dot"></span>D3 Teknik Mesin</a>
         <a href="d3tab.html"><span class="dot"></span>D3 Teknik Alat Berat</a>
-        <a href="d4rpm.html"><span class="dot"></span>D4 Rekayasa Perancangan Mekanik</a>
         <a href="d4tma.html"><span class="dot"></span>D4 Teknik Manufaktur</a>
+        <a href="d4rpm.html"><span class="dot"></span>D4 Rekayasa Perancangan Mekanik</a>
       </div>
     </li>
     <li class="nav-item">
@@ -409,6 +459,7 @@ html {
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-arc"></div>
   <div class="hero-wave">
     <svg viewBox="0 0 600 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="420" cy="210" rx="340" ry="230" fill="rgba(10,40,100,0.45)"/>
@@ -475,7 +526,7 @@ html {
   <div class="about-visual">
     <!-- Ganti src="ilustrasi.png" dengan gambar kamu. Jika belum ada, placeholder akan tampil -->
     <img src="ilustrasi.png" alt="Ilustrasi Sistem"
-    style="width:400px; height:auto;"
+    style="width:390px; height:auto;"
          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
     <div class="about-visual-placeholder" style="display:none;">
       <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M6 8h.01M9 8h6M6 11h12"/></svg>
@@ -519,37 +570,62 @@ html {
   </div>
 </section>
 
-<!-- STATISTIK DOKUMEN -->
-<section class="stats-section">
-  <h2 class="stats-section-title">Statistik Dokumen</h2>
-  <div class="stats-row">
-    <div class="stat-item">
-      <div class="stat-icon blue">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+<!-- KARTU INFO PROGRAM STUDI -->
+<section class="prodi-section">
+  <h2 class="prodi-section-title">Status Akreditasi Program Studi</h2>
+  <div class="prodi-more">⋯</div>
+  <div class="prodi-grid">
+    <div class="prodi-card" style="--prodi-color:#16a34a;">
+      <div class="prodi-card-header">
+        <div class="prodi-lembaga">LAM Teknik</div>
+        <div class="prodi-name">D3 Teknik Mesin</div>
       </div>
-      <div class="stat-num" data-target="156">0</div>
-      <div class="stat-label">Total Dokumen</div>
+      <div class="prodi-card-body">
+        <div class="prodi-status"><span class="dot"></span>Baik Sekali</div>
+        <div class="prodi-tahun">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          2024 – 2029
+        </div>
+      </div>
     </div>
-    <div class="stat-item">
-      <div class="stat-icon green">
-        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/><polyline points="9 11 12 14 22 4"/></svg>
+    <div class="prodi-card" style="--prodi-color:#2563eb;">
+      <div class="prodi-card-header">
+        <div class="prodi-lembaga">LAM Teknik</div>
+        <div class="prodi-name">D3 Teknik Alat Berat</div>
       </div>
-      <div class="stat-num" data-target="48">0</div>
-      <div class="stat-label">Dokumen Terverifikasi</div>
+      <div class="prodi-card-body">
+        <div class="prodi-status"><span class="dot"></span>Baik Sekali</div>
+        <div class="prodi-tahun">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          2023 – 2028
+        </div>
+      </div>
     </div>
-    <div class="stat-item">
-      <div class="stat-icon amber">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <div class="prodi-card" style="--prodi-color:#d97706;">
+      <div class="prodi-card-header">
+        <div class="prodi-lembaga">LAM Teknik</div>
+        <div class="prodi-name">D4 Teknik Manufaktur</div>
       </div>
-      <div class="stat-num" data-target="12">0</div>
-      <div class="stat-label">Dokumen Pending</div>
+      <div class="prodi-card-body">
+        <div class="prodi-status"><span class="dot"></span>Unggul</div>
+        <div class="prodi-tahun">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          2023 – 2028
+        </div>
+      </div>
     </div>
-    <div class="stat-item">
-      <div class="stat-icon purple">
-        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+    <div class="prodi-card" style="--prodi-color:#7c5cbf;">
+      <div class="prodi-card-header">
+        <div class="prodi-lembaga">LAM Teknik</div>
+        <div class="prodi-name">D4 Rek. Perancangan Mekanik</div>
       </div>
-      <div class="stat-num" data-target="96">0</div>
-      <div class="stat-label">Total Unduhan</div>
+      <div class="prodi-card-body">
+        <div class="prodi-status"><span class="dot"></span>Baik</div>
+        <div class="prodi-tahun">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          2024 – 2029
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -631,35 +707,42 @@ html {
 </footer>
 
 <script>
-  function animateCounter(el) {
-    const target = +el.dataset.target;
-    const duration = 900;
-    const start = performance.now();
-    function step(now) {
-      const pct = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - pct, 3);
-      el.textContent = Math.round(ease * target);
-      if (pct < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); observer.unobserve(e.target); } });
-  }, { threshold: .5 });
-  document.querySelectorAll('.stat-num[data-target]').forEach(el => observer.observe(el));
-</script>
-
-<script>
 document.querySelectorAll('.nav-item').forEach(item => {
   const menu = item.querySelector('.dropdown-menu');
-  const toggle = item.querySelector('a');
-  toggle.addEventListener('click', function(e) {
-    e.preventDefault();
+  if (!menu) return;
+  let timeout;
+
+  // Buka saat hover
+  item.addEventListener('mouseenter', () => {
+    clearTimeout(timeout);
+    document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
+    menu.style.display = 'block';
+  });
+
+  // Tutup dengan delay saat mouse keluar
+  item.addEventListener('mouseleave', () => {
+    timeout = setTimeout(() => {
+      menu.style.display = 'none';
+    }, 300);
+  });
+
+  // Cegah tutup saat mouse di dalam dropdown
+  menu.addEventListener('mouseenter', () => clearTimeout(timeout));
+  menu.addEventListener('mouseleave', () => {
+    timeout = setTimeout(() => {
+      menu.style.display = 'none';
+    }, 300);
+  });
+
+  // Klik toggle untuk mobile
+  item.querySelector('a').addEventListener('click', function(e) {
+    e.preventDefault(); // selalu cegah klik langsung ke href
     const isOpen = menu.style.display === 'block';
     document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
     if (!isOpen) menu.style.display = 'block';
   });
 });
+
 document.addEventListener('click', function(e) {
   if (!e.target.closest('.nav-item')) {
     document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');

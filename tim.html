@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tim Akreditasi – Jurusan Teknik Mesin – Politeknik Negeri Padang</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1a2b4a;
+      --navy-dk: #0f1c32;
+      --orange: #e85c1a;
+      --orange-lt: #f47c44;
+      --white: #ffffff;
+      --gray-50: #f8f9fb;
+      --gray-100: #eef0f4;
+      --gray-400: #9aa3b2;
+      --gray-600: #5a6478;
+      --gray-800: #2d3444;
+      --shadow: 0 2px 12px rgba(26,43,74,.10);
+      --shadow-lg: 0 8px 32px rgba(26,43,74,.14);
+      --r-lg: 16px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--gray-800); line-height: 1.6; }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-100);
+      box-shadow: 0 1px 8px rgba(0,0,0,.06);
+      display: flex; align-items: center;
+      padding: 0 2rem; height: 64px; gap: 1.5rem;
+    }
+    .nav-brand { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
+    .nav-logo { width: 42px; height: 42px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+    .nav-logo img { width: 100%; height: 100%; object-fit: cover; }
+    .nav-brand-text .inst { font-size: .68rem; font-weight: 700; color: var(--navy); letter-spacing: .04em; text-transform: uppercase; }
+    .nav-links { display: flex; gap: .25rem; margin-left: auto; align-items: center; list-style: none; }
+    .nav-links > li > a {
+      display: flex; align-items: center; gap: .4rem;
+      padding: .45rem .85rem; border-radius: 6px;
+      font-size: .85rem; font-weight: 500;
+      color: var(--gray-600); text-decoration: none;
+      transition: background .15s, color .15s;
+    }
+    .nav-links > li > a:hover { background: var(--gray-50); color: var(--navy); }
+    .nav-links > li > a.active { background: var(--navy); color: var(--white); border-radius: 8px; }
+    .btn-login {
+      background: var(--orange) !important; color: var(--white) !important;
+      border-radius: 6px !important; padding: .45rem .9rem !important;
+      font-size: .85rem; font-weight: 600;
+      text-decoration: none !important;
+    }
+    .btn-login:hover { background: var(--orange-lt) !important; }
+    .nav-icon { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+    .nav-item { position: relative; list-style: none; }
+    .nav-item > a {
+      display: flex; align-items: center; gap: .4rem;
+      padding: .45rem .85rem; border-radius: 6px;
+      font-size: .85rem; font-weight: 500;
+      color: var(--gray-600); text-decoration: none;
+      transition: background .15s, color .15s; cursor: pointer;
+    }
+    .nav-item > a:hover, .nav-item > a.active { background: var(--navy); color: var(--white); border-radius: 8px; }
+    .chevron { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.5; transition: transform .2s; }
+    .dropdown-menu {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: var(--white); border: 1px solid var(--gray-100);
+      border-radius: 10px; box-shadow: var(--shadow-lg);
+      min-width: 220px; padding: .4rem 0; z-index: 200;
+      margin-top: 8px; padding-top: 8px;
+    }
+    .dropdown-menu a {
+      display: flex; align-items: center; gap: .5rem;
+      padding: .55rem 1rem; font-size: .82rem; font-weight: 500;
+      color: var(--gray-600); text-decoration: none; background: none;
+      transition: background .12s, color .12s;
+    }
+    .dropdown-menu a:hover { background: var(--gray-50); color: var(--navy); }
+    .dropdown-menu a.active-sub { color: var(--orange); font-weight: 600; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative; min-height: 340px;
+      background: linear-gradient(125deg, #071b3e 0%, #0d2a5e 50%, #102f6e 100%);
+      display: grid; grid-template-columns: 1fr 1fr; overflow: hidden;
+    }
+    .hero-arc {
+      position: absolute; right: -80px; top: -60px;
+      width: 500px; height: 500px; border-radius: 50%;
+      border: 70px solid var(--orange);
+      opacity: .15; z-index: 1; pointer-events: none;
+    }
+    .hero-dots-tr {
+      position: absolute; top: 16px; right: 16px;
+      width: 90px; height: 60px;
+      background-image: radial-gradient(circle, rgba(232,92,26,.5) 1.5px, transparent 1.5px);
+      background-size: 10px 10px; z-index: 2; pointer-events: none;
+    }
+    .hero-dots-bl {
+      position: absolute; bottom: 30px; left: 240px;
+      width: 60px; height: 40px;
+      background-image: radial-gradient(circle, rgba(255,255,255,.15) 1.5px, transparent 1.5px);
+      background-size: 9px 9px; z-index: 2; pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 3;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 3rem 2rem 3rem 2.5rem;
+    }
+    .hero-breadcrumb {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .78rem; color: rgba(160,195,225,.7); margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .hero-breadcrumb a { color: var(--orange); text-decoration: none; font-weight: 600; }
+    .hero-breadcrumb a:hover { text-decoration: underline; }
+    .hero-breadcrumb .sep { color: rgba(160,195,225,.4); }
+    .hero-eyebrow {
+      font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--orange); margin-bottom: .5rem;
+    }
+    .hero-main-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 3rem; font-weight: 800; line-height: 1;
+      color: var(--white); letter-spacing: -.02em; margin-bottom: .1rem;
+    }
+    .hero-main-title span { color: var(--orange); display: block; }
+    .hero-sub { font-size: .95rem; font-weight: 600; color: rgba(200,220,240,.85); margin-top: .6rem; }
+    .hero-desc-block { margin-top: 1rem; max-width: 420px; }
+    .hero-desc-block p { font-size: .82rem; color: rgba(160,195,225,.85); line-height: 1.7; margin-bottom: .5rem; }
+    .hero-visual {
+      position: relative; z-index: 3;
+      display: flex; align-items: center;
+      justify-content: center;
+      padding: 2rem 2rem 2rem 0;
+    }
+    .hero-img-wrap { position: relative; width: 100%; max-width: 420px; height: 280px; margin-right: 2rem; }
+    .hero-img-bg {
+      position: absolute; right: -30px; top: 50%; transform: translateY(-50%);
+      width: 110%; height: 120%;
+      background: linear-gradient(160deg, #0d3a8a 0%, #072060 100%);
+      border-radius: 50% 20% 50% 20%; z-index: 0;
+    }
+    .hero-img-container {
+      position: relative; z-index: 2; width: 100%; height: 100%;
+      border-radius: 50%;
+      overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.45);
+    }
+    .hero-img-container img { width: 100%; height: 100%; object-fit: cover; object-position: center 60%; }
+    .deco-dots {
+      position: absolute; top: 8px; right: -8px; width: 70px; height: 50px;
+      background-image: radial-gradient(circle, rgba(232,92,26,.6) 1.5px, transparent 1.5px);
+      background-size: 9px 9px; z-index: 5;
+    }
+    .hero-chevrons {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -50%); z-index: 4; display: flex; gap: 4px;
+    }
+    .chev { display: block; width: 0; height: 0; border-top: 28px solid transparent; border-bottom: 28px solid transparent; border-left: 22px solid rgba(232,92,26,.45); }
+    .chev.dim { border-left-color: rgba(232,92,26,.18); }
+    .hero-bottom-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 5px; background: var(--orange); z-index: 10; }
+
+    /* ===== CONTENT ===== */
+    .content-wrap { padding: 2rem 2.5rem; background: var(--white); }
+
+    /* ===== TOOLBAR ===== */
+    .toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem; margin-bottom: 1.8rem;
+    }
+    .toolbar-left { display: flex; align-items: center; gap: .75rem; }
+    .toolbar-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: #fff7ed; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .toolbar-icon svg { width: 22px; height: 22px; stroke: var(--orange); fill: none; stroke-width: 1.8; }
+    .toolbar-text h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: .95rem; font-weight: 700; color: var(--navy); }
+    .toolbar-text p { font-size: .75rem; color: var(--gray-600); margin-top: .1rem; }
+
+    /* ===== SK BUTTON ===== */
+    .btn-sk {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--navy); color: var(--white);
+      border: none; border-radius: 8px;
+      padding: .55rem 1.2rem;
+      font-size: .82rem; font-weight: 600;
+      text-decoration: none; cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-sk:hover { background: var(--orange); }
+    .btn-sk svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    /* ===== TIM CARDS ===== */
+    .section-label {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .72rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--orange);
+      background: #fff7ed; padding: .3rem .9rem; border-radius: 20px;
+      margin-bottom: 1.2rem;
+    }
+    .section-label.navy {
+      color: var(--navy); background: var(--gray-50);
+    }
+
+    /* Pengarah grid */
+    .pengarah-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 2rem; }
+
+    .pengarah-card {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: 14px;
+      padding: 1.6rem 1.2rem 1.4rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: transform .2s, box-shadow .2s;
+      position: relative; overflow: hidden;
+    }
+    .pengarah-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: var(--orange);
+    }
+    .pengarah-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+    /* Tim inti grid */
+    .tim-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+
+    .tim-card {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: 12px;
+      padding: 1.2rem 1rem;
+      text-align: center;
+      box-shadow: 0 1px 6px rgba(26,43,74,.07);
+      transition: transform .2s, box-shadow .2s;
+      position: relative; overflow: hidden;
+    }
+    .tim-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--navy);
+    }
+    .tim-card.ketua::before { background: var(--orange); }
+    .tim-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+
+    /* Avatars */
+    .avatar-lg {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, #1a2b4a, #0d2a5e);
+      margin: 0 auto 1rem;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.4rem; font-weight: 800; color: var(--white);
+      border: 3px solid var(--orange);
+    }
+    .avatar-sm {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: linear-gradient(135deg, #2d3f6b, #1a2b4a);
+      margin: 0 auto .8rem;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1rem; font-weight: 800; color: var(--white);
+      border: 2px solid var(--gray-100);
+    }
+    .tim-card.ketua .avatar-sm {
+      background: linear-gradient(135deg, #e85c1a, #c44b0f);
+      border-color: var(--orange);
+    }
+
+    /* Badge jabatan */
+    .badge-jabatan {
+      font-size: .68rem; font-weight: 700; letter-spacing: .05em;
+      text-transform: uppercase; color: var(--orange);
+      background: #fff7ed; padding: .2rem .7rem; border-radius: 20px;
+      display: inline-block; margin-bottom: .6rem;
+    }
+    .badge-jabatan.navy {
+      color: var(--gray-600); background: var(--gray-50);
+    }
+    .tim-card.ketua .badge-jabatan { color: var(--orange); background: #fff7ed; }
+
+    .card-nama { font-family: 'Plus Jakarta Sans', sans-serif; font-size: .92rem; font-weight: 700; color: var(--navy); margin-bottom: .3rem; }
+    .card-nama-sm { font-family: 'Plus Jakarta Sans', sans-serif; font-size: .82rem; font-weight: 700; color: var(--navy); margin-bottom: .25rem; line-height: 1.3; }
+    .card-nip { font-size: .73rem; color: var(--gray-600); margin-bottom: .4rem; }
+    .card-nip-sm { font-size: .68rem; color: var(--gray-400); }
+    .card-unit { font-size: .72rem; color: var(--gray-600); font-style: italic; }
+
+    /* divider */
+    .section-divider { height: 1px; background: var(--gray-100); margin: 1.8rem 0; }
+
+    /* SK Table */
+    .sk-table-wrap {
+      border: 1px solid #b0b8c9;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .sk-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+    .sk-table thead th {
+      background: #d6e4f7; color: var(--navy);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700; font-size: .78rem;
+      padding: .65rem 1rem; text-align: left;
+    }
+    .sk-table td { padding: .65rem 1rem; border-bottom: 1px solid var(--gray-100); color: var(--gray-800); vertical-align: middle; }
+    .sk-table tbody tr:last-child td { border-bottom: none; }
+    .sk-table tbody tr:hover td { background: var(--gray-50); }
+    .btn-unduh {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: var(--navy); color: var(--white);
+      border-radius: 6px; padding: .35rem .85rem;
+      font-size: .75rem; font-weight: 600; text-decoration: none;
+      transition: background .15s;
+    }
+    .btn-unduh:hover { background: var(--orange); }
+    .btn-unduh svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    /* ===== FOOTER ===== */
+    footer { background: var(--navy-dk); padding: 2.5rem 2.5rem 1.2rem; color: #7fa0bc; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 2rem; margin-bottom: 2rem; }
+    .footer-col h5 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: .82rem; font-weight: 700; color: var(--white); margin-bottom: .8rem; }
+    .footer-col p, .footer-col a { font-size: .76rem; color: #7fa0bc; line-height: 1.8; text-decoration: none; display: block; }
+    .footer-col a:hover { color: var(--orange-lt); }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: .5rem; font-size: .76rem; color: #7fa0bc; margin-bottom: .4rem; line-height: 1.4; }
+    .footer-contact-item svg { width: 13px; height: 13px; stroke: var(--orange); fill: none; stroke-width: 1.8; flex-shrink: 0; margin-top: 2px; }
+    .footer-bottom { border-top: 1px solid #1e3a60; padding-top: 1.1rem; text-align: center; font-size: .73rem; color: #4a6580; }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-visual { display: none; }
+      .hero-main-title { font-size: 2.2rem; }
+      nav { padding: 0 1rem; }
+      .nav-links li:not(:last-child) { display: none; }
+      .content-wrap { padding: 1.5rem; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .pengarah-grid { grid-template-columns: 1fr; }
+      .tim-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-brand">
+    <div class="nav-logo">
+      <img src="logopnp.png" alt="Logo PNP">
+    </div>
+    <div class="nav-brand-text">
+      <div class="inst">Politeknik Negeri Padang</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li>
+      <a href="index.html">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 12L12 3l9 9M5 10v9h5v-5h4v5h5v-9"/></svg>
+        Beranda
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="instrumen.html">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Instrumen Akreditasi
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+        Dokumen Akreditasi
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </a>
+      <div class="dropdown-menu">
+        <a href="d3tme.html"><span class="dot"></span>D3 Teknik Mesin</a>
+        <a href="d3tab.html"><span class="dot"></span>D3 Teknik Alat Berat</a>
+        <a href="d4tma.html"><span class="dot"></span>D4 Teknik Manufaktur</a>
+        <a href="d4rpm.html"><span class="dot"></span>D4 Rekayasa Perancangan Mekanik</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="active">
+        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Informasi Akreditasi
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </a>
+      <div class="dropdown-menu">
+        <a href="status.html"><span class="dot"></span>Status Akreditasi</a>
+        <a href="tim.html" class="active-sub"><span class="dot"></span>Tim Akreditasi</a>
+        <a href="kegiatan.html"><span class="dot"></span>Kegiatan Akreditasi</a>
+      </div>
+    </li>
+    <li>
+      <a href="portal.html" class="btn-login">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Portal Login
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-arc"></div>
+  <div class="hero-dots-tr"></div>
+  <div class="hero-dots-bl"></div>
+  <div class="hero-content">
+    <div class="hero-breadcrumb">
+      <a href="index.html">Beranda</a>
+      <span class="sep">/</span>
+      <a href="#">Informasi Akreditasi</a>
+      <span class="sep">/</span>
+      <span>Tim Akreditasi</span>
+    </div>
+    <div class="hero-eyebrow">Informasi Akreditasi</div>
+    <h1 class="hero-main-title">
+      TIM<br><span>AKREDITASI</span>
+    </h1>
+    <div class="hero-sub">Politeknik Negeri Padang</div>
+    <div class="hero-desc-block">
+      <p>Susunan tim akreditasi Jurusan Teknik Mesin Politeknik Negeri Padang yang bertugas dalam menyiapkan, mengelola, dan melaksanakan proses akreditasi program studi sesuai standar LAM Teknik.</p>
+    </div>
+  </div>
+  <div class="hero-chevrons">
+    <span class="chev dim"></span>
+    <span class="chev dim"></span>
+    <span class="chev"></span>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img-wrap">
+      <div class="hero-img-bg"></div>
+      <div class="deco-dots"></div>
+      <div class="hero-img-container">
+        <img src="gambar gedung.png" alt="Gedung Politeknik Negeri Padang">
+      </div>
+    </div>
+  </div>
+  <div class="hero-bottom-bar"></div>
+</section>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <div class="toolbar-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <div class="toolbar-text">
+        <h2>Tim Akreditasi – Jurusan Teknik Mesin</h2>
+        <p>Susunan tim yang ditetapkan berdasarkan Surat Keputusan Direktur Politeknik Negeri Padang.</p>
+      </div>
+    </div>
+    <div>
+      <a href="GANTI_LINK_SK_DISINI" target="_blank" rel="noopener" class="btn-sk">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download SK Tim Akreditasi
+      </a>
+    </div>
+  </div>
+
+  <!-- PENGARAH & PENANGGUNG JAWAB -->
+  <div class="section-label">
+    ★ &nbsp;Pengarah &amp; Penanggung Jawab
+  </div>
+  <div class="pengarah-grid">
+    <div class="pengarah-card">
+      <div class="avatar-lg">SD</div>
+      <div class="badge-jabatan">Pengarah</div>
+      <div class="card-nama">Dr. [Nama Direktur], S.T., M.T.</div>
+      <div class="card-nip">NIP. 19XX XXXX XXXX X XXX</div>
+      <div class="card-unit">Direktur Politeknik Negeri Padang</div>
+    </div>
+    <div class="pengarah-card">
+      <div class="avatar-lg">WD</div>
+      <div class="badge-jabatan">Penanggung Jawab</div>
+      <div class="card-nama">Dr. [Nama Wakil Direktur], S.T., M.T.</div>
+      <div class="card-nip">NIP. 19XX XXXX XXXX X XXX</div>
+      <div class="card-unit">Wakil Direktur I Bidang Akademik</div>
+    </div>
+    <div class="pengarah-card">
+      <div class="avatar-lg">KJ</div>
+      <div class="badge-jabatan">Ketua Jurusan</div>
+      <div class="card-nama">Dr. [Nama Ketua Jurusan], S.T., M.T.</div>
+      <div class="card-nip">NIP. 19XX XXXX XXXX X XXX</div>
+      <div class="card-unit">Ketua Jurusan Teknik Mesin</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- TIM INTI -->
+  <div class="section-label navy">
+    Tim Inti Akreditasi
+  </div>
+  <div class="tim-grid">
+    <div class="tim-card ketua">
+      <div class="avatar-sm">KT</div>
+      <div class="badge-jabatan">Ketua Tim</div>
+      <div class="card-nama-sm">[Nama Ketua Tim], S.T., M.T.</div>
+      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
+    </div>
+    <div class="tim-card">
+      <div class="avatar-sm">SK</div>
+      <div class="badge-jabatan navy">Sekretaris</div>
+      <div class="card-nama-sm">[Nama Sekretaris], S.T., M.T.</div>
+      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
+    </div>
+    <div class="tim-card">
+      <div class="avatar-sm">A1</div>
+      <div class="badge-jabatan navy">Anggota</div>
+      <div class="card-nama-sm">[Nama Anggota 1], S.T., M.T.</div>
+      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
+    </div>
+    <div class="tim-card">
+      <div class="avatar-sm">A2</div>
+      <div class="badge-jabatan navy">Anggota</div>
+      <div class="card-nama-sm">[Nama Anggota 2], S.T., M.T.</div>
+      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
+    </div>
+    <div class="tim-card">
+      <div class="avatar-sm">A3</div>
+      <div class="badge-jabatan navy">Anggota</div>
+      <div class="card-nama-sm">[Nama Anggota 3], S.T., M.T.</div>
+      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
+    </div>
+    <div class="tim-card">
+      <div class="avatar-sm">A4</div>
+      <div class="badge-jabatan navy">Anggota</div>
+      <div class="card-nama-sm">[Nama Anggota 4], S.T., M.T.</div>
+      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
+    </div>
+    <div class="tim-card">
+      <div class="avatar-sm">A5</div>
+      <div class="badge-jabatan navy">Anggota</div>
+      <div class="card-nama-sm">[Nama Anggota 5], S.T., M.T.</div>
+      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
+    </div>
+    <div class="tim-card">
+      <div class="avatar-sm">A6</div>
+      <div class="badge-jabatan navy">Anggota</div>
+      <div class="card-nama-sm">[Nama Anggota 6], S.T., M.T.</div>
+      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- TABEL SK -->
+  <div class="section-label">
+    ★ &nbsp;Dasar Hukum Pembentukan Tim
+  </div>
+  <div class="sk-table-wrap">
+    <table class="sk-table">
+      <thead>
+        <tr>
+          <th style="width:4%">No</th>
+          <th style="width:35%">Nomor SK</th>
+          <th style="width:20%">Tanggal</th>
+          <th>Perihal</th>
+          <th style="width:14%;text-align:center">Dokumen</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:var(--navy)">1</td>
+          <td>SK Direktur No. XXXX/PNP/XXXX/2025</td>
+          <td>XX Januari 2025</td>
+          <td>Pembentukan Tim Akreditasi Jurusan Teknik Mesin Politeknik Negeri Padang Tahun 2025</td>
+          <td style="text-align:center">
+            <a href="GANTI_LINK_SK_2025" target="_blank" rel="noopener" class="btn-unduh">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Unduh SK
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:var(--navy)">2</td>
+          <td>SK Direktur No. XXXX/PNP/XXXX/2026</td>
+          <td>XX Januari 2026</td>
+          <td>Perubahan Susunan Tim Akreditasi Jurusan Teknik Mesin Politeknik Negeri Padang Tahun 2026</td>
+          <td style="text-align:center">
+            <a href="GANTI_LINK_SK_2026" target="_blank" rel="noopener" class="btn-unduh">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Unduh SK
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h5>Tentang Sistem</h5>
+      <p>Sistem Informasi Arsip Akreditasi Jurusan Teknik Mesin Politeknik Negeri Padang merupakan platform digital untuk pengelolaan dokumen akreditasi yang terstruktur, aman, dan mudah diakses.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Menu Utama</h5>
+      <a href="index.html">Beranda</a>
+      <a href="instrumen.html">Instrumen Akreditasi</a>
+      <a href="#">Dokumen Akreditasi</a>
+      <a href="#">Informasi Akreditasi</a>
+      <a href="portal.html">Portal Login</a>
+    </div>
+    <div class="footer-col">
+      <h5>Tautan Cepat</h5>
+      <a href="#">Politeknik Negeri Padang</a>
+      <a href="#">Jurusan Teknik Mesin</a>
+      <a href="#">Unit Penjaminan Mutu</a>
+      <a href="#">Pusat Teknologi Informasi</a>
+      <a href="#">Kementerian Pendidikan</a>
+    </div>
+    <div class="footer-col">
+      <h5>Kontak Kami</h5>
+      <div class="footer-contact-item">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Politeknik Negeri Padang, Jl. Kampus, Limau Manis, Padang 25164
+      </div>
+      <div class="footer-contact-item">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.29 6.29l1.51-1.52a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        (0751) 72590
+      </div>
+      <div class="footer-contact-item">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        info@pnp.ac.id
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Politeknik Negeri Padang. All rights reserved.</div>
+</footer>
+
+<script>
+document.querySelectorAll('.nav-item').forEach(item => {
+  const menu = item.querySelector('.dropdown-menu');
+  if (!menu) return;
+  let timeout;
+  item.addEventListener('mouseenter', () => {
+    clearTimeout(timeout);
+    document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
+    menu.style.display = 'block';
+  });
+  item.addEventListener('mouseleave', () => {
+    timeout = setTimeout(() => { menu.style.display = 'none'; }, 500);
+  });
+  menu.addEventListener('mouseenter', () => clearTimeout(timeout));
+  menu.addEventListener('mouseleave', () => {
+    timeout = setTimeout(() => { menu.style.display = 'none'; }, 500);
+  });
+  item.querySelector('a').addEventListener('click', function(e) {
+    e.preventDefault();
+    const isOpen = menu.style.display === 'block';
+    document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
+    if (!isOpen) menu.style.display = 'block';
+  });
+});
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-item')) {
+    document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
+  }
+});
+</script>
+</body>
+</html>
