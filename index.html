@@ -823,9 +823,9 @@ document.addEventListener('click', function(e) {
   }
 
   const todayStr  = new Date().toISOString().slice(0, 10);
-  const todayKey  = 'pnp-jtm-akreditasi-2026-harian-' + todayStr;
-  const totalKey  = 'pnp-jtm-akreditasi-2026-total';
-  const STAMP_KEY = 'pnp_jtm_last_visit_date'; // "stempel" tanggal kunjungan terakhir di browser ini
+  const todayKey  = 'pnp-jtm-akreditasi-2026-harian-v2-' + todayStr;
+  const totalKey  = 'pnp-jtm-akreditasi-2026-total-v2';
+  const STAMP_KEY = 'pnp_jtm_last_visit_date_v2'; // "stempel" tanggal kunjungan terakhir di browser ini
 
   // Cek apakah browser ini SUDAH pernah dihitung hari ini
   let sudahDihitungHariIni = false;
