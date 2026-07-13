@@ -371,6 +371,30 @@ html {
     .footer-contact-item svg { width: 13px; height: 13px; stroke: var(--orange); fill: none; stroke-width: 1.8; flex-shrink: 0; margin-top: 2px; }
     .footer-bottom { border-top: 1px solid #1e3a60; padding-top: 1.1rem; text-align: center; font-size: .73rem; color: #4a6580; }
 
+    /* STATISTIK PENGUNJUNG */
+    .stats-section { position: relative; z-index: 6; margin: 1.4rem 2.5rem 0; }
+    .stats-box {
+      width: fit-content; max-width: 100%;
+      background: var(--white); border-radius: 12px;
+      box-shadow: var(--shadow); border: 1px solid var(--gray-100);
+      display: flex; align-items: center; padding: .7rem 1.2rem; gap: .9rem;
+    }
+    .stat-item { display: flex; align-items: center; gap: .6rem; min-width: 0; }
+    .stat-icon { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .stat-icon.navy   { background: #eef2fb; }
+    .stat-icon.orange { background: #fff3ea; }
+    .stat-icon.green  { background: #e7f8ef; }
+    .stat-icon svg { width: 16px; height: 16px; fill: none; stroke-width: 1.8; }
+    .stat-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: .95rem; font-weight: 800; color: var(--navy); line-height: 1.15; display: flex; align-items: center; gap: .3rem; }
+    .stat-label { font-size: .66rem; color: var(--gray-600); font-weight: 500; margin-top: .05rem; white-space: nowrap; }
+    .stat-divider { width: 1px; height: 30px; background: var(--gray-100); flex-shrink: 0; }
+    .stats-live-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: statsPulse 1.6s infinite; }
+    @keyframes statsPulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+    @media (max-width: 768px) {
+      .stats-section { margin: 1.2rem 1rem 0; }
+      .stats-box { flex-wrap: wrap; width: 100%; padding: 1rem; }
+    }
+
     /* RESPONSIVE */
     @media (max-width: 1024px) {
       .features { grid-template-columns: repeat(2, 1fr); }
@@ -491,6 +515,41 @@ html {
     </div>
   </div>
   <div class="hero-bottom-curve"></div>
+</section>
+
+<!-- STATISTIK PENGUNJUNG -->
+<section class="stats-section">
+  <div class="stats-box">
+    <div class="stat-item">
+      <div class="stat-icon navy">
+        <svg viewBox="0 0 24 24" stroke="#1a2b4a"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <div>
+        <div class="stat-value"><span class="stats-live-dot"></span><span id="stat-total">0</span></div>
+        <div class="stat-label">Total Pengunjung</div>
+      </div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-icon orange">
+        <svg viewBox="0 0 24 24" stroke="#e85c1a"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/></svg>
+      </div>
+      <div>
+        <div class="stat-value" id="stat-today">0</div>
+        <div class="stat-label">Pengunjung Hari Ini</div>
+      </div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-icon green">
+        <svg viewBox="0 0 24 24" stroke="#2eab6e"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div>
+        <div class="stat-value" id="stat-time">--:--:--</div>
+        <div class="stat-label">Waktu Akses Anda</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- FEATURE CARDS -->
@@ -747,6 +806,46 @@ document.addEventListener('click', function(e) {
     document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
   }
 });
+</script>
+
+<!-- STATISTIK PENGUNJUNG: counter otomatis via CountAPI (gratis, tanpa perlu server sendiri) -->
+<script>
+(function () {
+  // Ganti "pnp-jtm-akreditasi" dengan namespace unik milikmu sendiri agar
+  // angkanya tidak bercampur dengan website lain yang kebetulan pakai nama sama.
+  const NAMESPACE = 'pnp-jtm-akreditasi-2026';
+  const totalEl = document.getElementById('stat-total');
+  const todayEl = document.getElementById('stat-today');
+  const timeEl  = document.getElementById('stat-time');
+
+  function formatNumber(n) {
+    return Number(n).toLocaleString('id-ID');
+  }
+
+  // Key harian dibuat otomatis dari tanggal hari ini, jadi "hitungan hari ini"
+  // otomatis mulai dari 0 lagi tiap pergantian hari.
+  const todayKey = 'harian-' + new Date().toISOString().slice(0, 10);
+
+  // Hit = tambah 1 lalu kembalikan nilai terbaru. Dipanggil tiap kali halaman dibuka,
+  // jadi angkanya sama untuk SEMUA pengunjung (bukan cuma di browser sendiri).
+  fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/total-pengunjung`)
+    .then(r => r.json())
+    .then(d => { totalEl.textContent = formatNumber(d.value); })
+    .catch(() => { totalEl.textContent = '—'; });
+
+  fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${todayKey}`)
+    .then(r => r.json())
+    .then(d => { todayEl.textContent = formatNumber(d.value); })
+    .catch(() => { todayEl.textContent = '—'; });
+
+  // Jam real-time (lokal di perangkat pengunjung)
+  function updateClock() {
+    const now = new Date();
+    timeEl.textContent = now.toLocaleTimeString('id-ID', { hour12: false });
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+})();
 </script>
 </body>
 </html>
