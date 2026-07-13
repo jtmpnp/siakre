@@ -808,33 +808,43 @@ document.addEventListener('click', function(e) {
 });
 </script>
 
-<!-- STATISTIK PENGUNJUNG: counter otomatis via CountAPI (gratis, tanpa perlu server sendiri) -->
+<!-- STATISTIK PENGUNJUNG: counter unik per-hari (localStorage) + CountAPI alternatif (gratis, tanpa server sendiri) -->
 <script>
 (function () {
-  // countapi.xyz (layanan lama) sudah tidak aktif lagi, jadi pakai alternatifnya:
-  // Ganti "pnp-jtm-akreditasi-2026-total" / "...-harian-" dengan key unik milikmu sendiri
+  // Ganti "pnp-jtm-akreditasi-2026-..." dengan key unik milikmu sendiri
   // agar tidak bentrok dengan pengguna lain (key di layanan ini bersifat publik/terbuka).
-  const BASE = 'https://countapi.mileshilliard.com/api/v1/hit/';
+  const BASE = 'https://countapi.mileshilliard.com/api/v1/';
   const totalEl = document.getElementById('stat-total');
   const todayEl = document.getElementById('stat-today');
   const timeEl  = document.getElementById('stat-time');
 
   function formatNumber(n) {
-    return Number(n).toLocaleString('id-ID');
+    return Number(n || 0).toLocaleString('id-ID');
   }
 
-  const todayKey = 'pnp-jtm-akreditasi-2026-harian-' + new Date().toISOString().slice(0, 10);
-  const totalKey = 'pnp-jtm-akreditasi-2026-total';
+  const todayStr  = new Date().toISOString().slice(0, 10);
+  const todayKey  = 'pnp-jtm-akreditasi-2026-harian-' + todayStr;
+  const totalKey  = 'pnp-jtm-akreditasi-2026-total';
+  const STAMP_KEY = 'pnp_jtm_last_visit_date'; // "stempel" tanggal kunjungan terakhir di browser ini
 
-  fetch(BASE + totalKey)
-    .then(r => r.json())
-    .then(d => { totalEl.textContent = formatNumber(d.value); })
-    .catch(() => { totalEl.textContent = '—'; });
+  // Cek apakah browser ini SUDAH pernah dihitung hari ini
+  let sudahDihitungHariIni = false;
+  try {
+    sudahDihitungHariIni = localStorage.getItem(STAMP_KEY) === todayStr;
+  } catch (e) {
+    // Kalau localStorage diblokir browser, anggap saja belum pernah dihitung
+  }
 
-  fetch(BASE + todayKey)
-    .then(r => r.json())
-    .then(d => { todayEl.textContent = formatNumber(d.value); })
-    .catch(() => { todayEl.textContent = '—'; });
+  if (sudahDihitungHariIni) {
+    // Sudah ada stempel hari ini -> cukup TAMPILKAN angka, jangan ditambah lagi
+    fetch(BASE + 'get/' + totalKey).then(r => r.json()).then(d => { totalEl.textContent = formatNumber(d.value); }).catch(() => { totalEl.textContent = '—'; });
+    fetch(BASE + 'get/' + todayKey).then(r => r.json()).then(d => { todayEl.textContent = formatNumber(d.value); }).catch(() => { todayEl.textContent = '—'; });
+  } else {
+    // Kunjungan pertama browser ini hari ini -> tambah +1, lalu tempel tanggal hari ini
+    fetch(BASE + 'hit/' + totalKey).then(r => r.json()).then(d => { totalEl.textContent = formatNumber(d.value); }).catch(() => { totalEl.textContent = '—'; });
+    fetch(BASE + 'hit/' + todayKey).then(r => r.json()).then(d => { todayEl.textContent = formatNumber(d.value); }).catch(() => { todayEl.textContent = '—'; });
+    try { localStorage.setItem(STAMP_KEY, todayStr); } catch (e) {}
+  }
 
   // Jam real-time (lokal di perangkat pengunjung)
   function updateClock() {
