@@ -80,6 +80,13 @@
     .toolbar-text h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: .95rem; font-weight: 700; color: var(--navy); }
     .toolbar-text p { font-size: .75rem; color: var(--gray-600); margin-top: .1rem; }
     .tbl-wrap { border: 1px solid #c8d3e6; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+    @media (max-width: 900px) {
+      .tbl-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .tbl-wrap table { min-width: 900px; }
+    }
     table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     thead tr { background: #d6e4f7; }
     thead th { padding: .75rem 1rem; border: 1px solid #b0b8c9; color: var(--navy); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: .78rem; text-align: center; }

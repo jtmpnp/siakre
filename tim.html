@@ -299,6 +299,13 @@
       box-shadow: var(--shadow);
       overflow: hidden;
     }
+    @media (max-width: 900px) {
+      .sk-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .sk-table-wrap table { min-width: 800px; }
+    }
     .sk-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     .sk-table thead th {
       background: #d6e4f7; color: var(--navy);

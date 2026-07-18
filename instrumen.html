@@ -172,7 +172,12 @@
     .table-header-text p { font-size: .78rem; color: var(--gray-600); }
 
     /* ===== TABLE ===== */
+    .doc-table-wrap { width: 100%; }
     .doc-table { width: 100%; border-collapse: collapse; }
+    @media (max-width: 640px) {
+      .doc-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .doc-table { min-width: 560px; }
+    }
     .doc-table thead tr { border-bottom: 2px solid var(--gray-100); }
     .doc-table thead th {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -391,6 +396,7 @@
     </div>
   </div>
 
+  <div class="doc-table-wrap">
   <table class="doc-table">
     <thead>
       <tr>
@@ -500,6 +506,7 @@
       </tr>
     </tbody>
   </table>
+  </div>
 </div>
 
 <!-- FOOTER -->
