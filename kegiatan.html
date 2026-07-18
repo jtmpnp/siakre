@@ -94,7 +94,7 @@
     /* YEAR TABS */
     .page-header {
       display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;
+      flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;
     }
     .page-header-left h2 {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -141,7 +141,7 @@
 
     /* Foto */
     .card-foto {
-      width: 100%; height: 185px; overflow: hidden;
+      width: 100%; aspect-ratio: 16 / 9; height: auto; overflow: hidden;
       background: linear-gradient(135deg, #d6e4f7 0%, #eef0f4 100%);
       display: flex; align-items: center; justify-content: center;
       position: relative;
@@ -196,25 +196,27 @@
     .gallery-meta-list li b { color: var(--navy); font-weight: 700; min-width: 70px; }
 
     .carousel-wrap {
-      position: relative; overflow: hidden; height: 100%; min-height: 260px;
+      position: relative; overflow: hidden; width: 100%;
+      aspect-ratio: 4 / 3; max-height: 300px;
+      align-self: center;
       background: var(--navy-dk);
     }
     .carousel-track {
       display: flex; height: 100%;
-      animation: carousel-slide 24s linear infinite;
-      width: max-content;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      scroll-behavior: smooth;
     }
-    .carousel-wrap:hover .carousel-track { animation-play-state: paused; }
+    .carousel-track::-webkit-scrollbar { display: none; }
     .carousel-track img {
-      width: 340px; height: 100%; object-fit: cover; flex-shrink: 0;
+      width: 100%; flex: 0 0 100%; height: 100%; object-fit: cover; object-position: center 65%;
       cursor: zoom-in; display: block; filter: brightness(.94);
       transition: filter .2s;
+      scroll-snap-align: start;
     }
     .carousel-track img:hover { filter: brightness(1.05); }
-    @keyframes carousel-slide {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
     .carousel-hint {
       position: absolute; bottom: .6rem; right: .6rem; z-index: 5;
       background: rgba(15,28,50,.75); color: var(--white); font-size: .68rem; font-weight: 600;
@@ -238,7 +240,7 @@
 
     @media (max-width: 900px) {
       .gallery-card-top { grid-template-columns: 1fr; }
-      .carousel-wrap { min-height: 220px; }
+      .carousel-wrap { max-height: 240px; }
     }
 
     /* LIGHTBOX MODAL */
@@ -249,7 +251,10 @@
     }
     .lightbox-overlay.open { display: flex; }
     .lightbox-box { position: relative; max-width: 90vw; max-height: 90vh; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
-    .lightbox-box img { max-width: 90vw; max-height: 74vh; border-radius: 10px; box-shadow: 0 12px 50px rgba(0,0,0,.5); }
+    .lightbox-box img {
+      width: min(90vw, 800px); aspect-ratio: 6 / 4; object-fit: cover;
+      max-height: 74vh; border-radius: 10px; box-shadow: 0 12px 50px rgba(0,0,0,.5);
+    }
     .lightbox-close {
       position: absolute; top: -18px; right: -18px; width: 40px; height: 40px;
       border-radius: 50%; background: var(--orange); border: 3px solid var(--white);
@@ -454,9 +459,9 @@ const data = {
           waktu: "07.30 WIB s.d. selesai",
           tempat: "Gedung Pertemuan Jurusan Teknik Mesin",
           narasi: [
-            "Jurusan Teknik Mesin Politeknik Negeri Padang melaksanakan kegiatan Asesmen Lapangan (visitasi) dalam rangka Akreditasi Program Studi D4 Teknik Manufaktur, yang berlangsung selama dua hari pada Kamis–Jumat, 22–23 Juni 2023, bertempat di Gedung Pertemuan Jurusan Teknik Mesin mulai pukul 07.30 WIB hingga selesai.",
-            "Kegiatan diawali dengan pembukaan dan sambutan dari pimpinan jurusan, dilanjutkan dengan presentasi capaian program studi oleh tim akreditasi. Selanjutnya, tim asesor melakukan verifikasi dan validasi data melalui peninjauan dokumen, kunjungan ke laboratorium dan bengkel, serta wawancara dengan dosen, tenaga kependidikan, mahasiswa, alumni, dan mitra industri.",
-            "Melalui asesmen lapangan ini, diharapkan dapat diperoleh gambaran yang objektif mengenai kinerja dan mutu penyelenggaraan Program Studi D4 Teknik Manufaktur, sekaligus menjadi masukan bagi perbaikan dan peningkatan kualitas pendidikan secara berkelanjutan."
+            "Selama dua hari, Kamis–Jumat 22–23 Juni 2023, Jurusan Teknik Mesin Politeknik Negeri Padang menjadi tuan rumah Asesmen Lapangan (visitasi) untuk Akreditasi Program Studi D4 Teknik Manufaktur. Kegiatan ini berlangsung di Gedung Pertemuan Jurusan Teknik Mesin, dimulai pukul 07.30 WIB hingga selesai.",
+            "Acara dibuka dengan sambutan dari pimpinan jurusan, kemudian dilanjutkan dengan pemaparan capaian program studi oleh tim akreditasi di hadapan asesor. Pada tahapan berikutnya, tim asesor menelusuri dokumen yang telah disiapkan, meninjau langsung kondisi laboratorium dan bengkel, serta menggali informasi lebih dalam lewat wawancara bersama dosen, tenaga kependidikan, mahasiswa, alumni, dan mitra industri.",
+            "Rangkaian asesmen lapangan ini bertujuan menghadirkan potret yang objektif atas kinerja dan mutu penyelenggaraan Program Studi D4 Teknik Manufaktur, sekaligus menjadi bahan evaluasi untuk terus memperbaiki dan meningkatkan kualitas pendidikan ke depannya."
           ],
           gallery: [
             "foto-d4tma/foto1.jpg",
@@ -483,9 +488,9 @@ const data = {
           waktu: "07.30 WIB s.d. Selesai",
           tempat: "Gedung Pertemuan Jurusan Teknik Mesin",
           narasi: [
-            "Jurusan Teknik Mesin Politeknik Negeri Padang melaksanakan kegiatan Asesmen Lapangan (visitasi) dalam rangka Akreditasi Program Studi D4 Rekayasa Perancangan Mekanik, yang berlangsung selama dua hari pada Rabu–Kamis, 26–27 Juni 2024, bertempat di Gedung Pertemuan Jurusan Teknik Mesin mulai pukul 07.30 WIB hingga selesai.",
-            "Kegiatan diawali dengan pembukaan dan sambutan dari pimpinan jurusan, dilanjutkan dengan presentasi capaian program studi oleh tim akreditasi. Selanjutnya, tim asesor melakukan verifikasi dan validasi data melalui peninjauan dokumen, kunjungan ke laboratorium dan bengkel, serta wawancara dengan dosen, tenaga kependidikan, mahasiswa, alumni, dan mitra industri.",
-            "Melalui asesmen lapangan ini, diharapkan dapat diperoleh gambaran yang objektif mengenai kinerja dan mutu penyelenggaraan Program Studi D4 Rekayasa Perancangan Mekanik, sekaligus menjadi masukan bagi perbaikan dan peningkatan kualitas pendidikan secara berkelanjutan."
+            "Bertempat di Gedung Pertemuan Jurusan Teknik Mesin, Politeknik Negeri Padang menggelar Asesmen Lapangan (visitasi) Akreditasi Program Studi D4 Rekayasa Perancangan Mekanik pada Rabu–Kamis, 26–27 Juni 2024. Rangkaian kegiatan berlangsung mulai pukul 07.30 WIB hingga tuntas.",
+            "Diawali dengan sambutan pimpinan jurusan, agenda berlanjut ke presentasi capaian program studi yang disampaikan oleh tim akreditasi. Tim asesor kemudian menindaklanjutinya dengan memeriksa dan memvalidasi kelengkapan dokumen, meninjau fasilitas laboratorium serta bengkel, dan mewawancarai dosen, tenaga kependidikan, mahasiswa, alumni, hingga mitra dari kalangan industri.",
+            "Harapannya, hasil asesmen lapangan ini mampu memberikan gambaran objektif atas kinerja dan mutu Program Studi D4 Rekayasa Perancangan Mekanik, sekaligus menjadi pijakan untuk terus memperbaiki dan mengembangkan kualitas pendidikan yang diselenggarakan."
           ],
           gallery: [
             "foto-d4rpm/foto1.jpg",
@@ -508,9 +513,9 @@ const data = {
           waktu: "08.00 WIB s.d. Selesai",
           tempat: "Ruang Pertemuan Jurusan Teknik Mesin",
           narasi: [
-            "Jurusan Teknik Mesin Politeknik Negeri Padang melaksanakan kegiatan Asesmen Lapangan (visitasi) dalam rangka Akreditasi Program Studi D3 Teknik Mesin, yang berlangsung selama dua hari pada Kamis–Jumat, 31 Oktober – 1 November 2024, bertempat di Ruang Pertemuan Jurusan Teknik Mesin mulai pukul 08.00 WIB hingga selesai.",
-            "Kegiatan diawali dengan pembukaan dan sambutan dari pimpinan jurusan, dilanjutkan dengan presentasi capaian program studi oleh tim akreditasi. Selanjutnya, tim asesor melakukan verifikasi dan validasi data melalui peninjauan dokumen, kunjungan ke laboratorium dan bengkel, serta wawancara dengan dosen, tenaga kependidikan, mahasiswa, alumni, dan mitra industri.",
-            "Melalui asesmen lapangan ini, diharapkan dapat diperoleh gambaran yang objektif mengenai kinerja dan mutu penyelenggaraan Program Studi D3 Teknik Mesin, sekaligus menjadi masukan bagi perbaikan dan peningkatan kualitas pendidikan secara berkelanjutan."
+            "Menutup bulan Oktober hingga awal November 2024, tepatnya Kamis–Jumat, 31 Oktober – 1 November, Program Studi D3 Teknik Mesin menjalani Asesmen Lapangan (visitasi) Akreditasi di Ruang Pertemuan Jurusan Teknik Mesin, Politeknik Negeri Padang. Kegiatan dimulai pukul 08.00 WIB dan berlangsung hingga rampung.",
+            "Setelah pembukaan resmi dan sambutan dari pimpinan jurusan, tim akreditasi memaparkan capaian program studi di hadapan para asesor. Proses berlanjut dengan penelusuran dan validasi dokumen, kunjungan langsung ke laboratorium dan bengkel, serta sesi wawancara mendalam bersama dosen, tenaga kependidikan, mahasiswa, alumni, dan mitra industri.",
+            "Asesmen lapangan ini diharapkan menghasilkan penilaian yang objektif terhadap kinerja dan mutu penyelenggaraan Program Studi D3 Teknik Mesin, sekaligus menjadi landasan bagi perbaikan dan peningkatan kualitas pendidikan secara berkelanjutan."
           ],
           gallery: [
             "foto-d3tme/foto1.jpg",
@@ -541,11 +546,9 @@ function renderGalleryCard(item) {
   const galId = 'gal' + galleryCounter;
   galleryStore[galId] = { images: item.gallery, judul: item.judul, gdrive: item.gdrive };
 
-  const thumbs = item.gallery.map((src, i) =>
-    `<img src="${src}" alt="${item.judul} - Foto ${i + 1}" onclick="openLightbox('${galId}', ${i})">`
+  const trackHtml = item.gallery.map((src, i) =>
+    `<img src="${src}" alt="${item.judul} - Foto ${i + 1}" loading="lazy" decoding="async" onclick="openLightbox('${galId}', ${i})">`
   ).join('');
-  // duplikasi untuk efek swipe/scroll otomatis yang berulang tanpa putus
-  const trackHtml = thumbs + thumbs;
 
   const narasiHtml = item.narasi.map(p => `<p>${p}</p>`).join('');
 
@@ -567,7 +570,7 @@ function renderGalleryCard(item) {
         <div class="carousel-track">${trackHtml}</div>
         <div class="carousel-hint">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
-          Klik foto untuk memperbesar
+          Klik untuk perbesar, atau geser untuk lihat manual
         </div>
       </div>
     </div>
@@ -638,7 +641,7 @@ function render() {
         return;
       }
       const fotoHtml = item.foto
-        ? `<img src="${item.foto}" alt="${item.judul}">`
+        ? `<img src="${item.foto}" alt="${item.judul}" loading="lazy" decoding="async">`
         : placeholderHtml();
       html += `<div class="kegiatan-card">
         <div class="card-foto">
@@ -661,6 +664,52 @@ function render() {
 }
 
 render();
+
+// Auto-scroll galeri foto: bergerak otomatis TAPI cepat & snap per foto
+// (mirip swipe galeri HP), bukan meluncur pelan. Berhenti sejenak saat
+// disentuh/di-hover manual, lalu lanjut lagi otomatis.
+function setupAutoCarousel() {
+  document.querySelectorAll('.carousel-wrap').forEach(wrap => {
+    const track = wrap.querySelector('.carousel-track');
+    if (!track) return;
+    const imgs = track.querySelectorAll('img');
+    if (imgs.length <= 1) return;
+
+    let idx = 0;
+    let paused = false;
+    let resumeTimeout;
+
+    function goTo(i) {
+      idx = (i + imgs.length) % imgs.length;
+      track.scrollTo({ left: imgs[idx].offsetLeft, behavior: 'smooth' });
+    }
+
+    const timer = setInterval(() => { if (!paused) goTo(idx + 1); }, 2200);
+
+    function pauseAutoplay() {
+      paused = true;
+      clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(() => { paused = false; }, 3500);
+    }
+    wrap.addEventListener('mouseenter', pauseAutoplay);
+    wrap.addEventListener('touchstart', pauseAutoplay, { passive: true });
+
+    // Sinkronkan idx kalau user geser manual, biar lanjut auto dari posisi terakhir
+    let syncTimeout;
+    track.addEventListener('scroll', () => {
+      clearTimeout(syncTimeout);
+      syncTimeout = setTimeout(() => {
+        let closest = 0, min = Infinity;
+        imgs.forEach((img, i) => {
+          const diff = Math.abs(img.offsetLeft - track.scrollLeft);
+          if (diff < min) { min = diff; closest = i; }
+        });
+        idx = closest;
+      }, 120);
+    });
+  });
+}
+setupAutoCarousel();
 
 // Jika datang dari link dengan target kegiatan tertentu (mis. index.html#d4tma-juni2023),
 // otomatis scroll & sorot ke kartu kegiatan tersebut.
