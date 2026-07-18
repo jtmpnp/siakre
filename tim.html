@@ -22,7 +22,9 @@
       --r-lg: 16px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--gray-800); line-height: 1.6; }
+    #sk-table-section { scroll-margin-top: 84px; }
 
     /* ===== NAVBAR ===== */
     nav {
@@ -316,6 +318,17 @@
     }
     .btn-unduh:hover { background: var(--orange); }
     .btn-unduh svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .btn-lihat {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: var(--white); color: var(--navy);
+      border: 1px solid var(--navy);
+      border-radius: 6px; padding: .35rem .85rem;
+      font-size: .75rem; font-weight: 600; text-decoration: none;
+      transition: background .15s, color .15s;
+    }
+    .btn-lihat:hover { background: var(--navy); color: var(--white); }
+    .btn-lihat svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .doc-btn-group { display: inline-flex; gap: .5rem; flex-wrap: wrap; justify-content: center; }
 
     /* ===== FOOTER ===== */
     footer { background: var(--navy-dk); padding: 2.5rem 2.5rem 1.2rem; color: #7fa0bc; }
@@ -453,9 +466,9 @@
       </div>
     </div>
     <div>
-      <a href="GANTI_LINK_SK_DISINI" target="_blank" rel="noopener" class="btn-sk">
-        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download SK Tim Akreditasi
+      <a href="#sk-table-section" class="btn-sk">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+        Lihat SK/ST Tim Akreditasi
       </a>
     </div>
   </div>
@@ -466,24 +479,24 @@
   </div>
   <div class="pengarah-grid">
     <div class="pengarah-card">
-      <div class="avatar-lg">SD</div>
+      <div class="avatar-lg">RH</div>
       <div class="badge-jabatan">Pengarah</div>
-      <div class="card-nama">Dr. [Nama Direktur], S.T., M.T.</div>
-      <div class="card-nip">NIP. 19XX XXXX XXXX X XXX</div>
+      <div class="card-nama">Ir. Revalin Herdianto, ST., M.Sc., Ph.D</div>
+      <div class="card-nip">NIP. 19730716 199512 1 001</div>
       <div class="card-unit">Direktur Politeknik Negeri Padang</div>
     </div>
     <div class="pengarah-card">
-      <div class="avatar-lg">WD</div>
+      <div class="avatar-lg">NF</div>
       <div class="badge-jabatan">Penanggung Jawab</div>
-      <div class="card-nama">Dr. [Nama Wakil Direktur], S.T., M.T.</div>
-      <div class="card-nip">NIP. 19XX XXXX XXXX X XXX</div>
+      <div class="card-nama">Dr. Nurul Fauzi, SE., MM., Ak., CA</div>
+      <div class="card-nip">NIP. 19760720 200112 1 003</div>
       <div class="card-unit">Wakil Direktur I Bidang Akademik</div>
     </div>
     <div class="pengarah-card">
-      <div class="avatar-lg">KJ</div>
+      <div class="avatar-lg">SA</div>
       <div class="badge-jabatan">Ketua Jurusan</div>
-      <div class="card-nama">Dr. [Nama Ketua Jurusan], S.T., M.T.</div>
-      <div class="card-nip">NIP. 19XX XXXX XXXX X XXX</div>
+      <div class="card-nama">Prof. Dr. Sir Anderson, ST., MT</div>
+      <div class="card-nip">NIP. 19720818 200003 1 002</div>
       <div class="card-unit">Ketua Jurusan Teknik Mesin</div>
     </div>
   </div>
@@ -496,59 +509,53 @@
   </div>
   <div class="tim-grid">
     <div class="tim-card ketua">
-      <div class="avatar-sm">KT</div>
+      <div class="avatar-sm">SA</div>
       <div class="badge-jabatan">Ketua Tim</div>
-      <div class="card-nama-sm">[Nama Ketua Tim], S.T., M.T.</div>
-      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
+      <div class="card-nama-sm">Prof. Dr. Sir Anderson, ST., MT</div>
+      <div class="card-nip-sm">NIP. 19720818 200003 1 002</div>
+      <div class="card-unit">Ketua Jurusan Teknik Mesin</div>
     </div>
     <div class="tim-card">
-      <div class="avatar-sm">SK</div>
+      <div class="avatar-sm">RN</div>
       <div class="badge-jabatan navy">Sekretaris</div>
-      <div class="card-nama-sm">[Nama Sekretaris], S.T., M.T.</div>
-      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
+      <div class="card-nama-sm">Rina, S.Pd., M.T.</div>
+      <div class="card-nip-sm">NIP. 19860429 201903 2 009</div>
+      <div class="card-unit">Sekretaris Jurusan Teknik Mesin</div>
     </div>
     <div class="tim-card">
-      <div class="avatar-sm">A1</div>
-      <div class="badge-jabatan navy">Anggota</div>
-      <div class="card-nama-sm">[Nama Anggota 1], S.T., M.T.</div>
-      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
+      <div class="avatar-sm">JN</div>
+      <div class="badge-jabatan navy">Ketua Tim Akreditasi Prodi D3 Teknik Mesin</div>
+      <div class="card-nama-sm">Dr. Junaidi, ST., MP</div>
+      <div class="card-nip-sm">NIP. 19660621 199203 1 005</div>
+      <div class="card-unit">Ka. Prodi D3 Teknik Mesin</div>
     </div>
     <div class="tim-card">
-      <div class="avatar-sm">A2</div>
-      <div class="badge-jabatan navy">Anggota</div>
-      <div class="card-nama-sm">[Nama Anggota 2], S.T., M.T.</div>
-      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
+      <div class="avatar-sm">KA</div>
+      <div class="badge-jabatan navy">Ketua Tim Akreditasi Prodi D3 Teknik Alat Berat</div>
+      <div class="card-nama-sm">Dr. Khairul Amri, S.Si., M.Si</div>
+      <div class="card-nip-sm">NIP. 19811213 200501 1 001</div>
+      <div class="card-unit">Ka. Prodi D3 Teknik Alat Berat</div>
     </div>
     <div class="tim-card">
-      <div class="avatar-sm">A3</div>
-      <div class="badge-jabatan navy">Anggota</div>
-      <div class="card-nama-sm">[Nama Anggota 3], S.T., M.T.</div>
-      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
+      <div class="avatar-sm">DB</div>
+      <div class="badge-jabatan navy">Ketua Tim Akreditasi Prodi D4 Teknik Manufaktur</div>
+      <div class="card-nama-sm">Daddy Budiman, ST., M.Eng</div>
+      <div class="card-nip-sm">NIP. 19710518 199903 1 003</div>
+      <div class="card-unit">Ka. Prodi D4 Teknik Manufaktur</div>
     </div>
     <div class="tim-card">
-      <div class="avatar-sm">A4</div>
-      <div class="badge-jabatan navy">Anggota</div>
-      <div class="card-nama-sm">[Nama Anggota 4], S.T., M.T.</div>
-      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
-    </div>
-    <div class="tim-card">
-      <div class="avatar-sm">A5</div>
-      <div class="badge-jabatan navy">Anggota</div>
-      <div class="card-nama-sm">[Nama Anggota 5], S.T., M.T.</div>
-      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
-    </div>
-    <div class="tim-card">
-      <div class="avatar-sm">A6</div>
-      <div class="badge-jabatan navy">Anggota</div>
-      <div class="card-nama-sm">[Nama Anggota 6], S.T., M.T.</div>
-      <div class="card-nip-sm">NIP. 19XX XXXX XXXX X XXX</div>
+      <div class="avatar-sm">RC</div>
+      <div class="badge-jabatan navy">Ketua Tim Akreditasi Prodi D4 Rekayasa Perancangan Mekanik</div>
+      <div class="card-nama-sm">Rivanol Chadry, ST., MT</div>
+      <div class="card-nip-sm">NIP. 19691215 199303 1 002</div>
+      <div class="card-unit">Ka. Prodi D4 Rekayasa Perancangan Mekanik</div>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
   <!-- TABEL SK -->
-  <div class="section-label">
+  <div class="section-label" id="sk-table-section">
     ★ &nbsp;Dasar Hukum Pembentukan Tim
   </div>
   <div class="sk-table-wrap">
@@ -556,35 +563,137 @@
       <thead>
         <tr>
           <th style="width:4%">No</th>
-          <th style="width:35%">Nomor SK</th>
-          <th style="width:20%">Tanggal</th>
-          <th>Perihal</th>
-          <th style="width:14%;text-align:center">Dokumen</th>
+          <th style="width:22%">Nomor SK / Surat Tugas</th>
+          <th style="width:12%">Tanggal</th>
+          <th style="width:44%">Perihal</th>
+          <th style="width:18%;text-align:center">Dokumen</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td style="text-align:center;font-weight:700;color:var(--navy)">1</td>
-          <td>SK Direktur No. XXXX/PNP/XXXX/2023</td>
-          <td>XX Januari 2023</td>
-          <td>Pembentukan Tim Akreditasi Jurusan Teknik Mesin Politeknik Negeri Padang Tahun 2023</td>
+          <td>SK Direktur No. 1610/PL9/AK.00.00/2023</td>
+          <td>18 September 2023</td>
+          <td>Pengangkatan Tim Penyusun Laporan Kinerja Program Studi (LKPS) Akreditasi Program Studi Sarjana Terapan Rekayasa Perancangan Mekanik</td>
           <td style="text-align:center">
-            <a href="GANTI_LINK_SK_2025" target="_blank" rel="noopener" class="btn-unduh">
-              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Unduh SK
-            </a>
+            <div class="doc-btn-group">
+              <a href="https://drive.google.com/file/d/1eywmbz_mP886zfpQoC72YP4eL-F8_zpi/view?usp=sharing" target="_blank" rel="noopener" class="btn-lihat">
+                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Lihat
+              </a>
+              <a href="https://drive.google.com/uc?export=download&id=1eywmbz_mP886zfpQoC72YP4eL-F8_zpi" download target="_blank" rel="noopener" class="btn-unduh">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Unduh
+              </a>
+            </div>
           </td>
         </tr>
         <tr>
           <td style="text-align:center;font-weight:700;color:var(--navy)">2</td>
-          <td>SK Direktur No. XXXX/PNP/XXXX/2024</td>
-          <td>XX Januari 2024</td>
-          <td>Perubahan Susunan Tim Akreditasi Jurusan Teknik Mesin Politeknik Negeri Padang Tahun 2024</td>
+          <td>SK Direktur No. 1611/PL9/AK.00.00/2023</td>
+          <td>18 September 2023</td>
+          <td>Pengangkatan Tim Penyusun Laporan Evaluasi Diri (LED) Akreditasi Program Studi Sarjana Terapan Rekayasa Perancangan Mekanik</td>
           <td style="text-align:center">
-            <a href="GANTI_LINK_SK_2026" target="_blank" rel="noopener" class="btn-unduh">
-              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Unduh SK
-            </a>
+            <div class="doc-btn-group">
+              <a href="https://drive.google.com/file/d/1NXj3lXWfIAdsbVJlGeRUsJTGbB4x2B8a/view?usp=sharing" target="_blank" rel="noopener" class="btn-lihat">
+                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Lihat
+              </a>
+              <a href="https://drive.google.com/uc?export=download&id=1NXj3lXWfIAdsbVJlGeRUsJTGbB4x2B8a" download target="_blank" rel="noopener" class="btn-unduh">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Unduh
+              </a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:var(--navy)">3</td>
+          <td>SK Direktur No. 1804/PL9/AK.00.00/2023</td>
+          <td>29 September 2023</td>
+          <td>Pengangkatan Tim Penyusun Laporan Kinerja Program Studi (LKPS) Akreditasi Program Studi Diploma Tiga Teknik Mesin</td>
+          <td style="text-align:center">
+            <div class="doc-btn-group">
+              <a href="https://drive.google.com/file/d/16yuLvM21wzysPpZw6BmGZAfCze45r6P9/view?usp=sharing" target="_blank" rel="noopener" class="btn-lihat">
+                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Lihat
+              </a>
+              <a href="https://drive.google.com/uc?export=download&id=16yuLvM21wzysPpZw6BmGZAfCze45r6P9" download target="_blank" rel="noopener" class="btn-unduh">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Unduh
+              </a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:var(--navy)">4</td>
+          <td>SK Direktur No. 1805/PL9/AK.00.00/2023</td>
+          <td>29 September 2023</td>
+          <td>Pengangkatan Tim Penyusun Laporan Evaluasi Diri (LED) Akreditasi Program Studi Diploma Tiga Teknik Mesin</td>
+          <td style="text-align:center">
+            <div class="doc-btn-group">
+              <a href="https://drive.google.com/file/d/10XAcSZNOC20Ubl-rjrkea1lvWvlI05_z/view?usp=sharing" target="_blank" rel="noopener" class="btn-lihat">
+                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Lihat
+              </a>
+              <a href="https://drive.google.com/uc?export=download&id=10XAcSZNOC20Ubl-rjrkea1lvWvlI05_z" download target="_blank" rel="noopener" class="btn-unduh">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Unduh
+              </a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:var(--navy)">5</td>
+          <td>Surat Tugas No. 041/PL9.4/AK/2024</td>
+          <td>18 Maret 2024</td>
+          <td>Penugasan Tim Persiapan Akreditasi Program Studi Sarjana Terapan Rekayasa Perancangan Mekanik</td>
+          <td style="text-align:center">
+            <div class="doc-btn-group">
+              <a href="https://drive.google.com/file/d/1h9nBTT_AUovITEGZXHLd-_L9_00umT2i/view?usp=sharing" target="_blank" rel="noopener" class="btn-lihat">
+                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Lihat
+              </a>
+              <a href="https://drive.google.com/uc?export=download&id=1h9nBTT_AUovITEGZXHLd-_L9_00umT2i" download target="_blank" rel="noopener" class="btn-unduh">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Unduh
+              </a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:var(--navy)">6</td>
+          <td>Surat Tugas No. 083/PL9.4/AK/2024</td>
+          <td>27 Mei 2024</td>
+          <td>Penugasan Tim Persiapan Akreditasi Program Studi Diploma III Teknik Mesin</td>
+          <td style="text-align:center">
+            <div class="doc-btn-group">
+              <a href="https://drive.google.com/file/d/1uREOVP4JPatRcB8xYyu6TUT2RwFCSigB/view?usp=sharing" target="_blank" rel="noopener" class="btn-lihat">
+                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Lihat
+              </a>
+              <a href="https://drive.google.com/uc?export=download&id=1uREOVP4JPatRcB8xYyu6TUT2RwFCSigB" download target="_blank" rel="noopener" class="btn-unduh">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Unduh
+              </a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:var(--navy)">7</td>
+          <td>Surat Tugas No. 205/PL9.4/AK/2024</td>
+          <td>30 Oktober 2024</td>
+          <td>Penugasan Tim Asesmen Lapangan Akreditasi Program Studi Diploma III Teknik Mesin</td>
+          <td style="text-align:center">
+            <div class="doc-btn-group">
+              <a href="https://drive.google.com/file/d/1Kb77ldcwU6L9b-h9mUmUMyRyh1JezPzB/view?usp=sharing" target="_blank" rel="noopener" class="btn-lihat">
+                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Lihat
+              </a>
+              <a href="https://drive.google.com/uc?export=download&id=1Kb77ldcwU6L9b-h9mUmUMyRyh1JezPzB" download target="_blank" rel="noopener" class="btn-unduh">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Unduh
+              </a>
+            </div>
           </td>
         </tr>
       </tbody>

@@ -175,6 +175,102 @@
     }
     .card-desc { font-size: .78rem; color: var(--gray-600); line-height: 1.6; }
 
+    /* GALLERY EVENT CARD (kartu kegiatan dengan galeri foto) */
+    .gallery-card {
+      grid-column: 1 / -1;
+      background: var(--white); border-radius: var(--r-lg);
+      border: 1px solid var(--gray-100); box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .gallery-card-top {
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 0;
+    }
+    .gallery-info { padding: 1.6rem 1.8rem; display: flex; flex-direction: column; justify-content: center; }
+    .gallery-info .card-tanggal { font-size: .76rem; margin-bottom: .6rem; }
+    .gallery-info .card-tanggal svg { width: 13px; height: 13px; }
+    .gallery-info .card-judul { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--navy); line-height: 1.35; margin-bottom: .7rem; }
+    .gallery-narasi { font-size: .84rem; color: var(--gray-600); line-height: 1.75; }
+    .gallery-narasi p + p { margin-top: .7rem; }
+    .gallery-meta-list { list-style: none; margin-top: 1rem; display: flex; flex-direction: column; gap: .4rem; }
+    .gallery-meta-list li { display: flex; gap: .5rem; font-size: .78rem; color: var(--gray-800); }
+    .gallery-meta-list li b { color: var(--navy); font-weight: 700; min-width: 70px; }
+
+    .carousel-wrap {
+      position: relative; overflow: hidden; height: 100%; min-height: 260px;
+      background: var(--navy-dk);
+    }
+    .carousel-track {
+      display: flex; height: 100%;
+      animation: carousel-slide 24s linear infinite;
+      width: max-content;
+    }
+    .carousel-wrap:hover .carousel-track { animation-play-state: paused; }
+    .carousel-track img {
+      width: 340px; height: 100%; object-fit: cover; flex-shrink: 0;
+      cursor: zoom-in; display: block; filter: brightness(.94);
+      transition: filter .2s;
+    }
+    .carousel-track img:hover { filter: brightness(1.05); }
+    @keyframes carousel-slide {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .carousel-hint {
+      position: absolute; bottom: .6rem; right: .6rem; z-index: 5;
+      background: rgba(15,28,50,.75); color: var(--white); font-size: .68rem; font-weight: 600;
+      padding: .3rem .7rem; border-radius: 20px; backdrop-filter: blur(4px);
+      display: flex; align-items: center; gap: .35rem; pointer-events: none;
+    }
+    .carousel-hint svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .gallery-drive-bar {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: .9rem 1.8rem; background: var(--gray-50); border-top: 1px solid var(--gray-100); flex-wrap: wrap;
+    }
+    .gallery-drive-bar span { font-size: .78rem; color: var(--gray-600); }
+    .btn-gdrive {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: var(--navy); color: var(--white); text-decoration: none;
+      font-size: .78rem; font-weight: 700; padding: .5rem 1.1rem; border-radius: 8px;
+      transition: background .15s;
+    }
+    .btn-gdrive:hover { background: var(--orange); }
+    .btn-gdrive svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    @media (max-width: 900px) {
+      .gallery-card-top { grid-template-columns: 1fr; }
+      .carousel-wrap { min-height: 220px; }
+    }
+
+    /* LIGHTBOX MODAL */
+    .lightbox-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(8,14,28,.92); backdrop-filter: blur(3px);
+      align-items: center; justify-content: center; padding: 2rem;
+    }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-box { position: relative; max-width: 90vw; max-height: 90vh; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+    .lightbox-box img { max-width: 90vw; max-height: 74vh; border-radius: 10px; box-shadow: 0 12px 50px rgba(0,0,0,.5); }
+    .lightbox-close {
+      position: absolute; top: -18px; right: -18px; width: 40px; height: 40px;
+      border-radius: 50%; background: var(--orange); border: 3px solid var(--white);
+      color: var(--white); font-size: 1.2rem; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; line-height: 1;
+      box-shadow: 0 4px 14px rgba(0,0,0,.35); transition: background .15s, transform .15s;
+    }
+    .lightbox-close:hover { background: #c94a10; transform: scale(1.06); }
+    .lightbox-actions { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; justify-content: center; }
+    .lightbox-btn {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-size: .8rem; font-weight: 700; text-decoration: none;
+      padding: .55rem 1.2rem; border-radius: 8px; cursor: pointer; border: none;
+    }
+    .lightbox-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .lightbox-btn.save { background: var(--orange); color: var(--white); }
+    .lightbox-btn.save:hover { background: var(--orange-lt); }
+    .lightbox-btn.drive { background: var(--white); color: var(--navy); }
+    .lightbox-btn.drive:hover { background: var(--gray-100); }
+    .lightbox-counter { color: rgba(255,255,255,.75); font-size: .76rem; font-weight: 600; }
+
     /* FOOTER */
     footer { background: var(--navy-dk); padding: 2.5rem 2.5rem 1.2rem; color: #7fa0bc; margin-top: 2rem; }
     .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 2rem; margin-bottom: 2rem; }
@@ -277,17 +373,32 @@
 
   <div class="page-header">
     <div class="page-header-left">
-      <h2>Kegiatan Akreditasi per Tahun</h2>
-      <p>Pilih tahun untuk melihat dokumentasi kegiatan akreditasi.</p>
-    </div>
-    <div class="year-tabs">
-      <button class="year-tab active" onclick="showYear(2023, this)">2023</button>
-      <button class="year-tab" onclick="showYear(2028, this)">2028</button>
+      <h2>Kegiatan Akreditasi</h2>
+      <p>Dokumentasi kegiatan akreditasi Jurusan Teknik Mesin dari tahun ke tahun.</p>
     </div>
   </div>
 
   <div id="timeline"></div>
 
+</div>
+
+<!-- LIGHTBOX MODAL FOTO -->
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="if(event.target===this) closeLightbox()">
+  <div class="lightbox-box">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Tutup">&times;</button>
+    <img id="lightboxImg" src="" alt="Dokumentasi Kegiatan">
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+    <div class="lightbox-actions">
+      <a class="lightbox-btn save" id="lightboxSave" href="#" download target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Simpan Gambar
+      </a>
+      <a class="lightbox-btn drive" id="lightboxDrive" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z"/></svg>
+        Lihat Semua Foto di Google Drive
+      </a>
+    </div>
+  </div>
 </div>
 
 <!-- FOOTER -->
@@ -333,172 +444,85 @@
 const data = {
   2023: [
     {
-      bulan: "Januari 2023",
-      items: [
-        {
-          foto: "",
-          tanggal: "10 Januari 2023",
-          judul: "Rapat Pembentukan Tim Akreditasi",
-          deskripsi: "Rapat koordinasi pembentukan tim akreditasi Jurusan Teknik Mesin untuk periode akreditasi 2023 bersama seluruh dosen dan tenaga kependidikan."
-        },
-        {
-          foto: "",
-          tanggal: "18 Januari 2023",
-          judul: "Sosialisasi Instrumen LAM Teknik",
-          deskripsi: "Sosialisasi instrumen dan pedoman penilaian akreditasi LAM Teknik kepada seluruh tim akreditasi agar memahami kriteria dan indikator penilaian."
-        }
-      ]
-    },
-    {
-      bulan: "Maret 2023",
-      items: [
-        {
-          foto: "",
-          tanggal: "25 Maret 2023",
-          judul: "Workshop Penyusunan Dokumen Akreditasi",
-          deskripsi: "Workshop penyusunan dokumen pendukung akreditasi bersama tim jurusan dan fasilitator eksternal untuk memastikan kualitas dokumen LKPS dan LED."
-        },
-        {
-          foto: "",
-          tanggal: "28 Maret 2023",
-          judul: "Pengumpulan Data LKPS",
-          deskripsi: "Pengumpulan dan verifikasi data Laporan Kinerja Program Studi (LKPS) untuk seluruh kriteria penilaian akreditasi LAM Teknik."
-        }
-      ]
-    },
-    {
-      bulan: "Mei 2023",
-      items: [
-        {
-          foto: "",
-          tanggal: "10 Mei 2023",
-          judul: "Sosialisasi Instrumen AMI 2023",
-          deskripsi: "Kegiatan sosialisasi instrumen Audit Mutu Internal (AMI) untuk mendukung persiapan akreditasi program studi di lingkungan Jurusan Teknik Mesin."
-        },
-        {
-          foto: "",
-          tanggal: "2 Mei 2023",
-          judul: "Rapat Persiapan Akreditasi",
-          deskripsi: "Rapat koordinasi persiapan dokumen dan data akreditasi Jurusan Teknik Mesin, membahas progres penyusunan dan pembagian tugas tim."
-        }
-      ]
-    },
-    {
       bulan: "Juni 2023",
       items: [
         {
-          foto: "",
-          tanggal: "15 Juni 2023",
-          judul: "Pengiriman Berkas ke LAM Teknik",
-          deskripsi: "Pengiriman resmi berkas permohonan akreditasi beserta dokumen LKPS dan LED ke LAM Teknik untuk dilakukan asesmen kecukupan."
-        }
-      ]
-    },
-    {
-      bulan: "September 2023",
-      items: [
-        {
-          foto: "",
-          tanggal: "18–20 September 2023",
-          judul: "Visitasi Lapangan oleh Asesor LAM Teknik",
-          deskripsi: "Kunjungan asesor LAM Teknik ke Jurusan Teknik Mesin PNP untuk verifikasi dan validasi data akreditasi secara langsung."
-        },
-        {
-          foto: "",
-          tanggal: "19 September 2023",
-          judul: "Presentasi & Klarifikasi Tim Akreditasi",
-          deskripsi: "Presentasi capaian dan klarifikasi data oleh tim akreditasi kepada asesor LAM Teknik dalam rangkaian kegiatan visitasi lapangan."
-        }
-      ]
-    },
-    {
-      bulan: "November 2023",
-      items: [
-        {
-          foto: "",
-          tanggal: "November 2023",
-          judul: "Pengumuman Hasil Akreditasi",
-          deskripsi: "Pengumuman resmi hasil penilaian akreditasi oleh LAM Teknik beserta penetapan peringkat akreditasi untuk program studi di Jurusan Teknik Mesin."
+          tipe: "galeri",
+          id: "d4tma-juni2023",
+          tanggal: "Kamis–Jumat, 22–23 Juni 2023",
+          judul: "Asesmen Lapangan Akreditasi Prodi D4 Teknik Manufaktur",
+          waktu: "07.30 WIB s.d. selesai",
+          tempat: "Gedung Pertemuan Jurusan Teknik Mesin",
+          narasi: [
+            "Jurusan Teknik Mesin Politeknik Negeri Padang melaksanakan kegiatan Asesmen Lapangan (visitasi) dalam rangka Akreditasi Program Studi D4 Teknik Manufaktur, yang berlangsung selama dua hari pada Kamis–Jumat, 22–23 Juni 2023, bertempat di Gedung Pertemuan Jurusan Teknik Mesin mulai pukul 07.30 WIB hingga selesai.",
+            "Kegiatan diawali dengan pembukaan dan sambutan dari pimpinan jurusan, dilanjutkan dengan presentasi capaian program studi oleh tim akreditasi. Selanjutnya, tim asesor melakukan verifikasi dan validasi data melalui peninjauan dokumen, kunjungan ke laboratorium dan bengkel, serta wawancara dengan dosen, tenaga kependidikan, mahasiswa, alumni, dan mitra industri.",
+            "Melalui asesmen lapangan ini, diharapkan dapat diperoleh gambaran yang objektif mengenai kinerja dan mutu penyelenggaraan Program Studi D4 Teknik Manufaktur, sekaligus menjadi masukan bagi perbaikan dan peningkatan kualitas pendidikan secara berkelanjutan."
+          ],
+          gallery: [
+            "foto-d4tma/foto1.jpg",
+            "foto-d4tma/foto2.jpg",
+            "foto-d4tma/foto3.jpg",
+            "foto-d4tma/foto4.jpg",
+            "foto-d4tma/foto5.jpg"
+          ],
+          gdrive: "https://drive.google.com/drive/folders/1HYQbc_rhzRIDk12HUkRex_9VHKPry1ZX?usp=sharing"
         }
       ]
     }
   ],
 
-  2028: [
+  2024: [
     {
-      bulan: "Januari 2028",
+      bulan: "Juni 2024",
       items: [
         {
-          foto: "",
-          tanggal: "10 Januari 2028",
-          judul: "Kick-off Persiapan Re-Akreditasi 2028",
-          deskripsi: "Rapat perdana persiapan re-akreditasi LAM Teknik periode 2028, penetapan tim dan jadwal kerja selama satu tahun ke depan."
-        },
-        {
-          foto: "",
-          tanggal: "15 Januari 2028",
-          judul: "Evaluasi Capaian Akreditasi 2023",
-          deskripsi: "Evaluasi menyeluruh terhadap rekomendasi perbaikan dari akreditasi 2023 dan capaian yang telah dipenuhi oleh jurusan."
+          tipe: "galeri",
+          id: "d4rpm-juni2024",
+          tanggal: "Rabu–Kamis, 26–27 Juni 2024",
+          judul: "Asesmen Lapangan Akreditasi Prodi D4 Rekayasa Perancangan Mekanik",
+          waktu: "07.30 WIB s.d. Selesai",
+          tempat: "Gedung Pertemuan Jurusan Teknik Mesin",
+          narasi: [
+            "Jurusan Teknik Mesin Politeknik Negeri Padang melaksanakan kegiatan Asesmen Lapangan (visitasi) dalam rangka Akreditasi Program Studi D4 Rekayasa Perancangan Mekanik, yang berlangsung selama dua hari pada Rabu–Kamis, 26–27 Juni 2024, bertempat di Gedung Pertemuan Jurusan Teknik Mesin mulai pukul 07.30 WIB hingga selesai.",
+            "Kegiatan diawali dengan pembukaan dan sambutan dari pimpinan jurusan, dilanjutkan dengan presentasi capaian program studi oleh tim akreditasi. Selanjutnya, tim asesor melakukan verifikasi dan validasi data melalui peninjauan dokumen, kunjungan ke laboratorium dan bengkel, serta wawancara dengan dosen, tenaga kependidikan, mahasiswa, alumni, dan mitra industri.",
+            "Melalui asesmen lapangan ini, diharapkan dapat diperoleh gambaran yang objektif mengenai kinerja dan mutu penyelenggaraan Program Studi D4 Rekayasa Perancangan Mekanik, sekaligus menjadi masukan bagi perbaikan dan peningkatan kualitas pendidikan secara berkelanjutan."
+          ],
+          gallery: [
+            "foto-d4rpm/foto1.jpg",
+            "foto-d4rpm/foto2.jpg",
+            "foto-d4rpm/foto3.jpg",
+            "foto-d4rpm/foto4.jpg"
+          ],
+          gdrive: "https://drive.google.com/drive/folders/14Er_8pOUVJQgZb-k2nXAz9hYYek0WYyv?usp=sharing"
         }
       ]
     },
     {
-      bulan: "Maret 2028",
+      bulan: "Oktober 2024",
       items: [
         {
-          foto: "",
-          tanggal: "Maret 2028",
-          judul: "Pelatihan Penulisan Dokumen Akreditasi",
-          deskripsi: "Pelatihan penulisan dokumen LED dan LKPS bagi seluruh anggota tim akreditasi baru sesuai instrumen LAM Teknik terbaru."
-        },
-        {
-          foto: "",
-          tanggal: "Maret – April 2028",
-          judul: "Penyusunan LED Versi 2028",
-          deskripsi: "Penyusunan dokumen Laporan Evaluasi Diri (LED) dengan data dan capaian terkini program studi untuk periode akreditasi 2028."
-        }
-      ]
-    },
-    {
-      bulan: "Mei 2028",
-      items: [
-        {
-          foto: "",
-          tanggal: "Mei 2028",
-          judul: "Audit Mutu Internal Pra-Akreditasi",
-          deskripsi: "Pelaksanaan AMI untuk memastikan kesiapan dokumen dan data sebelum pengajuan resmi ke LAM Teknik."
-        },
-        {
-          foto: "",
-          tanggal: "Juni 2028",
-          judul: "Finalisasi & Pengiriman Berkas Akreditasi",
-          deskripsi: "Finalisasi seluruh dokumen akreditasi dan pengiriman resmi berkas permohonan ke LAM Teknik."
-        }
-      ]
-    },
-    {
-      bulan: "September 2028",
-      items: [
-        {
-          foto: "",
-          tanggal: "September – Oktober 2028",
-          judul: "Visitasi Asesor LAM Teknik",
-          deskripsi: "Kunjungan asesor LAM Teknik ke kampus untuk verifikasi, validasi, dan wawancara stakeholder dalam rangka re-akreditasi 2028."
-        }
-      ]
-    },
-    {
-      bulan: "Desember 2028",
-      items: [
-        {
-          foto: "",
-          tanggal: "Desember 2028",
-          judul: "Pengumuman Hasil Re-Akreditasi",
-          deskripsi: "Pengumuman resmi hasil penilaian re-akreditasi LAM Teknik untuk seluruh program studi di Jurusan Teknik Mesin PNP."
+          tipe: "galeri",
+          id: "d3tme-oktober2024",
+          tanggal: "Kamis–Jumat, 31 Oktober – 1 November 2024",
+          judul: "Asesmen Lapangan Akreditasi Prodi D3 Teknik Mesin",
+          waktu: "08.00 WIB s.d. Selesai",
+          tempat: "Ruang Pertemuan Jurusan Teknik Mesin",
+          narasi: [
+            "Jurusan Teknik Mesin Politeknik Negeri Padang melaksanakan kegiatan Asesmen Lapangan (visitasi) dalam rangka Akreditasi Program Studi D3 Teknik Mesin, yang berlangsung selama dua hari pada Kamis–Jumat, 31 Oktober – 1 November 2024, bertempat di Ruang Pertemuan Jurusan Teknik Mesin mulai pukul 08.00 WIB hingga selesai.",
+            "Kegiatan diawali dengan pembukaan dan sambutan dari pimpinan jurusan, dilanjutkan dengan presentasi capaian program studi oleh tim akreditasi. Selanjutnya, tim asesor melakukan verifikasi dan validasi data melalui peninjauan dokumen, kunjungan ke laboratorium dan bengkel, serta wawancara dengan dosen, tenaga kependidikan, mahasiswa, alumni, dan mitra industri.",
+            "Melalui asesmen lapangan ini, diharapkan dapat diperoleh gambaran yang objektif mengenai kinerja dan mutu penyelenggaraan Program Studi D3 Teknik Mesin, sekaligus menjadi masukan bagi perbaikan dan peningkatan kualitas pendidikan secara berkelanjutan."
+          ],
+          gallery: [
+            "foto-d3tme/foto1.jpg",
+            "foto-d3tme/foto2.jpg",
+            "foto-d3tme/foto3.jpg",
+            "foto-d3tme/foto4.jpg"
+          ],
+          gdrive: "https://drive.google.com/drive/folders/17fnWE9sG0uVmebv712viyxOqw-TpElUs?usp=sharing"
         }
       ]
     }
-  ]
+  ],
 };
 
 function placeholderHtml() {
@@ -508,8 +532,98 @@ function placeholderHtml() {
   </div>`;
 }
 
-function render(tahun) {
-  const groups = data[tahun] || [];
+// Penyimpanan sementara data galeri agar bisa diakses oleh lightbox
+const galleryStore = {};
+let galleryCounter = 0;
+
+function renderGalleryCard(item) {
+  galleryCounter++;
+  const galId = 'gal' + galleryCounter;
+  galleryStore[galId] = { images: item.gallery, judul: item.judul, gdrive: item.gdrive };
+
+  const thumbs = item.gallery.map((src, i) =>
+    `<img src="${src}" alt="${item.judul} - Foto ${i + 1}" onclick="openLightbox('${galId}', ${i})">`
+  ).join('');
+  // duplikasi untuk efek swipe/scroll otomatis yang berulang tanpa putus
+  const trackHtml = thumbs + thumbs;
+
+  const narasiHtml = item.narasi.map(p => `<p>${p}</p>`).join('');
+
+  return `<div class="gallery-card" id="${item.id || galId}">
+    <div class="gallery-card-top">
+      <div class="gallery-info">
+        <div class="card-tanggal">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          ${item.tanggal}
+        </div>
+        <div class="card-judul">${item.judul}</div>
+        <div class="gallery-narasi">${narasiHtml}</div>
+        <ul class="gallery-meta-list">
+          <li><b>Jam</b> ${item.waktu}</li>
+          <li><b>Tempat</b> ${item.tempat}</li>
+        </ul>
+      </div>
+      <div class="carousel-wrap">
+        <div class="carousel-track">${trackHtml}</div>
+        <div class="carousel-hint">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
+          Klik foto untuk memperbesar
+        </div>
+      </div>
+    </div>
+    <div class="gallery-drive-bar">
+      <span>Total ${item.gallery.length} foto dokumentasi ditampilkan di sini.</span>
+      <a class="btn-gdrive" href="${item.gdrive}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z"/></svg>
+        Lihat Foto Lainnya di Google Drive
+      </a>
+    </div>
+  </div>`;
+}
+
+function openLightbox(galId, index) {
+  const gal = galleryStore[galId];
+  if (!gal) return;
+  window.__curGal = gal;
+  window.__curIdx = index;
+  showLightboxImage();
+  document.getElementById('lightboxOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function showLightboxImage() {
+  const gal = window.__curGal;
+  const idx = window.__curIdx;
+  const src = gal.images[idx];
+  const img = document.getElementById('lightboxImg');
+  img.src = src;
+  img.alt = gal.judul + ' - Foto ' + (idx + 1);
+  document.getElementById('lightboxCounter').textContent = (idx + 1) + ' / ' + gal.images.length;
+  const saveBtn = document.getElementById('lightboxSave');
+  saveBtn.href = src;
+  saveBtn.setAttribute('download', gal.judul.replace(/\s+/g, '_') + '_foto' + (idx + 1) + '.png');
+  document.getElementById('lightboxDrive').href = gal.gdrive;
+}
+
+function closeLightbox() {
+  document.getElementById('lightboxOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (!document.getElementById('lightboxOverlay').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowRight') { window.__curIdx = (window.__curIdx + 1) % window.__curGal.images.length; showLightboxImage(); }
+  if (e.key === 'ArrowLeft') { window.__curIdx = (window.__curIdx - 1 + window.__curGal.images.length) % window.__curGal.images.length; showLightboxImage(); }
+});
+
+function render() {
+  // Gabungkan seluruh kegiatan dari semua tahun menjadi satu linimasa,
+  // diurutkan dari tahun paling baru ke paling lama (terbaru di paling atas).
+  const groups = Object.keys(data)
+    .sort((a, b) => Number(b) - Number(a))
+    .flatMap(tahun => [...data[tahun]].reverse());
+
   let html = '';
   groups.forEach(g => {
     html += `<div class="month-group">
@@ -519,6 +633,10 @@ function render(tahun) {
       </div>
       <div class="cards-grid">`;
     g.items.forEach(item => {
+      if (item.tipe === 'galeri') {
+        html += renderGalleryCard(item);
+        return;
+      }
       const fotoHtml = item.foto
         ? `<img src="${item.foto}" alt="${item.judul}">`
         : placeholderHtml();
@@ -542,13 +660,20 @@ function render(tahun) {
   document.getElementById('timeline').innerHTML = html;
 }
 
-function showYear(tahun, btn) {
-  document.querySelectorAll('.year-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  render(tahun);
-}
+render();
 
-render(2023);
+// Jika datang dari link dengan target kegiatan tertentu (mis. index.html#d4tma-juni2023),
+// otomatis scroll & sorot ke kartu kegiatan tersebut.
+function scrollToTargetKegiatan() {
+  if (!location.hash) return;
+  const target = document.querySelector(location.hash);
+  if (!target) return;
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  target.style.outline = '3px solid var(--orange)';
+  target.style.outlineOffset = '4px';
+  setTimeout(() => { target.style.outline = 'none'; }, 2200);
+}
+setTimeout(scrollToTargetKegiatan, 150);
 </script>
 
 <script>
