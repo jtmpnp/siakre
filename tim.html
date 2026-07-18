@@ -345,12 +345,59 @@
       .hero-visual { display: none; }
       .hero-main-title { font-size: 2.2rem; }
       nav { padding: 0 1rem; }
-      .nav-links li:not(:last-child) { display: none; }
       .content-wrap { padding: 1.5rem; }
       .footer-grid { grid-template-columns: 1fr; }
       .pengarah-grid { grid-template-columns: 1fr; }
       .tim-grid { grid-template-columns: repeat(2, 1fr); }
     }
+  
+    /* ===== NAV RESPONSIVE (HAMBURGER) ===== */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      margin-left: auto;
+      z-index: 210;
+    }
+    .nav-toggle svg { width: 26px; height: 26px; stroke: var(--navy, #1a2b4a); fill: none; stroke-width: 2; }
+
+    @media (max-width: 768px) {
+      .nav-toggle { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        background: var(--white, #fff);
+        box-shadow: 0 8px 20px rgba(0,0,0,.10);
+        padding: .5rem 1rem 1rem;
+        gap: .15rem;
+        margin: 0;
+        max-height: calc(100vh - 64px);
+        overflow-y: auto;
+      }
+      .nav-links.active { display: flex; }
+      .nav-links li { width: 100%; }
+      .nav-links > li > a, .nav-links .nav-item > a { width: 100%; }
+      .nav-item .dropdown-menu {
+        display: none;
+        position: static;
+        box-shadow: none;
+        border: none;
+        min-width: 0;
+        width: 100%;
+        padding-left: 1rem;
+        margin-top: 0;
+        padding-top: 0;
+      }
+      .nav-item .dropdown-menu.active { display: block; }
+    }
+    /* ===== END NAV RESPONSIVE ===== */
   </style>
 </head>
 <body>
@@ -365,6 +412,9 @@
       <div class="inst">Politeknik Negeri Padang</div>
     </div>
   </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Buka menu">
+    <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+  </button>
   <ul class="nav-links">
     <li>
       <a href="index.html">
@@ -772,6 +822,24 @@ document.addEventListener('click', function(e) {
     document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
   }
 });
+</script>
+
+<script>
+(function () {
+  var toggle = document.getElementById('navToggle');
+  var links = document.querySelector('.nav-links');
+  if (toggle && links) {
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      links.classList.toggle('active');
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.nav-links') && !e.target.closest('.nav-toggle')) {
+        links.classList.remove('active');
+      }
+    });
+  }
+})();
 </script>
 </body>
 </html>
