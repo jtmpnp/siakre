@@ -863,9 +863,10 @@ document.addEventListener('click', function(e) {
 <!-- STATISTIK PENGUNJUNG: counter unik per-hari (localStorage) + CountAPI alternatif (gratis, tanpa server sendiri) -->
 <script>
 (function () {
-  // Ganti "pnp-jtm-akreditasi-2026-..." dengan key unik milikmu sendiri
-  // agar tidak bentrok dengan pengguna lain (key di layanan ini bersifat publik/terbuka).
-  const BASE = 'https://countapi.mileshilliard.com/api/v1/';
+  // Counter mandiri berbasis Cloudflare Worker + KV milik sendiri.
+  // Lebih stabil daripada layanan pihak ketiga gratis (mis. CountAPI) yang
+  // bisa berhenti beroperasi sewaktu-waktu tanpa pemberitahuan.
+  const BASE = 'https://pnp-jtm-counter.fauziahhanum.workers.dev';
   const totalEl = document.getElementById('stat-total');
   const todayEl = document.getElementById('stat-today');
   const timeEl  = document.getElementById('stat-time');
@@ -875,28 +876,75 @@ document.addEventListener('click', function(e) {
   }
 
   const todayStr  = new Date().toISOString().slice(0, 10);
-  const todayKey  = 'pnp-jtm-akreditasi-2026-harian-v3-' + todayStr;
-  const totalKey  = 'pnp-jtm-akreditasi-2026-total-v3';
-  const STAMP_KEY = 'pnp_jtm_last_visit_date_v3'; // "stempel" tanggal kunjungan terakhir di browser ini
+  const STAMP_KEY = 'pnp_jtm_last_visit_date_v4'; // "stempel" tanggal kunjungan terakhir di browser ini
 
-  // Cek apakah browser ini SUDAH pernah dihitung hari ini
-  let sudahDihitungHariIni = false;
-  try {
-    sudahDihitungHariIni = localStorage.getItem(STAMP_KEY) === todayStr;
-  } catch (e) {
-    // Kalau localStorage diblokir browser, anggap saja belum pernah dihitung
+  // Deteksi apakah halaman ini sedang dibuka dari lingkungan development
+  // (misalnya Live Server di VSCode, atau localhost lainnya). Kalau ya,
+  // JANGAN ikut menambah angka pengunjung asli di situs produksi -
+  // cukup tampilkan angka yang sudah ada (mode "hanya lihat").
+  const host = location.hostname;
+  const isLocalDev = (
+    host === 'localhost' ||
+    host === '127.0.0.1' ||
+    host === '' ||
+    host.endsWith('.local')
+  );
+
+  // Bungkus fetch dengan opsi anti-cache + query string acak (cache-buster).
+  // Ini penting terutama di HP: banyak jaringan seluler/proxy operator
+  // menyimpan (cache) hasil GET, sehingga angka yang tampil jadi "nyangkut"
+  // di nilai lama sampai cache-nya kedaluwarsa. Dengan menambahkan parameter
+  // acak di URL setiap kali + header no-store, permintaan selalu dianggap
+  // baru dan tidak akan diambil dari cache manapun (browser maupun jaringan).
+  function freshFetch(path) {
+    const bust = BASE + path + '?_=' + Date.now();
+    return fetch(bust, { cache: 'no-store' }).then(r => r.json());
   }
 
-  if (sudahDihitungHariIni) {
-    // Sudah ada stempel hari ini -> cukup TAMPILKAN angka, jangan ditambah lagi
-    fetch(BASE + 'get/' + totalKey).then(r => r.json()).then(d => { totalEl.textContent = formatNumber(d.value); }).catch(() => { totalEl.textContent = '—'; });
-    fetch(BASE + 'get/' + todayKey).then(r => r.json()).then(d => { todayEl.textContent = formatNumber(d.value); }).catch(() => { todayEl.textContent = '—'; });
-  } else {
-    // Kunjungan pertama browser ini hari ini -> tambah +1, lalu tempel tanggal hari ini
-    fetch(BASE + 'hit/' + totalKey).then(r => r.json()).then(d => { totalEl.textContent = formatNumber(d.value); }).catch(() => { totalEl.textContent = '—'; });
-    fetch(BASE + 'hit/' + todayKey).then(r => r.json()).then(d => { todayEl.textContent = formatNumber(d.value); }).catch(() => { todayEl.textContent = '—'; });
-    try { localStorage.setItem(STAMP_KEY, todayStr); } catch (e) {}
+  function tampilkan(d) {
+    totalEl.textContent = formatNumber(d.total);
+    todayEl.textContent = formatNumber(d.today);
   }
+
+  function refreshStats() {
+    // Cek apakah browser ini SUDAH pernah dihitung hari ini
+    let sudahDihitungHariIni = false;
+    try {
+      sudahDihitungHariIni = localStorage.getItem(STAMP_KEY) === todayStr;
+    } catch (e) {
+      // Kalau localStorage diblokir browser, anggap saja belum pernah dihitung
+    }
+
+    if (isLocalDev) {
+      // Lagi testing lokal (Live Server/localhost) -> jangan pernah menghitung,
+      // cukup tampilkan angka asli dari worker sebagai referensi.
+      freshFetch('/get').then(tampilkan).catch(() => { totalEl.textContent = '—'; todayEl.textContent = '—'; });
+      return;
+    }
+
+    if (sudahDihitungHariIni) {
+      // Sudah ada stempel hari ini -> cukup TAMPILKAN angka terbaru, jangan ditambah lagi
+      freshFetch('/get').then(tampilkan).catch(() => { totalEl.textContent = '—'; todayEl.textContent = '—'; });
+    } else {
+      // Kunjungan pertama browser ini hari ini -> tambah +1, lalu tempel tanggal hari ini
+      freshFetch('/hit').then(tampilkan).catch(() => { totalEl.textContent = '—'; todayEl.textContent = '—'; });
+      try { localStorage.setItem(STAMP_KEY, todayStr); } catch (e) {}
+    }
+  }
+
+  refreshStats();
+
+  // Banyak browser mobile (Safari/Chrome di HP) menyimpan halaman di
+  // "bfcache" saat kamu pindah tab/aplikasi lalu balik lagi, sehingga
+  // script TIDAK dijalankan ulang dan angka tidak pernah di-refresh.
+  // Dua listener di bawah memaksa data diambil ulang setiap kali halaman
+  // ini terlihat kembali di layar.
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) refreshStats();
+  });
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') refreshStats();
+  });
 
   // Jam real-time (lokal di perangkat pengunjung)
   function updateClock() {
