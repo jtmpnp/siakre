@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <script>
+    // PENJAGA PINTU: cek akses sebelum halaman ini ditampilkan.
+    // Status login sekarang berlaku HANYA untuk hari ini - begitu tanggal
+    // berganti (lewat tengah malam), otomatis dianggap kadaluwarsa dan
+    // akan dilempar balik ke portal.html untuk login ulang.
+    // Diletakkan paling atas <head> supaya berjalan SEBELUM konten dokumen
+    // sempat dirender, sehingga tidak ada celah "kelihatan sekilas" lalu redirect.
+    (function () {
+      function todayStr() {
+        return new Date().toISOString().slice(0, 10);
+      }
+      try {
+        var granted = localStorage.getItem('pnp_jtm_access') === 'granted';
+        var sameDay = localStorage.getItem('pnp_jtm_access_date') === todayStr();
+        if (!granted || !sameDay) {
+          location.replace('portal.html');
+        }
+      } catch (e) {
+        location.replace('portal.html');
+      }
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dokumen Akreditasi – D4 Teknik Manufaktur – Politeknik Negeri Padang</title>

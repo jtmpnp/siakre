@@ -468,8 +468,37 @@
 </section>
 
 <script>
-  const CORRECT_PASSWORD = "akses2026";
+  // Password tidak lagi ditulis polos di kode, melainkan disimpan sebagai
+  // hash SHA-256. Hash aslinya adalah dari kata sandi "akses2026" -
+  // kalau mau ganti kata sandi, hitung hash SHA-256 kata sandi baru lalu
+  // ganti nilai di bawah ini.
+  const CORRECT_PASSWORD_HASH = "a2200f47ef77363001dffeadedeadea60eb50271f54b3f99de6de542f1b724f9";
   const STORAGE_KEY = "pnp_jtm_access";
+  const DATE_KEY = "pnp_jtm_access_date"; // tanggal terakhir login berhasil
+
+  function todayStr() {
+    return new Date().toISOString().slice(0, 10); // format: YYYY-MM-DD
+  }
+
+  // Status login dianggap masih berlaku HANYA kalau flag "granted" ada
+  // DAN tanggal yang tersimpan sama dengan hari ini. Begitu tanggal berganti
+  // (lewat tengah malam), status otomatis dianggap kadaluwarsa dan
+  // password akan diminta lagi.
+  function sudahLoginHariIni() {
+    try {
+      return localStorage.getItem(STORAGE_KEY) === 'granted'
+        && localStorage.getItem(DATE_KEY) === todayStr();
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async function sha256(text) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(text);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
 
   const loginFormWrap = document.getElementById('loginFormWrap');
   const unlockedPanel = document.getElementById('unlockedPanel');
@@ -490,17 +519,26 @@
   }
 
   // Cek status akses saat halaman dibuka
-  try {
-    if (localStorage.getItem(STORAGE_KEY) === 'granted') {
-      showUnlocked();
-    }
-  } catch (e) { /* localStorage tidak tersedia, form login tetap tampil */ }
+  if (sudahLoginHariIni()) {
+    showUnlocked();
+  } else {
+    // Kalau statusnya sudah kadaluwarsa (hari sudah berganti), bersihkan
+    // dulu jejak lama supaya tidak membingungkan.
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(DATE_KEY);
+    } catch (e) {}
+  }
 
-  loginForm.addEventListener('submit', function () {
+  loginForm.addEventListener('submit', async function () {
     const value = passwordInput.value.trim();
-    if (value === CORRECT_PASSWORD) {
+    const hashed = await sha256(value);
+    if (hashed === CORRECT_PASSWORD_HASH) {
       errorMsg.classList.remove('show');
-      try { localStorage.setItem(STORAGE_KEY, 'granted'); } catch (e) {}
+      try {
+        localStorage.setItem(STORAGE_KEY, 'granted');
+        localStorage.setItem(DATE_KEY, todayStr());
+      } catch (e) {}
       showUnlocked();
     } else {
       errorMsg.classList.add('show');
@@ -513,7 +551,10 @@
   });
 
   logoutBtn.addEventListener('click', function () {
-    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(DATE_KEY);
+    } catch (e) {}
     passwordInput.value = '';
     showLoginForm();
   });
